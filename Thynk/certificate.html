@@ -1,0 +1,2362 @@
+<!DOCTYPE html>
+<html lang="th">
+<link rel="icon" type="image/png" href="thynk.png">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>THYNK // IQ Certificate</title>
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="thynk.png"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/style2.css"
+    >
+
+    <!-- =====================================================
+         PDF LIBRARIES
+    ====================================================== -->
+
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">
+    </script>
+
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
+    </script>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     TOP NAVIGATION
+====================================================== -->
+
+<header class="topbar">
+
+    <div class="logo">
+        THYNK
+        <span>//</span>
+        IQ
+    </div>
+
+    <div class="top-status">
+        VERIFIED NEURAL ASSESSMENT
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN
+====================================================== -->
+
+<main class="page">
+
+
+    <!-- =================================================
+         CERTIFICATE PAPER
+    ================================================== -->
+
+    <section
+        class="certificate"
+        id="certificate"
+    >
+
+
+        <!-- =================================================
+             DECORATIVE FRAMES
+        ================================================== -->
+
+        <div class="frame1"></div>
+        <div class="frame2"></div>
+        <div class="frame3"></div>
+
+
+        <!-- =================================================
+             CORNER DECORATIONS
+        ================================================== -->
+
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+        <div class="corner bl"></div>
+        <div class="corner br"></div>
+
+
+        <!-- =================================================
+             WATERMARK
+        ================================================== -->
+
+        <div class="watermark">
+            THYNK
+        </div>
+
+
+
+        <!-- =================================================
+             CERTIFICATE CONTENT
+        ================================================== -->
+
+        <div class="certificate-content">
+
+
+            <!-- =================================================
+                 BRAND
+            ================================================== -->
+
+            <div class="thynk-logo">
+
+                <img
+                    src="thynk.png"
+                    alt="THYNK"
+                >
+
+            </div>
+
+
+            <div class="website-name">
+                THYNK
+            </div>
+
+
+            <div class="website-sub">
+                ระบบประเมินความสามารถทางการคิด
+            </div>
+
+
+            <div class="gold-line"></div>
+
+
+
+            <!-- =================================================
+                 CERTIFICATE TITLE
+            ================================================== -->
+
+            <h1 class="main-title">
+                THYNK COGNITIVE ACHIEVEMENT
+            </h1>
+
+
+            <div class="main-subtitle">
+                OFFICIAL COGNITIVE ASSESSMENT CERTIFICATE
+            </div>
+
+
+            <div class="presented">
+                ใบประกาศนียบัตรฉบับนี้มอบให้แก่
+            </div>
+
+
+
+            <!-- =================================================
+                 USER NAME
+            ================================================== -->
+
+            <div
+                class="name"
+                id="displayName"
+            >
+                —
+            </div>
+
+
+            <div class="name-line"></div>
+
+
+
+            <!-- =================================================
+                 DESCRIPTION
+            ================================================== -->
+
+            <div class="description">
+
+                เพื่อรับรองว่า
+
+                <strong id="descriptionName">
+                    ผู้เข้ารับการประเมิน
+                </strong>
+
+                ได้ผ่านการประเมินระดับเชาวน์ปัญญา (IQ)
+                ของ THYNK ซึ่งออกแบบเพื่อประเมินศักยภาพ
+                ทางการคิดใน 5 ด้าน ได้แก่
+                การค้นหารูปแบบ การใช้เหตุผลเชิงตรรกะ
+                การใช้เหตุผลเชิงตัวเลข มิติสัมพันธ์
+                และการแก้ปัญหาแบบบูรณาการ
+                โดยสะท้อนความสามารถในการวิเคราะห์
+                เชื่อมโยงข้อมูล และคิดอย่างเป็นระบบ
+
+            </div>
+
+
+
+            <!-- =================================================
+                 IQ SCORE
+            ================================================== -->
+
+            <div class="iq-hero">
+
+
+                <div class="iq-title">
+                    IQ SCORE
+                </div>
+
+
+                <div
+                    class="iq-score"
+                    id="score"
+                >
+                    —
+                </div>
+
+
+                <div class="iq-score-label">
+                    COGNITIVE INTELLIGENCE SCORE
+                </div>
+
+
+                <div class="iq-level-box">
+
+                    <div class="iq-level-label">
+                        ระดับ IQ
+                    </div>
+
+                    <div
+                        class="iq-level-value"
+                        id="level"
+                    >
+                        —
+                    </div>
+
+                </div>
+
+
+                <div class="neural-type">
+
+                    รูปแบบการคิด :
+
+                    <strong id="type">
+                        —
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 RESULT HEADER
+            ================================================== -->
+
+            <div class="section-title">
+
+                <span>
+                    ผลการสอบ
+                </span>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 STATISTICS
+            ================================================== -->
+
+            <div class="statistics">
+
+
+                <div class="stat">
+
+                    <div class="stat-label">
+                        คะแนน IQ
+                    </div>
+
+                    <div
+                        class="stat-value gold"
+                        id="resultScore"
+                    >
+                        —
+                    </div>
+
+                </div>
+
+
+
+                <div class="stat">
+
+                    <div class="stat-label">
+                        ระดับความสามารถ
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="resultLevel"
+                    >
+                        —
+                    </div>
+
+                </div>
+
+
+
+                <div class="stat">
+
+                    <div class="stat-label">
+                        จำนวนข้อ
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="totalQuestions"
+                    >
+                        —
+                    </div>
+
+                </div>
+
+
+
+                <div class="stat">
+
+                    <div class="stat-label">
+                        ตอบถูก
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="correctAnswers"
+                    >
+                        —
+                    </div>
+
+                </div>
+
+
+
+                <div class="stat">
+
+                    <div class="stat-label">
+                        ความแม่นยำ
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="accuracy"
+                    >
+                        —
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 IQ SCALE
+            ================================================== -->
+
+            <div class="iq-scale">
+
+
+                <div class="iq-scale-title">
+                    ระดับคะแนน IQ
+                </div>
+
+
+                <div class="iq-levels">
+
+
+                    <div
+                        class="iq-level"
+                        data-min="130"
+                    >
+
+                        <div class="iq-range">
+                            ≥130
+                        </div>
+
+                        <div class="iq-name">
+                            อัจฉริยะ
+                        </div>
+
+                    </div>
+
+
+
+                    <div
+                        class="iq-level"
+                        data-min="120"
+                    >
+
+                        <div class="iq-range">
+                            120–129
+                        </div>
+
+                        <div class="iq-name">
+                            สูงมาก
+                        </div>
+
+                    </div>
+
+
+
+                    <div
+                        class="iq-level"
+                        data-min="110"
+                    >
+
+                        <div class="iq-range">
+                            110–119
+                        </div>
+
+                        <div class="iq-name">
+                            สูงกว่าค่าเฉลี่ย
+                        </div>
+
+                    </div>
+
+
+
+                    <div
+                        class="iq-level"
+                        data-min="90"
+                    >
+
+                        <div class="iq-range">
+                            90–109
+                        </div>
+
+                        <div class="iq-name">
+                            ค่าเฉลี่ย
+                        </div>
+
+                    </div>
+
+
+
+                    <div
+                        class="iq-level"
+                        data-min="80"
+                    >
+
+                        <div class="iq-range">
+                            80–89
+                        </div>
+
+                        <div class="iq-name">
+                            ต่ำกว่าค่าเฉลี่ย
+                        </div>
+
+                    </div>
+
+
+
+                    <div
+                        class="iq-level"
+                        data-min="70"
+                    >
+
+                        <div class="iq-range">
+                            70–79
+                        </div>
+
+                        <div class="iq-name">
+                            ค่อนข้างต่ำ
+                        </div>
+
+                    </div>
+
+
+
+                    <div
+                        class="iq-level"
+                        data-min="0"
+                    >
+
+                        <div class="iq-range">
+                            &lt;70
+                        </div>
+
+                        <div class="iq-name">
+                            ต่ำ
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 LARGE CENTER IMAGE
+            ================================================== -->
+
+            <div class="certificate-image-section">
+
+                <div class="certificate-image-frame">
+
+                    <img
+                        src="thynk 3.png"
+                        alt="THYNK Cognitive Assessment"
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 CERTIFICATE FOOTER
+            ================================================== -->
+
+            <div class="certificate-footer">
+
+
+                <div class="footer-left">
+
+
+                    <div class="footer-item">
+
+                        <div class="footer-label">
+                            วันที่ประเมิน
+                        </div>
+
+                        <div
+                            class="footer-value"
+                            id="date"
+                        >
+                            —
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="footer-item">
+
+                        <div class="footer-label">
+                            ASSESSMENT ID
+                        </div>
+
+                        <div
+                            class="footer-value assessment-code"
+                            id="assessmentId"
+                        >
+                            THY-XXXXXXXX
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="footer-right">
+
+                    <div class="footer-image">
+
+                        <img
+                            src="thynk1.png"
+                            alt="THYNK Certificate Signature"
+                        >
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         ACTION BUTTONS
+    ================================================== -->
+
+    <div class="actions">
+
+
+        <button
+            type="button"
+            class="action-btn home-btn"
+            onclick="goHome()"
+        >
+
+            <span class="btn-icon">
+                ←
+            </span>
+
+            <span>
+                กลับหน้าหลัก
+            </span>
+
+        </button>
+
+
+
+        <button
+            type="button"
+            class="action-btn download-btn"
+            id="downloadButton"
+            onclick="downloadCertificate()"
+        >
+
+            <span class="btn-icon">
+                ↓
+            </span>
+
+            <span>
+                ดาวน์โหลดใบประกาศ
+            </span>
+
+        </button>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         INFORMATION
+    ================================================== -->
+
+    <div class="info">
+
+        THYNK // A4 PORTRAIT // VERIFIED NEURAL ASSESSMENT
+
+    </div>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     PDF LOADING OVERLAY
+====================================================== -->
+
+<div
+    class="pdf-loading"
+    id="pdfLoading"
+>
+
+    <div class="loader-ring"></div>
+
+    <div
+        class="loading-title"
+        id="loadingTitle"
+    >
+        กำลังสร้างใบประกาศนียบัตร
+    </div>
+
+    <div
+        class="loading-subtitle"
+        id="loadingSubtitle"
+    >
+        THYNK // BUILDING A4 PDF
+    </div>
+
+</div>
+
+
+
+<script>
+
+/* =====================================================
+   THYNK IQ CERTIFICATE SYSTEM
+====================================================== */
+
+
+/* =====================================================
+   SAFE JSON READER
+====================================================== */
+
+function readStorageJSON(key) {
+
+    try {
+
+        const value =
+            localStorage.getItem(key);
+
+        if (!value) {
+            return null;
+        }
+
+        return JSON.parse(value);
+
+    }
+
+    catch (error) {
+
+        console.error(
+            `Unable to parse ${key}:`,
+            error
+        );
+
+        return null;
+
+    }
+
+}
+
+
+/* =====================================================
+   LOAD CERTIFICATE DATA
+====================================================== */
+
+/*
+   ระบบจะรองรับหลาย key เพื่อให้เข้ากับ
+   ระบบ IQ เดิมและระบบใหม่
+
+   Priority:
+
+   1. thynkCertificate
+   2. thynkIQCertificate
+   3. thynkIQResult
+   4. thynkResult
+*/
+
+let data =
+    readStorageJSON(
+        "thynkCertificate"
+    );
+
+
+if (!data) {
+
+    data =
+        readStorageJSON(
+            "thynkIQCertificate"
+        );
+
+}
+
+
+/* =====================================================
+   FALLBACK IQ RESULT
+====================================================== */
+
+if (!data) {
+
+    const iqResult =
+        readStorageJSON(
+            "thynkIQResult"
+        );
+
+
+    if (iqResult) {
+
+        data = {
+
+            displayName:
+                iqResult.displayName ||
+                iqResult.name ||
+                iqResult.fullName ||
+                `${iqResult.firstName || ""} ${iqResult.lastName || ""}`.trim() ||
+                "THYNK USER",
+
+            firstName:
+                iqResult.firstName ||
+                "",
+
+            lastName:
+                iqResult.lastName ||
+                "",
+
+            iqScore:
+                iqResult.iqScore ??
+                iqResult.iq ??
+                iqResult.score ??
+                0,
+
+            score:
+                iqResult.score ??
+                iqResult.iqScore ??
+                iqResult.iq ??
+                0,
+
+            level:
+                iqResult.level ||
+                "",
+
+            neuralType:
+                iqResult.neuralType ||
+                iqResult.profileName ||
+                iqResult.profile ||
+                "—",
+
+            total:
+                iqResult.total ??
+                iqResult.totalQuestions ??
+                0,
+
+            totalQuestions:
+                iqResult.totalQuestions ??
+                iqResult.total ??
+                0,
+
+            correct:
+                iqResult.correct ??
+                iqResult.correctAnswers ??
+                0,
+
+            accuracy:
+                iqResult.accuracy ??
+                iqResult.completion ??
+                null,
+
+            assessmentId:
+                iqResult.assessmentId ||
+                "",
+
+            completedAt:
+                iqResult.completedAt ||
+                iqResult.timestamp ||
+                new Date().toISOString()
+
+        };
+
+
+        /*
+           บันทึกเป็น certificate
+           เพื่อเปิดซ้ำได้
+        */
+
+        try {
+
+            localStorage.setItem(
+                "thynkCertificate",
+                JSON.stringify(data)
+            );
+
+        }
+
+        catch (error) {
+
+            console.warn(
+                "Unable to save IQ certificate:",
+                error
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   FINAL FALLBACK
+====================================================== */
+
+if (!data) {
+
+    const genericResult =
+        readStorageJSON(
+            "thynkResult"
+        );
+
+
+    if (genericResult) {
+
+        data =
+            genericResult;
+
+    }
+
+}
+
+
+/* =====================================================
+   NO DATA
+====================================================== */
+
+if (!data) {
+
+    alert(
+        "ไม่พบข้อมูลใบประกาศ IQ\n\n" +
+        "กรุณากลับไปหน้าผลการสอบและสร้างใบประกาศอีกครั้ง"
+    );
+
+    window.location.href =
+        "index.html";
+
+    throw new Error(
+        "THYNK IQ Certificate data not found."
+    );
+
+}
+
+
+/* =====================================================
+   HELPERS
+====================================================== */
+
+function safeNumber(
+    value,
+    fallback = 0
+) {
+
+    const number =
+        Number(value);
+
+    return Number.isFinite(
+        number
+    )
+        ? number
+        : fallback;
+
+}
+
+
+function setText(
+    id,
+    value
+) {
+
+    const element =
+        document.getElementById(
+            id
+        );
+
+
+    if (!element) {
+        return;
+    }
+
+
+    element.textContent =
+        value;
+
+}
+
+
+/* =====================================================
+   USER NAME
+====================================================== */
+
+let displayName =
+    data.displayName ||
+    data.name ||
+    data.fullName ||
+    `${data.firstName || ""} ${data.lastName || ""}`.trim();
+
+
+/*
+   หาก Certificate ไม่มีชื่อ
+   ให้ลองอ่านชื่อจาก localStorage
+*/
+
+if (!displayName) {
+
+    const nameKeys = [
+
+        "displayName",
+        "fullName",
+        "userName",
+        "username",
+        "name",
+        "thynkName",
+        "thynkUserName",
+        "iqUserName"
+
+    ];
+
+
+    for (
+        const key of nameKeys
+    ) {
+
+        const savedName =
+            localStorage.getItem(
+                key
+            );
+
+
+        if (
+            savedName &&
+            savedName.trim()
+        ) {
+
+            displayName =
+                savedName.trim();
+
+            break;
+
+        }
+
+    }
+
+}
+
+
+if (!displayName) {
+
+    displayName =
+        "THYNK USER";
+
+}
+
+
+setText(
+    "displayName",
+    displayName
+);
+
+
+setText(
+    "descriptionName",
+    displayName
+);
+
+
+/* =====================================================
+   IQ SCORE
+====================================================== */
+
+const score =
+    Math.max(
+        0,
+        safeNumber(
+            data.iqScore ??
+            data.iq ??
+            data.score,
+            0
+        )
+    );
+
+
+setText(
+    "score",
+    score
+);
+
+
+setText(
+    "resultScore",
+    score
+);
+
+
+/* =====================================================
+   IQ LEVEL
+====================================================== */
+
+const level =
+    data.level ||
+    calculateIQLevel(
+        score
+    );
+
+
+setText(
+    "level",
+    level
+);
+
+
+setText(
+    "resultLevel",
+    level
+);
+
+
+/* =====================================================
+   NEURAL TYPE
+====================================================== */
+
+setText(
+    "type",
+    data.neuralType ||
+    data.profileName ||
+    data.profile ||
+    "—"
+);
+
+
+/* =====================================================
+   TEST STATISTICS
+====================================================== */
+
+const correct =
+    safeNumber(
+        data.correct ??
+        data.correctAnswers ??
+        0,
+        0
+    );
+
+
+const total =
+    safeNumber(
+        data.totalQuestions ??
+        data.total ??
+        0,
+        0
+    );
+
+
+/* =====================================================
+   ACCURACY
+====================================================== */
+
+let accuracy;
+
+
+const storedAccuracy =
+    data.accuracy ??
+    data.completion;
+
+
+if (
+    storedAccuracy !== undefined &&
+    storedAccuracy !== null &&
+    storedAccuracy !== ""
+) {
+
+    accuracy =
+        safeNumber(
+            storedAccuracy,
+            0
+        );
+
+}
+
+else if (
+    total > 0
+) {
+
+    accuracy =
+        (
+            correct /
+            total
+        ) * 100;
+
+}
+
+else {
+
+    accuracy =
+        0;
+
+}
+
+
+/*
+   ป้องกันค่าเกิน 100%
+*/
+
+accuracy =
+    Math.max(
+        0,
+        Math.min(
+            100,
+            accuracy
+        )
+    );
+
+
+setText(
+    "totalQuestions",
+    total || "—"
+);
+
+
+setText(
+    "correctAnswers",
+    correct
+);
+
+
+setText(
+    "accuracy",
+    `${accuracy.toFixed(1)}%`
+);
+
+
+/* =====================================================
+   IQ LEVEL CALCULATION
+====================================================== */
+
+function calculateIQLevel(
+    iq
+) {
+
+    if (iq >= 130) {
+
+        return "อัจฉริยะ";
+
+    }
+
+
+    if (iq >= 120) {
+
+        return "สูงมาก";
+
+    }
+
+
+    if (iq >= 110) {
+
+        return "สูงกว่าค่าเฉลี่ย";
+
+    }
+
+
+    if (iq >= 90) {
+
+        return "ค่าเฉลี่ย";
+
+    }
+
+
+    if (iq >= 80) {
+
+        return "ต่ำกว่าค่าเฉลี่ย";
+
+    }
+
+
+    if (iq >= 70) {
+
+        return "ค่อนข้างต่ำ";
+
+    }
+
+
+    return "ต่ำ";
+
+}
+
+
+/* =====================================================
+   IQ SCALE HIGHLIGHT
+====================================================== */
+
+function highlightIQLevel(
+    iq
+) {
+
+    const levels =
+        document.querySelectorAll(
+            ".iq-level"
+        );
+
+
+    levels.forEach(
+        element => {
+
+            element.classList.remove(
+                "active"
+            );
+
+        }
+    );
+
+
+    let target;
+
+
+    if (iq >= 130) {
+
+        target =
+            document.querySelector(
+                '[data-min="130"]'
+            );
+
+    }
+
+    else if (iq >= 120) {
+
+        target =
+            document.querySelector(
+                '[data-min="120"]'
+            );
+
+    }
+
+    else if (iq >= 110) {
+
+        target =
+            document.querySelector(
+                '[data-min="110"]'
+            );
+
+    }
+
+    else if (iq >= 90) {
+
+        target =
+            document.querySelector(
+                '[data-min="90"]'
+            );
+
+    }
+
+    else if (iq >= 80) {
+
+        target =
+            document.querySelector(
+                '[data-min="80"]'
+            );
+
+    }
+
+    else if (iq >= 70) {
+
+        target =
+            document.querySelector(
+                '[data-min="70"]'
+            );
+
+    }
+
+    else {
+
+        target =
+            document.querySelector(
+                '[data-min="0"]'
+            );
+
+    }
+
+
+    if (target) {
+
+        target.classList.add(
+            "active"
+        );
+
+    }
+
+}
+
+
+highlightIQLevel(
+    score
+);
+
+
+/* =====================================================
+   ASSESSMENT ID
+====================================================== */
+
+let assessmentId =
+    data.assessmentId;
+
+
+if (!assessmentId) {
+
+    assessmentId =
+        generateAssessmentId();
+
+
+    /*
+       เก็บกลับเข้า data
+       เพื่อให้ใช้ ID เดิมต่อไป
+    */
+
+    data.assessmentId =
+        assessmentId;
+
+
+    try {
+
+        localStorage.setItem(
+            "thynkCertificate",
+            JSON.stringify(data)
+        );
+
+    }
+
+    catch (error) {
+
+        console.warn(
+            "Unable to save assessment ID:",
+            error
+        );
+
+    }
+
+}
+
+
+setText(
+    "assessmentId",
+    assessmentId
+);
+
+
+/* =====================================================
+   GENERATE ASSESSMENT ID
+====================================================== */
+
+function generateAssessmentId() {
+
+    const chars =
+        "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+
+    let code =
+        "";
+
+
+    for (
+        let i = 0;
+        i < 8;
+        i++
+    ) {
+
+        code +=
+            chars[
+                Math.floor(
+                    Math.random() *
+                    chars.length
+                )
+            ];
+
+    }
+
+
+    return `THY-${code}`;
+
+}
+
+
+/* =====================================================
+   DATE
+====================================================== */
+
+let completedDate;
+
+
+if (
+    data.completedAt ||
+    data.timestamp
+) {
+
+    completedDate =
+        new Date(
+            data.completedAt ||
+            data.timestamp
+        );
+
+}
+
+else {
+
+    completedDate =
+        new Date();
+
+}
+
+
+if (
+    Number.isNaN(
+        completedDate.getTime()
+    )
+) {
+
+    completedDate =
+        new Date();
+
+}
+
+
+const formattedDate =
+    completedDate.toLocaleDateString(
+        "th-TH",
+        {
+            day:
+                "numeric",
+
+            month:
+                "long",
+
+            year:
+                "numeric"
+        }
+    );
+
+
+setText(
+    "date",
+    formattedDate
+);
+
+
+/* =====================================================
+   WAIT FOR FONTS
+====================================================== */
+
+async function waitForFonts() {
+
+    if (
+        !document.fonts
+    ) {
+
+        return;
+
+    }
+
+
+    try {
+
+        await document.fonts.ready;
+
+    }
+
+    catch (error) {
+
+        console.warn(
+            "Font loading warning:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   WAIT FOR IMAGES
+====================================================== */
+
+async function waitForImages(
+    container
+) {
+
+    const images =
+        Array.from(
+            container.querySelectorAll(
+                "img"
+            )
+        );
+
+
+    await Promise.all(
+        images.map(
+            image => {
+
+                if (
+                    image.complete
+                ) {
+
+                    return Promise.resolve();
+
+                }
+
+
+                return new Promise(
+                    resolve => {
+
+                        image.addEventListener(
+                            "load",
+                            resolve,
+                            {
+                                once:
+                                    true
+                            }
+                        );
+
+
+                        image.addEventListener(
+                            "error",
+                            resolve,
+                            {
+                                once:
+                                    true
+                            }
+                        );
+
+                    }
+                );
+
+            }
+        )
+    );
+
+}
+
+
+/* =====================================================
+   SAFE FILE NAME
+====================================================== */
+
+function createSafeFileName(
+    name
+) {
+
+    return String(
+        name ||
+        "THYNK_USER"
+    )
+
+        .trim()
+
+        .replace(
+            /[\\/:*?"<>|]/g,
+            ""
+        )
+
+        .replace(
+            /\s+/g,
+            "_"
+        )
+
+        .replace(
+            /_+/g,
+            "_"
+        )
+
+        .substring(
+            0,
+            80
+        );
+
+}
+
+
+/* =====================================================
+   SET LOADING STATE
+====================================================== */
+
+function setLoadingState(
+    title,
+    subtitle
+) {
+
+    setText(
+        "loadingTitle",
+        title
+    );
+
+
+    setText(
+        "loadingSubtitle",
+        subtitle
+    );
+
+}
+
+
+/* =====================================================
+   EXPORT CANVAS SAFELY
+====================================================== */
+
+function exportCanvas(
+    canvas
+) {
+
+    try {
+
+        return {
+
+            data:
+                canvas.toDataURL(
+                    "image/png"
+                ),
+
+            format:
+                "PNG"
+
+        };
+
+    }
+
+    catch (pngError) {
+
+        console.warn(
+            "PNG export failed:",
+            pngError
+        );
+
+
+        try {
+
+            return {
+
+                data:
+                    canvas.toDataURL(
+                        "image/jpeg",
+                        0.95
+                    ),
+
+                format:
+                    "JPEG"
+
+            };
+
+        }
+
+        catch (jpegError) {
+
+            console.warn(
+                "JPEG export failed:",
+                jpegError
+            );
+
+            return null;
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   DOWNLOAD CERTIFICATE
+====================================================== */
+
+async function downloadCertificate() {
+
+    const certificate =
+        document.getElementById(
+            "certificate"
+        );
+
+
+    const button =
+        document.getElementById(
+            "downloadButton"
+        );
+
+
+    const loading =
+        document.getElementById(
+            "pdfLoading"
+        );
+
+
+    if (
+        !certificate ||
+        !button
+    ) {
+
+        alert(
+            "ไม่พบองค์ประกอบใบประกาศนียบัตร"
+        );
+
+        return;
+
+    }
+
+
+    if (
+        button.disabled
+    ) {
+
+        return;
+
+    }
+
+
+    const originalText =
+        button.innerHTML;
+
+
+    button.disabled =
+        true;
+
+
+    button.innerHTML =
+        `
+        <span class="btn-icon">◌</span>
+        <span>กำลังสร้าง PDF...</span>
+        `;
+
+
+    if (loading) {
+
+        loading.classList.add(
+            "active"
+        );
+
+    }
+
+
+    try {
+
+
+        /* =================================================
+           CHECK LIBRARIES
+        ================================================== */
+
+        if (
+            typeof window.html2canvas !==
+            "function"
+        ) {
+
+            throw new Error(
+                "html2canvas ไม่ได้โหลด"
+            );
+
+        }
+
+
+        if (
+            !window.jspdf ||
+            typeof window.jspdf.jsPDF !==
+            "function"
+        ) {
+
+            throw new Error(
+                "jsPDF ไม่ได้โหลด"
+            );
+
+        }
+
+
+
+        /* =================================================
+           PREPARE
+        ================================================== */
+
+        setLoadingState(
+            "กำลังเตรียมใบประกาศนียบัตร",
+            "THYNK // PREPARING DOCUMENT"
+        );
+
+
+        await waitForFonts();
+
+
+        await waitForImages(
+            certificate
+        );
+
+
+        await new Promise(
+            resolve => {
+
+                requestAnimationFrame(
+                    () => {
+
+                        requestAnimationFrame(
+                            resolve
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+
+        /* =================================================
+           PDF MODE
+        ================================================== */
+
+        certificate.classList.add(
+            "pdf-mode"
+        );
+
+
+        await new Promise(
+            resolve => {
+
+                requestAnimationFrame(
+                    () => {
+
+                        requestAnimationFrame(
+                            resolve
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+        setLoadingState(
+            "กำลังสร้างใบประกาศนียบัตร",
+            "THYNK // RENDERING A4"
+        );
+
+
+
+        /* =================================================
+           HTML → CANVAS
+        ================================================== */
+
+        let canvas;
+
+
+        try {
+
+            canvas =
+                await window.html2canvas(
+                    certificate,
+                    {
+
+                        scale:
+                            2,
+
+                        useCORS:
+                            true,
+
+                        allowTaint:
+                            false,
+
+                        backgroundColor:
+                            "#ffffff",
+
+                        logging:
+                            false,
+
+                        imageTimeout:
+                            20000,
+
+                        removeContainer:
+                            true,
+
+                        scrollX:
+                            0,
+
+                        scrollY:
+                            0,
+
+                        width:
+                            certificate.scrollWidth,
+
+                        height:
+                            certificate.scrollHeight,
+
+                        windowWidth:
+                            certificate.scrollWidth,
+
+                        windowHeight:
+                            certificate.scrollHeight
+
+                    }
+                );
+
+        }
+
+        catch (renderError) {
+
+            console.warn(
+                "Primary PDF render failed:",
+                renderError
+            );
+
+
+            /*
+               SAFE MODE
+               ซ่อนรูปที่อาจทำให้ canvas ติด CORS
+            */
+
+            setLoadingState(
+                "กำลังสร้าง PDF สำรอง",
+                "THYNK // SAFE IMAGE MODE"
+            );
+
+
+            canvas =
+                await window.html2canvas(
+                    certificate,
+                    {
+
+                        scale:
+                            2,
+
+                        useCORS:
+                            false,
+
+                        allowTaint:
+                            false,
+
+                        backgroundColor:
+                            "#ffffff",
+
+                        logging:
+                            false,
+
+                        imageTimeout:
+                            5000,
+
+                        scrollX:
+                            0,
+
+                        scrollY:
+                            0,
+
+                        width:
+                            certificate.scrollWidth,
+
+                        height:
+                            certificate.scrollHeight,
+
+                        windowWidth:
+                            certificate.scrollWidth,
+
+                        windowHeight:
+                            certificate.scrollHeight,
+
+                        onclone:
+                            clonedDocument => {
+
+                                const clone =
+                                    clonedDocument.getElementById(
+                                        "certificate"
+                                    );
+
+
+                                if (!clone) {
+                                    return;
+                                }
+
+
+                                clone
+                                    .querySelectorAll("img")
+                                    .forEach(
+                                        img => {
+
+                                            img.style.visibility =
+                                                "hidden";
+
+                                        }
+                                    );
+
+
+                                clone
+                                    .querySelectorAll("*")
+                                    .forEach(
+                                        element => {
+
+                                            element.style.backgroundImage =
+                                                "none";
+
+                                        }
+                                    );
+
+                            }
+
+                    }
+                );
+
+        }
+
+
+
+        /* =================================================
+           RESTORE NORMAL MODE
+        ================================================== */
+
+        certificate.classList.remove(
+            "pdf-mode"
+        );
+
+
+        if (
+            !canvas ||
+            canvas.width <= 0 ||
+            canvas.height <= 0
+        ) {
+
+            throw new Error(
+                "ไม่สามารถสร้างภาพใบประกาศนียบัตรได้"
+            );
+
+        }
+
+
+
+        /* =================================================
+           EXPORT IMAGE
+        ================================================== */
+
+        const exported =
+            exportCanvas(
+                canvas
+            );
+
+
+        if (!exported) {
+
+            throw new Error(
+                "ไม่สามารถส่งออก Canvas เป็นภาพได้"
+            );
+
+        }
+
+
+
+        /* =================================================
+           CREATE PDF
+        ================================================== */
+
+        setLoadingState(
+            "กำลังสร้างไฟล์ PDF",
+            "THYNK // BUILDING A4 PDF"
+        );
+
+
+        const {
+            jsPDF
+        } =
+            window.jspdf;
+
+
+        const pdf =
+            new jsPDF(
+                {
+
+                    orientation:
+                        "portrait",
+
+                    unit:
+                        "mm",
+
+                    format:
+                        "a4",
+
+                    compress:
+                        true
+
+                }
+            );
+
+
+
+        /* =================================================
+           A4 IMAGE
+        ================================================== */
+
+        pdf.addImage(
+            exported.data,
+            exported.format,
+            0,
+            0,
+            210,
+            297,
+            undefined,
+            "FAST"
+        );
+
+
+
+        /* =================================================
+           PDF METADATA
+        ================================================== */
+
+        pdf.setProperties(
+            {
+
+                title:
+                    "THYNK Cognitive Achievement",
+
+                subject:
+                    "THYNK IQ Certificate",
+
+                author:
+                    "THYNK",
+
+                creator:
+                    "THYNK Cognitive Assessment System",
+
+                keywords:
+                    "THYNK, IQ, Certificate, Cognitive Assessment"
+
+            }
+        );
+
+
+
+        /* =================================================
+           FILE NAME
+        ================================================== */
+
+        const safeName =
+            createSafeFileName(
+                displayName
+            );
+
+
+        const fileName =
+            `THYNK-IQ-Certificate-${safeName}.pdf`;
+
+
+
+        /* =================================================
+           SAVE
+        ================================================== */
+
+        setLoadingState(
+            "กำลังบันทึกใบประกาศนียบัตร",
+            "THYNK // SAVING IQ CERTIFICATE"
+        );
+
+
+        pdf.save(
+            fileName
+        );
+
+
+
+        /* =================================================
+           SUCCESS
+        ================================================== */
+
+        button.innerHTML =
+            `
+            <span class="btn-icon">✓</span>
+            <span>ดาวน์โหลดสำเร็จ</span>
+            `;
+
+
+        setLoadingState(
+            "สร้างใบประกาศนียบัตรสำเร็จ",
+            "THYNK // A4 PDF READY"
+        );
+
+
+        setTimeout(
+            () => {
+
+                if (loading) {
+
+                    loading.classList.remove(
+                        "active"
+                    );
+
+                }
+
+
+                button.disabled =
+                    false;
+
+
+                button.innerHTML =
+                    originalText;
+
+            },
+            1800
+        );
+
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "THYNK IQ PDF generation failed:",
+            error
+        );
+
+
+        certificate.classList.remove(
+            "pdf-mode"
+        );
+
+
+        if (loading) {
+
+            loading.classList.remove(
+                "active"
+            );
+
+        }
+
+
+        button.disabled =
+            false;
+
+
+        button.innerHTML =
+            originalText;
+
+
+        alert(
+            "ไม่สามารถดาวน์โหลดใบประกาศนียบัตรได้\n\n" +
+            "สาเหตุ: " +
+            (
+                error &&
+                error.message
+                    ? error.message
+                    : error
+            ) +
+            "\n\n" +
+            "หากเปิดไฟล์ด้วย file:// " +
+            "แนะนำให้เปิดผ่าน http://localhost"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   GO HOME
+====================================================== */
+
+function goHome() {
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+/* =====================================================
+   PREVENT DOUBLE SUBMISSION
+====================================================== */
+
+window.addEventListener(
+    "beforeunload",
+    () => {
+
+        const certificate =
+            document.getElementById(
+                "certificate"
+            );
+
+
+        if (certificate) {
+
+            certificate.classList.remove(
+                "pdf-mode"
+            );
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

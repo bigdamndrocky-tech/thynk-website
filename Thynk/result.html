@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="th">
+    <link rel="icon" type="image/png" href="thynk.png">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THYNK // IQ ANALYSIS</title>
+
+<link rel="stylesheet" href="css/style1.css">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root{
+    --bg:#050505;
+    --panel:#0b0b0b;
+    --panel2:#101010;
+    --line:#252525;
+    --text:#f2f2f2;
+    --muted:#777;
+    --soft:#aaa;
+    --green:#00ff9c;
+    --red:#ff3b5c;
+    --gold:#d6b36a;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    background:
+        radial-gradient(circle at 50% -10%, #171717 0%, #050505 45%, #000 100%);
+    color:var(--text);
+    font-family:'Kanit',sans-serif;
+    min-height:100vh;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.035;
+    background-image:
+        linear-gradient(#fff 1px,transparent 1px),
+        linear-gradient(90deg,#fff 1px,transparent 1px);
+    background-size:40px 40px;
+}
+
+/* ================= HEADER ================= */
+
+.header{
+    height:76px;
+    border-bottom:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 40px;
+    position:relative;
+    z-index:2;
+    background:rgba(5,5,5,.92);
+}
+
+.logo{
+    font-family:'JetBrains Mono',monospace;
+    font-size:21px;
+    font-weight:700;
+    letter-spacing:4px;
+}
+
+.logo span{
+    color:var(--green);
+}
+
+.status{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:#777;
+    letter-spacing:1px;
+}
+
+.status-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 12px var(--green);
+}
+
+/* ================= MAIN ================= */
+
+.container{
+    width:min(1180px,92%);
+    margin:0 auto;
+    padding:60px 0 100px;
+}
+
+.kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--green);
+    letter-spacing:3px;
+    margin-bottom:12px;
+}
+
+h1{
+    font-size:48px;
+    line-height:1;
+    margin:0;
+    letter-spacing:1px;
+}
+
+.subtitle{
+    color:var(--muted);
+    margin-top:14px;
+    font-size:15px;
+}
+
+/* ================= HERO SCORE ================= */
+
+.score-hero{
+    margin-top:45px;
+    border:1px solid var(--line);
+    background:
+        linear-gradient(135deg,rgba(255,255,255,.025),rgba(255,255,255,.005));
+    min-height:310px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    position:relative;
+    overflow:hidden;
+}
+
+.score-hero::after{
+    content:"THYNK";
+    position:absolute;
+    right:-50px;
+    bottom:-75px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:170px;
+    font-weight:700;
+    color:rgba(255,255,255,.018);
+    pointer-events:none;
+}
+
+.score-left{
+    padding:45px;
+    border-right:1px solid var(--line);
+}
+
+.score-label{
+    font-family:'JetBrains Mono',monospace;
+    color:#777;
+    font-size:11px;
+    letter-spacing:3px;
+}
+
+.score{
+    font-family:'JetBrains Mono',monospace;
+    font-size:110px;
+    line-height:.95;
+    margin:15px 0;
+    font-weight:700;
+}
+
+.score span{
+    font-size:25px;
+    color:#555;
+}
+
+.score-bar{
+    width:100%;
+    height:4px;
+    background:#202020;
+    overflow:hidden;
+}
+
+.score-fill{
+    height:100%;
+    background:var(--green);
+    box-shadow:0 0 15px rgba(0,255,156,.4);
+    width:0%;
+    transition:1s;
+}
+
+.score-right{
+    padding:45px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.level-label{
+    color:#777;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:3px;
+}
+
+.level{
+    font-size:38px;
+    font-weight:600;
+    margin:8px 0;
+}
+
+.type{
+    color:var(--green);
+    font-family:'JetBrains Mono',monospace;
+    font-size:15px;
+    letter-spacing:2px;
+}
+
+.description{
+    margin-top:20px;
+    color:#888;
+    line-height:1.7;
+    max-width:430px;
+}
+
+/* ================= STAT ================= */
+
+.section{
+    margin-top:55px;
+}
+
+.section-title{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    letter-spacing:2px;
+    margin-bottom:20px;
+}
+
+.section-title::before{
+    content:"";
+    width:25px;
+    height:1px;
+    background:var(--green);
+}
+
+.domain-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:10px;
+}
+
+.domain{
+    border:1px solid var(--line);
+    background:var(--panel);
+    padding:20px;
+}
+
+.domain-name{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    color:#777;
+    letter-spacing:1px;
+}
+
+.domain-score{
+    font-family:'JetBrains Mono',monospace;
+    font-size:32px;
+    margin:8px 0;
+}
+
+.domain-bar{
+    height:3px;
+    background:#202020;
+}
+
+.domain-fill{
+    height:100%;
+    background:#aaa;
+}
+
+/* ================= QUICK STATS ================= */
+
+.quick-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+
+.quick{
+    border:1px solid var(--line);
+    padding:25px;
+    background:var(--panel);
+}
+
+.quick-label{
+    color:#666;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    letter-spacing:1px;
+}
+
+.quick-value{
+    font-family:'JetBrains Mono',monospace;
+    font-size:27px;
+    margin-top:8px;
+}
+
+.correct{
+    color:var(--green);
+}
+
+.wrong{
+    color:var(--red);
+}
+
+/* ================= PROFILE ================= */
+
+.profile{
+    border:1px solid var(--line);
+    padding:35px;
+    background:
+        linear-gradient(120deg,#0d0d0d,#080808);
+    display:grid;
+    grid-template-columns:180px 1fr;
+    gap:35px;
+}
+
+.profile-symbol{
+    width:150px;
+    height:150px;
+    border:1px solid #333;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'JetBrains Mono',monospace;
+    font-size:42px;
+    color:var(--green);
+    position:relative;
+}
+
+.profile-symbol::before,
+.profile-symbol::after{
+    content:"";
+    position:absolute;
+    width:12px;
+    height:12px;
+    border-color:var(--green);
+    border-style:solid;
+}
+
+.profile-symbol::before{
+    top:-1px;
+    left:-1px;
+    border-width:1px 0 0 1px;
+}
+
+.profile-symbol::after{
+    right:-1px;
+    bottom:-1px;
+    border-width:0 1px 1px 0;
+}
+
+.profile h2{
+    margin:0;
+    font-size:30px;
+}
+
+.profile p{
+    color:#888;
+    line-height:1.8;
+}
+
+/* ================= ANSWERS ================= */
+
+.review-list{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.review{
+    border:1px solid var(--line);
+    background:#090909;
+}
+
+.review-head{
+    padding:18px 20px;
+    display:grid;
+    grid-template-columns:65px 1fr 90px;
+    align-items:center;
+    gap:15px;
+    cursor:pointer;
+}
+
+.q-number{
+    font-family:'JetBrains Mono',monospace;
+    color:#666;
+    font-size:11px;
+}
+
+.q-title{
+    font-size:14px;
+}
+
+.result-badge{
+    text-align:right;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+}
+
+.result-badge.correct{
+    color:var(--green);
+}
+
+.result-badge.wrong{
+    color:var(--red);
+}
+
+.review-body{
+    display:none;
+    border-top:1px solid var(--line);
+    padding:25px;
+    background:#0d0d0d;
+}
+
+.review.open .review-body{
+    display:block;
+}
+
+.question-text{
+    font-size:17px;
+    margin-bottom:20px;
+}
+
+.answer-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+}
+
+.answer-box{
+    border:1px solid #222;
+    padding:12px 15px;
+    font-size:13px;
+}
+
+.answer-box.selected{
+    border-color:#555;
+}
+
+.answer-box.right{
+    border-color:var(--green);
+    color:var(--green);
+}
+
+.answer-box.wrong-selected{
+    border-color:var(--red);
+    color:var(--red);
+}
+
+.explanation{
+    margin-top:20px;
+    border-left:2px solid var(--green);
+    padding:12px 15px;
+    color:#999;
+    line-height:1.7;
+}
+
+/* ================= IDENTITY ================= */
+
+.identity{
+    border:1px solid var(--line);
+    background:
+        linear-gradient(135deg,#0e0e0e,#070707);
+    padding:40px;
+}
+
+.identity-intro{
+    color:#777;
+    line-height:1.7;
+    margin-bottom:30px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.field.full{
+    grid-column:1/-1;
+}
+
+.field label{
+    font-family:'JetBrains Mono',monospace;
+    color:#777;
+    font-size:10px;
+    letter-spacing:1px;
+}
+
+.field input{
+    background:#050505;
+    border:1px solid #292929;
+    color:white;
+    padding:14px;
+    font-family:'Kanit',sans-serif;
+    outline:none;
+    font-size:14px;
+    transition:.2s;
+}
+
+.field input:focus{
+    border-color:#777;
+    box-shadow:0 0 0 1px #222;
+}
+
+.certificate-button{
+    width:100%;
+    margin-top:30px;
+    padding:19px;
+    background:#f2f2f2;
+    color:#050505;
+    border:0;
+    font-family:'JetBrains Mono',monospace;
+    font-weight:700;
+    letter-spacing:2px;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.certificate-button:hover{
+    background:var(--green);
+    box-shadow:0 0 30px rgba(0,255,156,.18);
+}
+
+.error{
+    display:none;
+    color:var(--red);
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    margin-top:15px;
+}
+
+/* ================= FOOTER ================= */
+
+.footer{
+    text-align:center;
+    color:#444;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    letter-spacing:2px;
+    margin-top:70px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:800px){
+
+    .header{
+        padding:0 20px;
+    }
+
+    .container{
+        width:94%;
+        padding-top:35px;
+    }
+
+    h1{
+        font-size:34px;
+    }
+
+    .score-hero{
+        grid-template-columns:1fr;
+    }
+
+    .score-left{
+        border-right:0;
+        border-bottom:1px solid var(--line);
+    }
+
+    .score{
+        font-size:80px;
+    }
+
+    .domain-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .quick-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .profile{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .field.full{
+        grid-column:auto;
+    }
+
+    .review-head{
+        grid-template-columns:50px 1fr 70px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo">THYNK <span>//</span> IQ</div>
+
+    <div class="status">
+        <div class="status-dot"></div>
+        ASSESSMENT COMPLETE
+    </div>
+</header>
+
+<main class="container">
+
+    <div class="kicker">THYNK // NEURAL ANALYSIS</div>
+
+    <h1>YOUR THYNK PROFILE</h1>
+
+    <div class="subtitle">
+        การวิเคราะห์ผลจากการทดสอบความสามารถด้านการคิดทั้ง 5 ด้าน
+    </div>
+
+
+    <!-- SCORE -->
+
+    <section class="score-hero">
+
+        <div class="score-left">
+
+            <div class="score-label">
+                THYNK SCORE
+            </div>
+
+            <div class="score">
+                <span id="score">--</span>
+                <span>/100</span>
+            </div>
+
+            <div class="score-bar">
+                <div class="score-fill" id="scoreFill"></div>
+            </div>
+
+        </div>
+
+
+        <div class="score-right">
+
+            <div class="level-label">
+                COGNITIVE LEVEL
+            </div>
+
+            <div class="level" id="level">
+                ANALYZING...
+            </div>
+
+            <div class="type" id="neuralType">
+                //
+            </div>
+
+            <div class="description" id="levelDescription">
+                กำลังวิเคราะห์รูปแบบการคิดของคุณ...
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- DOMAINS -->
+
+    <section class="section">
+
+        <div class="section-title">
+            COGNITIVE MATRIX
+        </div>
+
+        <div class="domain-grid">
+
+            <div class="domain">
+                <div class="domain-name">SEQUENCE</div>
+                <div class="domain-score" id="sequenceScore">--</div>
+                <div class="domain-bar">
+                    <div class="domain-fill" id="sequenceBar"></div>
+                </div>
+            </div>
+
+            <div class="domain">
+                <div class="domain-name">LOGIC</div>
+                <div class="domain-score" id="logicScore">--</div>
+                <div class="domain-bar">
+                    <div class="domain-fill" id="logicBar"></div>
+                </div>
+            </div>
+
+            <div class="domain">
+                <div class="domain-name">NUMBER</div>
+                <div class="domain-score" id="numberScore">--</div>
+                <div class="domain-bar">
+                    <div class="domain-fill" id="numberBar"></div>
+                </div>
+            </div>
+
+            <div class="domain">
+                <div class="domain-name">SPACE</div>
+                <div class="domain-score" id="spaceScore">--</div>
+                <div class="domain-bar">
+                    <div class="domain-fill" id="spaceBar"></div>
+                </div>
+            </div>
+
+            <div class="domain">
+                <div class="domain-name">CORE</div>
+                <div class="domain-score" id="coreScore">--</div>
+                <div class="domain-bar">
+                    <div class="domain-fill" id="coreBar"></div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- QUICK STATS -->
+
+    <section class="section">
+
+        <div class="section-title">
+            PERFORMANCE
+        </div>
+
+        <div class="quick-grid">
+
+            <div class="quick">
+                <div class="quick-label">CORRECT</div>
+                <div class="quick-value correct" id="correctCount">--</div>
+            </div>
+
+            <div class="quick">
+                <div class="quick-label">WRONG</div>
+                <div class="quick-value wrong" id="wrongCount">--</div>
+            </div>
+
+            <div class="quick">
+                <div class="quick-label">ACCURACY</div>
+                <div class="quick-value" id="accuracy">--%</div>
+            </div>
+
+            <div class="quick">
+                <div class="quick-label">MAX COMBO</div>
+                <div class="quick-value" id="maxCombo">--</div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- PROFILE -->
+
+    <section class="section">
+
+        <div class="section-title">
+            NEURAL PROFILE
+        </div>
+
+        <div class="profile">
+
+            <div class="profile-symbol" id="profileSymbol">
+                ◇
+            </div>
+
+            <div>
+                <h2 id="profileTitle">
+                    ANALYZING...
+                </h2>
+
+                <p id="profileText">
+                    กำลังประมวลผลรูปแบบการตอบของคุณ
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ANSWER REVIEW -->
+
+    <section class="section">
+
+        <div class="section-title">
+            ANSWER REVIEW // เฉลยข้อสอบ
+        </div>
+
+        <div class="review-list" id="reviewList"></div>
+
+    </section>
+
+
+    <!-- IDENTITY -->
+
+    <section class="section">
+
+        <div class="section-title">
+            CERTIFICATE IDENTITY
+        </div>
+
+        <div class="identity">
+
+            <div class="identity-intro">
+                กรอกข้อมูลด้านล่างเพื่อสร้างใบเกียรติบัตร THYNK
+                ชื่อที่กรอกจะถูกนำไปแสดงบนใบเกียรติบัตร
+            </div>
+
+            <div class="form-grid">
+
+                <div class="field">
+                    <label>FIRST NAME / ชื่อ</label>
+                    <input
+                        type="text"
+                        id="firstName"
+                        placeholder="ชื่อของคุณ"
+                        maxlength="40"
+                    >
+                </div>
+
+                <div class="field">
+                    <label>LAST NAME / นามสกุล</label>
+                    <input
+                        type="text"
+                        id="lastName"
+                        placeholder="นามสกุลของคุณ"
+                        maxlength="40"
+                    >
+                </div>
+
+                <div class="field full">
+                    <label>DISPLAY NAME / ชื่อที่ต้องการแสดงบนใบเกียรติบัตร</label>
+                    <input
+                        type="text"
+                        id="displayName"
+                        placeholder="เว้นว่างได้ ระบบจะใช้ชื่อและนามสกุล"
+                        maxlength="80"
+                    >
+                </div>
+
+                <div class="field">
+                    <label>COUNTRY / ประเทศ</label>
+                    <input
+                        type="text"
+                        id="country"
+                        placeholder="Thailand"
+                        maxlength="40"
+                    >
+                </div>
+
+                <div class="field">
+                    <label>ORGANIZATION / SCHOOL / องค์กรหรือโรงเรียน</label>
+                    <input
+                        type="text"
+                        id="organization"
+                        placeholder="ไม่บังคับ"
+                        maxlength="80"
+                    >
+                </div>
+
+            </div>
+
+            <div class="error" id="formError">
+                PLEASE ENTER YOUR FIRST NAME AND LAST NAME.
+            </div>
+
+            <button
+                class="certificate-button"
+                onclick="generateCertificate()"
+            >
+                ✦ RECEIVE MY CERTIFICATE
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <div class="footer">
+        THYNK // NEURAL ASSESSMENT SYSTEM
+    </div>
+
+</main>
+
+
+<script>
+
+/* =====================================================
+   LOAD RESULT
+===================================================== */
+
+const raw = localStorage.getItem("thynkIQResult");
+
+if(!raw){
+
+    document.body.innerHTML = `
+        <div style="
+            min-height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            background:#050505;
+            color:white;
+            font-family:monospace;
+            text-align:center;
+            padding:30px;
+        ">
+            <div>
+                <div style="
+                    color:#ff3b5c;
+                    font-size:12px;
+                    letter-spacing:3px;
+                    margin-bottom:15px;
+                ">
+                    ERROR // NO ASSESSMENT DATA
+                </div>
+
+                <div style="color:#777;">
+                    ไม่พบข้อมูลผลการทดสอบ
+                </div>
+
+                <button
+                    onclick="location.href='index.html'"
+                    style="
+                        margin-top:25px;
+                        padding:12px 25px;
+                        background:white;
+                        border:0;
+                        cursor:pointer;
+                    "
+                >
+                    BACK TO THYNK
+                </button>
+            </div>
+        </div>
+    `;
+
+    throw new Error("No THYNK result data.");
+
+}
+
+const result = JSON.parse(raw);
+
+
+/* =====================================================
+   BASIC DATA
+===================================================== */
+
+const score = Number(result.score || 0);
+
+const correct = Number(result.correct || 0);
+
+const total = Number(result.total || 100);
+
+const accuracy = Number(
+    result.accuracy ??
+    ((correct / total) * 100)
+);
+
+const maxCombo = Number(
+    result.maxCombo ??
+    result.combo ??
+    0
+);
+
+
+/* =====================================================
+   LEVEL SYSTEM
+===================================================== */
+
+function getLevel(score){
+
+    if(score >= 95){
+        return {
+            name:"NEURAL MASTER",
+            type:"THE ARCHITECT",
+            symbol:"✦",
+            description:
+                "คุณสามารถรับมือกับโจทย์หลายรูปแบบได้อย่างแม่นยำและต่อเนื่อง แสดงให้เห็นถึงความสามารถในการเชื่อมโยงข้อมูลและตัดสินใจภายใต้แรงกดดัน",
+            profile:
+                "รูปแบบการตอบของคุณมีความสม่ำเสมอสูง จุดเด่นอยู่ที่การมองภาพรวม การจับความสัมพันธ์ และการเลือกคำตอบอย่างรวดเร็ว"
+        };
+    }
+
+    if(score >= 85){
+        return {
+            name:"STRATEGIST",
+            type:"THE ANALYST",
+            symbol:"◇",
+            description:
+                "คุณมีความสามารถในการวิเคราะห์โครงสร้างของปัญหาและค้นหาวิธีแก้ที่มีประสิทธิภาพ โดยเฉพาะเมื่อโจทย์มีข้อมูลหลายชั้น",
+            profile:
+                "คุณมีแนวโน้มที่จะวิเคราะห์สถานการณ์ก่อนตัดสินใจ สามารถแยกข้อมูลสำคัญออกจากข้อมูลรบกวนได้ดี"
+        };
+    }
+
+    if(score >= 70){
+        return {
+            name:"ANALYST",
+            type:"THE PATTERN SEEKER",
+            symbol:"△",
+            description:
+                "คุณมีพื้นฐานการคิดเชิงเหตุผลที่ดี สามารถค้นหารูปแบบและความสัมพันธ์ของข้อมูลได้ค่อนข้างรวดเร็ว",
+            profile:
+                "จุดเด่นของคุณคือการสังเกตความสัมพันธ์และสร้างข้อสรุปจากข้อมูลที่มี"
+        };
+    }
+
+    if(score >= 55){
+        return {
+            name:"PROBLEM SOLVER",
+            type:"THE OBSERVER",
+            symbol:"○",
+            description:
+                "คุณสามารถแก้ปัญหาหลากหลายรูปแบบได้ แต่ความแม่นยำอาจเปลี่ยนไปเมื่อโจทย์มีความซับซ้อนหรือมีเวลาจำกัด",
+            profile:
+                "คุณเรียนรู้จากข้อมูลและสถานการณ์ได้ดี และมีแนวโน้มพัฒนาความสามารถได้อย่างรวดเร็วเมื่อได้ฝึกฝน"
+        };
+    }
+
+    if(score >= 40){
+        return {
+            name:"THINKER",
+            type:"THE EXPLORER",
+            symbol:"▽",
+            description:
+                "คุณมีแนวทางการคิดที่หลากหลาย แต่ยังสามารถพัฒนาความเร็วและความแม่นยำในการประมวลผลได้อีกมาก",
+            profile:
+                "รูปแบบการตอบของคุณแสดงให้เห็นถึงการทดลองหลายแนวทางก่อนตัดสินใจ"
+        };
+    }
+
+    return {
+        name:"COGNITIVE INITIATE",
+        type:"THE BEGINNER",
+        symbol:"·",
+        description:
+            "นี่คือจุดเริ่มต้นของการสำรวจรูปแบบการคิดของคุณ ผลลัพธ์สามารถใช้เป็นแนวทางในการฝึกทักษะการคิดต่อไป",
+        profile:
+            "คุณกำลังเริ่มต้นสำรวจรูปแบบการคิดของตัวเอง การฝึกโจทย์อย่างสม่ำเสมอสามารถช่วยเพิ่มความคล่องตัวในการแก้ปัญหาได้"
+    };
+
+}
+
+
+const level = getLevel(score);
+
+
+/* =====================================================
+   UPDATE HERO
+===================================================== */
+
+document.getElementById("score").textContent =
+    Math.round(score);
+
+document.getElementById("level").textContent =
+    level.name;
+
+document.getElementById("neuralType").textContent =
+    level.type;
+
+document.getElementById("levelDescription").textContent =
+    level.description;
+
+document.getElementById("profileTitle").textContent =
+    level.type;
+
+document.getElementById("profileText").textContent =
+    level.profile;
+
+document.getElementById("profileSymbol").textContent =
+    level.symbol;
+
+document.getElementById("scoreFill").style.width =
+    Math.max(0, Math.min(100, score)) + "%";
+
+
+/* =====================================================
+   PERFORMANCE
+===================================================== */
+
+document.getElementById("correctCount").textContent =
+    correct;
+
+document.getElementById("wrongCount").textContent =
+    Math.max(0, total - correct);
+
+document.getElementById("accuracy").textContent =
+    Math.round(accuracy) + "%";
+
+document.getElementById("maxCombo").textContent =
+    maxCombo;
+
+
+/* =====================================================
+   DOMAIN SCORES
+===================================================== */
+
+const domains = result.stageStats || {};
+
+function getDomain(key){
+
+    const data = domains[key];
+
+    if(!data){
+        return 0;
+    }
+
+    if(data.accuracy !== undefined){
+        return Math.round(data.accuracy);
+    }
+
+    if(data.total){
+        return Math.round(
+            (data.correct / data.total) * 100
+        );
+    }
+
+    return 0;
+}
+
+
+const domainValues = {
+
+    sequence:getDomain("sequence"),
+
+    logic:getDomain("logic"),
+
+    number:getDomain("number"),
+
+    space:getDomain("space"),
+
+    core:getDomain("core")
+
+};
+
+
+function setDomain(name,value){
+
+    const scoreEl =
+        document.getElementById(name+"Score");
+
+    const barEl =
+        document.getElementById(name+"Bar");
+
+    if(scoreEl){
+        scoreEl.textContent = value;
+    }
+
+    if(barEl){
+        barEl.style.width =
+            value + "%";
+    }
+
+}
+
+
+setDomain("sequence",domainValues.sequence);
+setDomain("logic",domainValues.logic);
+setDomain("number",domainValues.number);
+setDomain("space",domainValues.space);
+setDomain("core",domainValues.core);
+
+
+/* =====================================================
+   ANSWER REVIEW
+===================================================== */
+
+const reviewList =
+    document.getElementById("reviewList");
+
+const answers =
+    Array.isArray(result.answers)
+        ? result.answers
+        : [];
+
+
+if(answers.length === 0){
+
+    reviewList.innerHTML = `
+        <div style="
+            border:1px solid #222;
+            padding:30px;
+            color:#666;
+            font-family:monospace;
+            text-align:center;
+        ">
+            ANSWER REVIEW DATA NOT FOUND
+        </div>
+    `;
+
+}else{
+
+    answers.forEach((item,index)=>{
+
+        const review =
+            document.createElement("div");
+
+        review.className =
+            "review";
+
+
+        const isCorrect =
+            item.correct === true;
+
+
+        const stage =
+            item.stage ||
+            "THYNK";
+
+
+        const question =
+            item.question ||
+            item.title ||
+            `QUESTION ${index + 1}`;
+
+
+        const options =
+            Array.isArray(item.options)
+                ? item.options
+                : [];
+
+
+        const selected =
+            item.selected;
+
+
+        const correctAnswer =
+            item.correctAnswer;
+
+
+        review.innerHTML = `
+
+            <div class="review-head">
+
+                <div class="q-number">
+                    Q${String(index + 1).padStart(3,"0")}
+                </div>
+
+                <div class="q-title">
+                    ${escapeHTML(question)}
+                </div>
+
+                <div class="
+                    result-badge
+                    ${isCorrect ? "correct" : "wrong"}
+                ">
+                    ${isCorrect ? "CORRECT" : "WRONG"}
+                </div>
+
+            </div>
+
+
+            <div class="review-body">
+
+                <div style="
+                    font-family:monospace;
+                    color:#555;
+                    font-size:10px;
+                    margin-bottom:10px;
+                ">
+                    ${escapeHTML(stage)}
+                    ${item.difficulty ? " // " + escapeHTML(item.difficulty) : ""}
+                </div>
+
+
+                <div class="question-text">
+                    ${escapeHTML(
+                        item.questionText ||
+                        item.prompt ||
+                        question
+                    )}
+                </div>
+
+
+                <div class="answer-row">
+
+                    ${options.map((option,i)=>{
+
+                        let cls = "answer-box";
+
+                        if(i === correctAnswer){
+                            cls += " right";
+                        }
+
+                        if(
+                            i === selected &&
+                            i !== correctAnswer
+                        ){
+                            cls += " wrong-selected";
+                        }
+
+                        if(
+                            i === selected &&
+                            i === correctAnswer
+                        ){
+                            cls += " selected";
+                        }
+
+                        return `
+                            <div class="${cls}">
+                                ${String.fromCharCode(65+i)}
+                                .
+                                ${escapeHTML(String(option))}
+                            </div>
+                        `;
+
+                    }).join("")}
+
+                </div>
+
+
+                <div class="explanation">
+
+                    <strong style="color:#ddd;">
+                        EXPLANATION
+                    </strong>
+
+                    <br>
+
+                    ${escapeHTML(
+                        item.explanation ||
+                        "ไม่มีคำอธิบายสำหรับข้อนี้"
+                    )}
+
+                </div>
+
+            </div>
+        `;
+
+
+        const head =
+            review.querySelector(".review-head");
+
+
+        head.addEventListener("click",()=>{
+
+            review.classList.toggle("open");
+
+        });
+
+
+        reviewList.appendChild(review);
+
+    });
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value){
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =====================================================
+   CERTIFICATE
+===================================================== */
+
+function generateCertificate(){
+
+    const firstName =
+        document.getElementById("firstName")
+            .value.trim();
+
+    const lastName =
+        document.getElementById("lastName")
+            .value.trim();
+
+    const displayName =
+        document.getElementById("displayName")
+            .value.trim();
+
+    const country =
+        document.getElementById("country")
+            .value.trim();
+
+    const organization =
+        document.getElementById("organization")
+            .value.trim();
+
+
+    const error =
+        document.getElementById("formError");
+
+
+    if(!firstName || !lastName){
+
+        error.style.display = "block";
+
+        document.getElementById("firstName").focus();
+
+        return;
+
+    }
+
+
+    error.style.display = "none";
+
+
+    const finalName =
+        displayName ||
+        `${firstName} ${lastName}`;
+
+
+    const certificateData = {
+
+        firstName,
+        lastName,
+        displayName:finalName,
+        country,
+        organization,
+
+        score:Math.round(score),
+
+        correct,
+
+        total,
+
+        accuracy:Math.round(accuracy),
+
+        maxCombo,
+
+        level:level.name,
+
+        neuralType:level.type,
+
+        profileSymbol:level.symbol,
+
+        assessmentId:
+            result.assessmentId ||
+            createAssessmentID(),
+
+        completedAt:
+            result.completedAt ||
+            new Date().toISOString()
+
+    };
+
+
+    localStorage.setItem(
+        "thynkCertificate",
+        JSON.stringify(certificateData)
+    );
+
+
+    window.location.href =
+        "certificate.html";
+
+}
+
+
+/* =====================================================
+   ASSESSMENT ID
+===================================================== */
+
+function createAssessmentID(){
+
+    const chars =
+        "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+    let id = "THY-";
+
+    for(let i=0;i<8;i++){
+
+        id +=
+            chars[
+                Math.floor(
+                    Math.random()*chars.length
+                )
+            ];
+
+    }
+
+    return id;
+
+}
+
+</script>
+
+</body>
+</html>

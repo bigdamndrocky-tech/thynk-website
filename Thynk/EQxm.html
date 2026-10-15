@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THYNK — EQ TRIAL</title>
+<link rel="icon" type="image/png" href="thynk.png">
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+
+body{ font-family:'Kanit',sans-serif; background:#050505; color:#fff; min-height:100vh; }
+
+.exam{ width:100%; min-height:100vh; display:flex; flex-direction:column; }
+
+/* HEADER */
+header{ height:80px; border-bottom:1px solid #242424; display:flex; align-items:center; justify-content:space-between; padding:0 5%; background:#080808; }
+.logo{ font-family:'JetBrains Mono',monospace; font-size:24px; font-weight:600; letter-spacing:4px; }
+.logo span{ color:#888; font-size:13px; letter-spacing:2px; }
+.status{ font-family:'JetBrains Mono',monospace; font-size:11px; color:#999; display:flex; align-items:center; }
+.status-dot{ width:7px; height:7px; display:inline-block; background:#fff; border-radius:50%; margin-right:8px; animation:pulse 1.5s infinite; }
+@keyframes pulse{ 0%,100%{ opacity:.35; } 50%{ opacity:1; } }
+
+/* MAIN */
+main{ width:min(1000px,92%); margin:auto; padding:40px 0 70px; }
+
+/* TOP */
+.top{ display:grid; grid-template-columns:1fr auto; gap:30px; margin-bottom:25px; }
+.domain-label{ font-family:'JetBrains Mono',monospace; color:#777; font-size:11px; letter-spacing:2px; margin-bottom:8px; }
+.domain{ font-size:30px; font-weight:500; transition:.2s; }
+.question-counter{ text-align:right; font-family:'JetBrains Mono',monospace; }
+.question-counter small{ display:block; color:#666; font-size:10px; }
+.question-counter strong{ font-size:28px; }
+.question-counter span{ color:#555; }
+
+/* PROGRESS */
+.progress-wrap{ margin-bottom:35px; }
+.progress-info{ display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:10px; color:#777; margin-bottom:8px; }
+.progress{ width:100%; height:4px; background:#1c1c1c; overflow:hidden; }
+.progress-bar{ width:0%; height:100%; background:#fff; transition:.3s; }
+
+/* CARD */
+.card{ border:1px solid #292929; background:#0b0b0b; padding:45px; transition:border-color .3s; }
+.card:hover{ border-color:#383838; }
+.type{ font-family:'JetBrains Mono',monospace; font-size:10px; color:#666; letter-spacing:2px; margin-bottom:20px; }
+.question{ font-size:30px; line-height:1.5; font-weight:400; margin-bottom:40px; min-height:90px; }
+
+/* ANSWERS */
+.answers{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.answer{ border:1px solid #292929; background:#111; min-height:75px; padding:15px 20px; color:#ddd; cursor:pointer; display:flex; align-items:center; gap:15px; transition:.2s; }
+.answer:hover{ border-color:#666; background:#171717; transform:translateY(-1px); }
+.answer.selected{ border-color:#fff; background:#fff; color:#000; }
+.answer-number{ width:28px; height:28px; border:1px solid #444; display:flex; justify-content:center; align-items:center; font-family:'JetBrains Mono',monospace; font-size:12px; flex-shrink:0; }
+.answer.selected .answer-number{ border-color:#000; }
+
+/* FOOTER */
+.card-footer{ margin-top:35px; display:flex; justify-content:space-between; align-items:center; }
+.timer{ font-family:'JetBrains Mono',monospace; color:#777; font-size:12px; }
+.timer strong{ color:#fff; display:inline-block; min-width:25px; text-align:center; }
+.timer.warning strong{ text-decoration:underline; }
+button{ border:1px solid #fff; background:#fff; color:#000; padding:14px 25px; font-family:'Kanit',sans-serif; font-size:14px; cursor:pointer; transition:.2s; }
+button:hover:not(:disabled){ background:#ddd; transform:translateY(-1px); }
+button:disabled{ opacity:.25; cursor:not-allowed; }
+
+/* INTRO */
+.overlay{ position:fixed; inset:0; background:#050505; z-index:100; display:flex; justify-content:center; align-items:center; padding:25px; }
+.intro{ width:min(650px,100%); max-height:90vh; overflow:auto; border:1px solid #292929; padding:55px; background:#090909; text-align:center; }
+.intro-label{ font-family:'JetBrains Mono',monospace; color:#777; font-size:11px; letter-spacing:3px; margin-bottom:20px; }
+.intro h1{ font-size:55px; letter-spacing:5px; margin-bottom:15px; }
+.intro p{ color:#888; line-height:2; margin-bottom:30px; }
+.domains{ border-top:1px solid #222; border-bottom:1px solid #222; padding:20px 0; margin-bottom:30px; text-align:left; }
+.domain-row{ display:flex; justify-content:space-between; padding:7px 0; font-family:'JetBrains Mono',monospace; font-size:11px; color:#aaa; }
+.domain-row span{ color:#555; }
+.warning-note{ border:1px solid #222; padding:15px; margin-bottom:25px; color:#666; font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.8; }
+
+/* COMPLETION */
+.finishing{ position:fixed; inset:0; background:#050505; z-index:500; display:none; justify-content:center; align-items:center; text-align:center; }
+.finishing.active{ display:flex; }
+.finishing-box{ width:min(500px,90%); border:1px solid #292929; background:#090909; padding:50px; }
+.finishing-label{ font-family:'JetBrains Mono',monospace; color:#666; font-size:10px; letter-spacing:3px; margin-bottom:20px; }
+.finishing h2{ font-size:32px; margin-bottom:15px; }
+.finishing p{ color:#777; line-height:1.8; }
+.loader{ width:100%; height:2px; background:#222; margin-top:30px; overflow:hidden; }
+.loader span{ display:block; width:40%; height:100%; background:#fff; animation:loading 1s infinite; }
+@keyframes loading{ 0%{ transform:translateX(-120%); } 100%{ transform:translateX(350%); } }
+
+/* MOBILE */
+@media(max-width:700px){
+    header{ height:65px; padding:0 20px; }
+    .logo{ font-size:20px; }
+    .status{ display:none; }
+    main{ width:94%; padding-top:25px; }
+    .top{ grid-template-columns:1fr auto; }
+    .domain{ font-size:22px; }
+    .question-counter strong{ font-size:22px; }
+    .card{ padding:25px 20px; }
+    .question{ font-size:22px; min-height:auto; }
+    .answers{ grid-template-columns:1fr; }
+    .intro{ padding:35px 22px; }
+    .intro h1{ font-size:40px; }
+    .card-footer{ gap:15px; }
+    .card-footer button{ padding:12px 15px; font-size:12px; }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="exam">
+
+<header>
+    <div class="logo">THYNK <span>// EQ</span></div>
+    <div class="status"><span class="status-dot"></span>EMOTIONAL ENGINE ACTIVE</div>
+</header>
+
+<main>
+
+    <div class="top">
+        <div>
+            <div class="domain-label">CURRENT DOMAIN</div>
+            <div class="domain" id="domainName">SELF-AWARENESS</div>
+        </div>
+        <div class="question-counter">
+            <small>QUESTION</small>
+            <strong id="questionNumber">01</strong>
+            <span>/ 100</span>
+        </div>
+    </div>
+
+    <div class="progress-wrap">
+        <div class="progress-info">
+            <span id="domainProgress">DOMAIN 01 / 05</span>
+            <span id="percent">0%</span>
+        </div>
+        <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+    </div>
+
+    <section class="card">
+        <div class="type" id="questionType">SELF-AWARENESS</div>
+        <div class="question" id="question">กำลังโหลดคำถาม...</div>
+        <div class="answers" id="answers"></div>
+        <div class="card-footer">
+            <div class="timer" id="timerBox">TIME <strong id="timer">30</strong> s</div>
+            <button id="nextButton" disabled>CONFIRM RESPONSE →</button>
+        </div>
+    </section>
+
+</main>
+
+</div>
+
+<div class="overlay" id="introOverlay">
+    <div class="intro">
+        <div class="intro-label">THYNK // EMOTIONAL ENGINE</div>
+        <h1>EQ TRIAL</h1>
+        <p>100 QUESTIONS.<br>5 EMOTIONAL DOMAINS.<br>ONE INNER TRIAL.</p>
+
+        <div class="domains">
+            <div class="domain-row">SELF-AWARENESS<span>01 — 20</span></div>
+            <div class="domain-row">EMOTIONAL CONTROL<span>21 — 40</span></div>
+            <div class="domain-row">EMPATHY<span>41 — 60</span></div>
+            <div class="domain-row">SOCIAL INTELLIGENCE<span>61 — 80</span></div>
+            <div class="domain-row">RESILIENCE<span>81 — 100</span></div>
+        </div>
+
+        <div class="warning-note">
+            TIME LIMIT : 30 SECONDS / QUESTION<br>
+            TOTAL : 100 QUESTIONS<br>
+            NO RIGHT OR WRONG ANSWERS
+        </div>
+
+        <p>ไม่มีคำตอบที่ถูกหรือผิด<br>เลือกคำตอบที่ตรงกับตัวคุณมากที่สุด<br>ตอบตามความเป็นจริง ไม่ใช่ตามที่อยากให้เป็น</p>
+
+        <button id="startButton">BEGIN EQ TRIAL →</button>
+    </div>
+</div>
+
+<div class="finishing" id="finishingScreen">
+    <div class="finishing-box">
+        <div class="finishing-label">THYNK // ANALYSIS ENGINE</div>
+        <h2>ANALYZING YOUR EQ</h2>
+        <p>กำลังประมวลผลคำตอบทั้ง 100 ข้อ<br>และสร้าง Emotional Profile ของคุณ</p>
+        <div class="loader"><span></span></div>
+    </div>
+</div>
+
+
+<script>
+/* =========================================================
+   THYNK // EQ TRIAL ENGINE
+   VERSION 4.0
+   100 QUESTIONS • 5 DOMAINS × 20 • NO RIGHT OR WRONG ANSWERS
+   ========================================================= */
+
+const OPTIONS = [
+    "แทบไม่เป็นแบบนี้เลย",
+    "เป็นบางครั้ง",
+    "เป็นบ่อยครั้ง",
+    "เป็นเกือบทุกครั้ง"
+];
+
+const TOTAL_QUESTIONS = 100;
+const QUESTIONS_PER_DOMAIN = 20;
+const MAX_ANSWER_SCORE = 4;
+const TIME_PER_QUESTION = 30;
+
+const RESULT_KEY = "thynkEQResult";
+const RESULT_BACKUP_KEY = "THYNK_EQ_RESULT";
+
+const questions = [
+{domain:"SELF-AWARENESS",type:"EMOTIONAL SELF-AWARENESS",questions:["เมื่อคุณรู้สึกไม่สบายใจ คุณมักจะรู้ว่าอะไรเป็นสาเหตุของความรู้สึกนั้น","คุณสามารถบอกได้ว่าตอนนี้ตัวเองกำลังรู้สึกอะไร","คุณสังเกตได้เมื่ออารมณ์ของตัวเองเริ่มเปลี่ยนไป","คุณเข้าใจว่าสิ่งใดมักเป็นตัวกระตุ้นอารมณ์ของคุณ","เมื่อคุณตัดสินใจเรื่องสำคัญ คุณสามารถแยกอารมณ์ออกจากเหตุผลได้","คุณรู้ว่าจุดแข็งด้านอารมณ์ของตัวเองคืออะไร","คุณรู้ว่าตัวเองมีจุดอ่อนด้านอารมณ์เรื่องใด","คุณสามารถยอมรับได้เมื่อความคิดหรืออารมณ์ของตัวเองอาจผิดพลาด","คุณสังเกตได้ว่าความเครียดส่งผลต่อพฤติกรรมของตัวเองอย่างไร","คุณรู้ว่าตัวเองต้องการอะไรจริง ๆ ในสถานการณ์ที่สับสน","เมื่อมีคนวิจารณ์คุณ คุณสามารถสังเกตปฏิกิริยาทางอารมณ์ของตัวเองได้","คุณสามารถแยกความรู้สึกชั่วคราวออกจากสิ่งที่คุณต้องการในระยะยาว","คุณรู้ว่าเมื่อใดควรหยุดพักเพื่อจัดการกับอารมณ์ของตัวเอง","คุณสามารถอธิบายเหตุผลเบื้องหลังการตัดสินใจของตัวเองได้","คุณสังเกตได้ว่าอารมณ์มีผลต่อวิธีพูดหรือการแสดงออกของคุณ","คุณสามารถมองเห็นรูปแบบพฤติกรรมของตัวเองที่เกิดซ้ำ ๆ","เมื่อทำผิด คุณสามารถยอมรับกับตัวเองได้โดยไม่ต้องหาข้อแก้ตัว","คุณรู้ว่าคุณมักตอบสนองต่อความกดดันในรูปแบบใด","คุณสามารถมองตัวเองจากมุมมองของคนอื่นได้","คุณใช้ประสบการณ์ในอดีตเพื่อทำความเข้าใจตัวเองในปัจจุบัน"]},
+{domain:"EMOTIONAL CONTROL",type:"EMOTIONAL REGULATION",questions:["เมื่อโกรธ คุณสามารถหยุดตัวเองก่อนพูดหรือทำบางอย่างที่อาจเสียใจภายหลัง","เมื่อมีคนทำให้คุณไม่พอใจ คุณสามารถควบคุมสีหน้าและน้ำเสียงได้","คุณสามารถสงบสติอารมณ์ได้เมื่อสถานการณ์เริ่มตึงเครียด","คุณไม่ปล่อยให้อารมณ์ชั่ววูบเป็นตัวกำหนดการตัดสินใจสำคัญ","เมื่อถูกยั่วยุ คุณสามารถเลือกที่จะไม่ตอบโต้ทันที","คุณสามารถจัดการความหงุดหงิดโดยไม่ระบายใส่คนอื่น","เมื่อเจอเรื่องกดดัน คุณยังสามารถคิดอย่างเป็นระบบได้","คุณสามารถเปลี่ยนความคิดลบให้กลายเป็นมุมมองที่สร้างสรรค์ขึ้น","คุณรู้วิธีทำให้ตัวเองกลับมาสงบเมื่ออารมณ์รุนแรง","คุณสามารถควบคุมความวิตกกังวลก่อนเหตุการณ์สำคัญได้","เมื่อผิดหวัง คุณสามารถจัดการความรู้สึกโดยไม่ทำลายสิ่งอื่นรอบตัว","คุณสามารถเลื่อนการตอบสนองออกไปจนกว่าจะพร้อม","คุณสามารถรับมือกับคนที่มีอารมณ์รุนแรงโดยไม่สูญเสียการควบคุมของตัวเอง","เมื่อเกิดความขัดแย้ง คุณสามารถรักษาน้ำเสียงที่เหมาะสมได้","คุณสามารถควบคุมแรงกระตุ้นที่อาจนำไปสู่ปัญหา","เมื่ออารมณ์ไม่ดี คุณยังสามารถทำหน้าที่ที่จำเป็นต่อไปได้","คุณไม่ตัดสินใจเรื่องสำคัญในช่วงที่กำลังโกรธมาก","เมื่อสถานการณ์ไม่เป็นไปตามแผน คุณสามารถปรับอารมณ์ได้","คุณสามารถให้อภัยตัวเองหลังจากทำผิดโดยไม่จมอยู่กับความผิดพลาด","คุณสามารถรักษาความสงบเมื่อคนอื่นพยายามกดดันคุณ"]},
+{domain:"EMPATHY",type:"EMOTIONAL EMPATHY",questions:["คุณสังเกตได้เมื่อคนรอบตัวกำลังรู้สึกไม่สบายใจ แม้เขาจะไม่ได้พูดออกมา","คุณพยายามเข้าใจความรู้สึกของคนอื่นก่อนตัดสินเขา","เมื่อเพื่อนมีปัญหา คุณสามารถรับฟังโดยไม่รีบพูดถึงตัวเอง","คุณสามารถมองสถานการณ์จากมุมมองของอีกฝ่ายได้","คุณสังเกตความเปลี่ยนแปลงของน้ำเสียงหรือท่าทางของคนอื่น","คุณรู้ว่าเมื่อใดคนอื่นต้องการกำลังใจมากกว่าคำแนะนำ","คุณสามารถรับฟังความคิดเห็นที่แตกต่างโดยไม่รู้สึกว่าต้องเอาชนะ","คุณพยายามเข้าใจเหตุผลเบื้องหลังพฤติกรรมของคนอื่น","เมื่อมีคนเสียใจ คุณสามารถอยู่ข้างเขาโดยไม่ลดทอนความรู้สึกของเขา","คุณสามารถรับรู้ได้เมื่อคำพูดของคุณอาจทำร้ายความรู้สึกคนอื่น","คุณให้ความสำคัญกับความรู้สึกของคนอื่นเมื่อต้องตัดสินใจร่วมกัน","คุณสามารถขอโทษเมื่อรู้ว่าตัวเองทำให้คนอื่นรู้สึกไม่ดี","คุณสามารถรับฟังเรื่องเดิมของคนอื่นโดยไม่แสดงความรำคาญ","คุณพยายามเข้าใจคนที่มีภูมิหลังหรือประสบการณ์แตกต่างจากคุณ","คุณสามารถแสดงความเห็นอกเห็นใจโดยไม่จำเป็นต้องเห็นด้วยกับอีกฝ่าย","เมื่อคนอื่นทำผิด คุณพยายามเข้าใจสถานการณ์ก่อนตำหนิ","คุณสังเกตได้เมื่อคนอื่นต้องการพื้นที่ส่วนตัว","คุณสามารถพูดปลอบคนอื่นในช่วงเวลาที่เขากำลังลำบาก","คุณให้ความสำคัญกับการฟังมากกว่าการรีบให้คำตอบ","คุณสามารถเข้าใจว่าคนสองคนอาจรู้สึกต่างกันต่อเหตุการณ์เดียวกัน"]},
+{domain:"SOCIAL INTELLIGENCE",type:"SOCIAL AWARENESS",questions:["คุณสามารถปรับวิธีสื่อสารให้เหมาะกับคนแต่ละประเภท","คุณรู้ว่าเมื่อใดควรพูดและเมื่อใดควรฟัง","คุณสามารถเริ่มบทสนทนากับคนที่ไม่คุ้นเคยได้","คุณสามารถทำให้คนอื่นรู้สึกสบายใจเมื่อพูดคุยกับคุณ","เมื่อเกิดความขัดแย้ง คุณพยายามหาทางออกที่ทั้งสองฝ่ายยอมรับได้","คุณสามารถอ่านบรรยากาศของกลุ่มคนก่อนแสดงความคิดเห็น","คุณรู้ว่าเรื่องใดควรพูดในที่สาธารณะและเรื่องใดควรพูดเป็นการส่วนตัว","คุณสามารถสื่อสารความต้องการของตัวเองโดยไม่ก้าวร้าว","คุณสามารถปฏิเสธคำขอของคนอื่นโดยไม่ทำให้ความสัมพันธ์เสียหาย","คุณสามารถรักษาความสัมพันธ์กับคนที่มีความคิดเห็นแตกต่างจากคุณ","เมื่อเกิดความเข้าใจผิด คุณพยายามแก้ไขโดยการสื่อสาร","คุณสามารถทำงานร่วมกับคนที่มีบุคลิกแตกต่างจากคุณ","คุณสามารถรับฟังคำวิจารณ์โดยไม่เปลี่ยนการสนทนาให้กลายเป็นการทะเลาะ","คุณรู้ว่าควรใช้คำพูดแบบใดเมื่อจำเป็นต้องพูดเรื่องละเอียดอ่อน","คุณสามารถสังเกตได้ว่าบทสนทนากำลังทำให้อีกฝ่ายไม่สบายใจ","คุณสามารถรักษาขอบเขตของตัวเองโดยยังเคารพขอบเขตของคนอื่น","เมื่อทำงานเป็นทีม คุณสามารถช่วยลดความตึงเครียดระหว่างสมาชิกได้","คุณสามารถเจรจาเมื่อความคิดเห็นของคุณไม่ตรงกับคนอื่น","คุณสามารถสร้างความไว้วางใจกับคนใหม่ได้อย่างเป็นธรรมชาติ","คุณสามารถเปลี่ยนวิธีสื่อสารเมื่อรู้ว่าอีกฝ่ายไม่เข้าใจสิ่งที่คุณพูด"]},
+{domain:"RESILIENCE",type:"EMOTIONAL RESILIENCE",questions:["เมื่อเจอความล้มเหลว คุณสามารถกลับมาตั้งหลักได้","คุณสามารถเรียนรู้จากความผิดพลาดแทนที่จะจมอยู่กับมัน","เมื่อแผนที่วางไว้ล้มเหลว คุณสามารถสร้างแผนใหม่ได้","คุณยังสามารถมองเห็นความหวังในช่วงเวลาที่ยากลำบาก","คุณสามารถรับมือกับการเปลี่ยนแปลงที่ไม่ได้เตรียมตัวไว้","เมื่อถูกปฏิเสธ คุณสามารถเดินหน้าต่อได้","คุณไม่ยอมให้ความผิดพลาดครั้งหนึ่งกำหนดคุณค่าของตัวเอง","คุณสามารถปรับตัวเมื่อสภาพแวดล้อมเปลี่ยนแปลงอย่างรวดเร็ว","เมื่อเจอปัญหาใหญ่ คุณสามารถแบ่งปัญหาออกเป็นส่วนเล็ก ๆ เพื่อจัดการ","คุณสามารถขอความช่วยเหลือเมื่อรู้ว่าตัวเองรับมือคนเดียวไม่ไหว","หลังจากเจอเรื่องหนัก คุณสามารถกลับมาทำกิจวัตรตามปกติได้","คุณสามารถใช้ประสบการณ์ที่ยากลำบากเพื่อพัฒนาตัวเอง","เมื่อสิ่งต่าง ๆ ไม่เป็นธรรม คุณยังพยายามหาสิ่งที่ควบคุมได้","คุณสามารถรักษาความมุ่งมั่นแม้ผลลัพธ์จะยังไม่เกิดขึ้น","คุณไม่ยอมแพ้ง่าย ๆ เมื่อเจออุปสรรค","คุณสามารถยอมรับสิ่งที่เปลี่ยนแปลงไม่ได้และโฟกัสกับสิ่งที่ทำได้","เมื่อมีความกดดันต่อเนื่อง คุณสามารถหาวิธีฟื้นพลังให้ตัวเอง","คุณสามารถกลับมาเชื่อมั่นในตัวเองหลังจากความผิดหวัง","คุณมองปัญหาเป็นสิ่งที่สามารถเรียนรู้และเติบโตจากมันได้","เมื่อชีวิตเปลี่ยนทิศทางกะทันหัน คุณสามารถหาวิธีเดินหน้าต่อได้"]}
+];
+
+
+/* =========================================================
+   THYNK // EQ ENGINE  v4
+   วางทับตั้งแต่บรรทัด  const questionCount = ...
+   ลงไปจนถึงก่อน  (โค้ดด้านบน: OPTIONS, questions, profiles คงเดิม)
+   ========================================================= */
+
+
+/* =========================================================
+   1) ข้อกลับด้าน (reverse-keyed)
+   ---------------------------------------------------------
+   เดิมทุกข้อเป็นประโยคเชิงบวก → ใครเลือก "ตรงมาก" ทุกข้อก็ได้เต็ม
+   จึงแทนที่ 4 ข้อต่อมิติ (รวม 20 ข้อ) ด้วยประโยคเชิงลบ
+   ที่ต้องกลับคะแนน (5 − คำตอบ) ก่อนรวม
+   ========================================================= */
+
+const REVERSE_POSITIONS = [3, 8, 13, 18];     // ตำแหน่งในแต่ละมิติ (เริ่มที่ 0)
+
+const REVERSE_ITEMS = [
+    /* SELF-AWARENESS */
+    [
+        "คุณมักไม่รู้ว่าทำไมตัวเองถึงรู้สึกแบบนั้น จนต้องให้คนอื่นบอก",
+        "คุณมักไม่ทันสังเกตว่าตัวเองกำลังเครียดจนมีคนมาทัก",
+        "เมื่อมีคนชี้ข้อผิดพลาด คุณมักรู้สึกว่าถูกโจมตีและไม่อยากรับฟัง",
+        "คุณมักตัดสินใจตามอารมณ์ตอนนั้นโดยไม่เข้าใจเหตุผลของตัวเอง"
+    ],
+    /* EMOTIONAL CONTROL */
+    [
+        "เมื่อโกรธ คุณมักพูดหรือทำสิ่งที่ต้องเสียใจภายหลัง",
+        "เมื่อเครียด คุณมักระบายอารมณ์ใส่คนที่ไม่เกี่ยวข้อง",
+        "เมื่อถูกยั่วยุ คุณมักตอบโต้ทันทีโดยไม่คิด",
+        "เมื่อผิดหวัง อารมณ์ของคุณมักรบกวนงานหรือหน้าที่จนทำต่อไม่ได้"
+    ],
+    /* EMPATHY */
+    [
+        "คุณมักไม่ทันสังเกตว่าคนรอบข้างกำลังไม่สบายใจ",
+        "เมื่อเพื่อนมีปัญหา คุณมักรีบเล่าเรื่องของตัวเองหรือเปลี่ยนเรื่อง",
+        "คุณรู้สึกรำคาญเมื่อต้องฟังคนอื่นพูดถึงปัญหาเดิม ๆ",
+        "คุณมักตัดสินคนอื่นจากพฤติกรรมโดยไม่ถามถึงสถานการณ์ของเขา"
+    ],
+    /* SOCIAL INTELLIGENCE */
+    [
+        "คุณมักพูดโดยไม่ได้ดูว่าบรรยากาศหรืออีกฝ่ายพร้อมฟังหรือไม่",
+        "เมื่อเกิดความขัดแย้ง คุณมักพยายามเอาชนะมากกว่าหาทางออกร่วมกัน",
+        "คุณมักเสียความสัมพันธ์กับคนที่มีความเห็นต่างจากคุณ",
+        "เมื่อเกิดความเข้าใจผิด คุณมักปล่อยไว้โดยไม่พยายามอธิบาย"
+    ],
+    /* RESILIENCE */
+    [
+        "หลังความล้มเหลว คุณมักจมอยู่กับมันเป็นเวลานาน",
+        "เมื่อเจออุปสรรคแรก ๆ คุณมักยอมแพ้",
+        "เมื่อแผนพัง คุณมักรู้สึกว่าไม่มีทางเลือกอื่นเหลืออยู่",
+        "คุณมักปล่อยให้ความผิดพลาดครั้งเดียวทำให้เสียความมั่นใจในตัวเองไปนาน"
+    ]
+];
+
+REVERSE_ITEMS.forEach((texts, d) => {
+    texts.forEach((text, i) => {
+        questions[d].questions[REVERSE_POSITIONS[i]] = text;
+    });
+});
+
+
+/* =========================================================
+   2) ค่าตั้งต้นของระบบคะแนน
+   ========================================================= */
+
+/* องค์ประกอบ EQ (อิงโมเดล Goleman / Mayer–Salovey)
+   → ผูกกับมิติของแบบทดสอบ; THINKING STYLE ไม่นับรวมใน EQ */
+const EQ_COMPONENTS = [
+    { domainIndex: 0, key: "selfAwareness",     th: "การตระหนักรู้ตนเอง",           weight: 0.20 },
+    { domainIndex: 1, key: "emotionalControl",  th: "การควบคุมอารมณ์",              weight: 0.20 },
+    { domainIndex: 2, key: "empathy",           th: "ความเห็นอกเห็นใจ",             weight: 0.20 },
+    { domainIndex: 3, key: "socialIntelligence",th: "ความฉลาดทางสังคม",             weight: 0.20 },
+    { domainIndex: 4, key: "resilience",        th: "ความยืดหยุ่นทางอารมณ์",        weight: 0.20 }
+];
+
+/* ค่าเฉลี่ย/SD ของ "คะแนน 0–100" ในประชากร (สมมติ — ควรแทนด้วยข้อมูลจริง) */
+const NORM = {
+    domain:    { mean: 65, sd: 13 },
+    composite: { mean: 65, sd: 11 }
+};
+
+const ITEM_RELIABILITY   = 0.20;   // ความเที่ยงต่อ 1 ข้อ (ใช้ Spearman–Brown หาความเที่ยงรวม)
+const MIN_DOMAIN_COVERAGE = 0.70;  // มิติที่ตอบน้อยกว่า 70% ไม่นับ
+const MIN_ANSWERED        = 80;    // ตอบน้อยกว่า 80 ข้อ = ผลไม่น่าเชื่อถือ
+const EQ_MIN = 55;
+const EQ_MAX = 145;
+
+const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+const mean  = a => a.length ? a.reduce((x, y) => x + y, 0) / a.length : null;
+
+
+/* =========================================================
+   3) โครงข้อสอบ
+   ========================================================= */
+
+const questionCount = questions.reduce((total, domain) => total + domain.questions.length, 0);
+
+if (questionCount !== TOTAL_QUESTIONS) {
+    console.error("THYNK EQ ERROR: Question count =", questionCount, "Expected =", TOTAL_QUESTIONS);
+}
+
+const allQuestions = [];
+
+questions.forEach((domain, domainIndex) => {
+    domain.questions.forEach((text, questionIndex) => {
+        allQuestions.push({
+            question: text,
+            domain: domain.domain,
+            type: domain.type,
+            domainIndex,
+            questionIndex,
+            reverse: REVERSE_POSITIONS.includes(questionIndex),
+            number: allQuestions.length + 1
+        });
+    });
+});
+
+
+/* =========================================================
+   4) STATE / ELEMENTS
+   ========================================================= */
+
+let currentQuestion = 0;
+let selectedAnswer = null;
+let timer = TIME_PER_QUESTION;
+let timerInterval = null;
+let answerRecords = [];
+let examStartTime = null;
+let examEndTime = null;
+let examFinished = false;
+
+const introOverlay = document.getElementById("introOverlay");
+const startButton = document.getElementById("startButton");
+const questionNumber = document.getElementById("questionNumber");
+const questionElement = document.getElementById("question");
+const questionType = document.getElementById("questionType");
+const answers = document.getElementById("answers");
+const domainName = document.getElementById("domainName");
+const progressBar = document.getElementById("progressBar");
+const percent = document.getElementById("percent");
+const domainProgress = document.getElementById("domainProgress");
+const nextButton = document.getElementById("nextButton");
+const timerDisplay = document.getElementById("timer");
+const timerBox = document.getElementById("timerBox");
+const finishingScreen = document.getElementById("finishingScreen");
+
+startButton.addEventListener("click", startExam);
+
+function startExam() {
+    introOverlay.style.display = "none";
+    currentQuestion = 0;
+    selectedAnswer = null;
+    timer = TIME_PER_QUESTION;
+    answerRecords = [];
+    examFinished = false;
+    examStartTime = new Date();
+    examEndTime = null;
+    showQuestion();
+}
+
+function showQuestion() {
+    clearInterval(timerInterval);
+    selectedAnswer = null;
+    nextButton.disabled = true;
+
+    const q = allQuestions[currentQuestion];
+
+    if (!q) {
+        finishExam();
+        return;
+    }
+
+    questionNumber.textContent = String(currentQuestion + 1).padStart(2, "0");
+    questionElement.textContent = q.question;
+    questionType.textContent = q.type;
+    domainName.textContent = q.domain;
+    answers.innerHTML = "";
+
+    OPTIONS.forEach((text, index) => {
+        const answer = document.createElement("div");
+        answer.className = "answer";
+
+        const number = document.createElement("div");
+        number.className = "answer-number";
+        number.textContent = index + 1;
+
+        const label = document.createElement("div");
+        label.textContent = text;
+
+        answer.appendChild(number);
+        answer.appendChild(label);
+
+        answer.addEventListener("click", () => {
+            document.querySelectorAll(".answer").forEach(item => item.classList.remove("selected"));
+            answer.classList.add("selected");
+            selectedAnswer = index + 1;
+            nextButton.disabled = false;
+        });
+
+        answers.appendChild(answer);
+    });
+
+    updateProgress();
+    startTimer();
+}
+
+function updateProgress() {
+    const percentage = Math.round((currentQuestion / TOTAL_QUESTIONS) * 100);
+    progressBar.style.width = percentage + "%";
+    percent.textContent = percentage + "%";
+
+    const domainIndex = Math.min(Math.floor(currentQuestion / QUESTIONS_PER_DOMAIN), 4);
+    domainProgress.textContent =
+        `DOMAIN ${String(domainIndex + 1).padStart(2, "0")} / 05`;
+}
+
+function startTimer() {
+    clearInterval(timerInterval);
+    timer = TIME_PER_QUESTION;
+    timerDisplay.textContent = timer;
+    timerBox.classList.remove("warning");
+
+    timerInterval = setInterval(() => {
+        timer--;
+        timerDisplay.textContent = timer;
+
+        if (timer <= 10) timerBox.classList.add("warning");
+
+        if (timer <= 0) {
+            clearInterval(timerInterval);
+            submitAnswer();            // ถ้าเลือกไว้แล้วจะส่งคำตอบนั้น ถ้าไม่เลือกจะนับว่าไม่ได้ตอบ
+        }
+    }, 1000);
+}
+
+nextButton.addEventListener("click", submitAnswer);
+
+
+/* =========================================================
+   5) บันทึกคำตอบ
+   ---------------------------------------------------------
+   answer  = ค่าที่ผู้ตอบเลือก (1–4) หรือ 0 = ไม่ได้ตอบ
+   keyed   = คะแนนหลังกลับด้านแล้ว (1–4) หรือ null ถ้าไม่ได้ตอบ
+   ข้อที่ไม่ได้ตอบ "ไม่ถูกนับเป็น 0" อีกต่อไป (เดิมดึงคะแนนลง)
+   ========================================================= */
+
+function makeRecord(q, answerValue, timeUsed) {
+    const keyed = answerValue === 0 ? null : (q.reverse ? 5 - answerValue : answerValue);
+
+    return {
+        questionNumber: q.number,
+        question: q.question,
+        domain: q.domain,
+        type: q.type,
+        domainIndex: q.domainIndex,
+        questionIndex: q.questionIndex,
+        reverse: q.reverse,
+        answer: answerValue,
+        answerText: answerValue === 0 ? "ไม่ได้ตอบ" : OPTIONS[answerValue - 1],
+        keyed: keyed,
+        score: keyed === null ? 0 : keyed,
+        answered: answerValue > 0,
+        timeUsed: Math.round(timeUsed * 10) / 10,
+        timeRemaining: Math.max(0, TIME_PER_QUESTION - timeUsed),
+        timestamp: new Date().toISOString()
+    };
+}
+
+function submitAnswer() {
+    if (examFinished) return;
+
+    clearInterval(timerInterval);
+
+    const q = allQuestions[currentQuestion];
+
+    if (!q) {
+        finishExam();
+        return;
+    }
+
+    const answerValue = selectedAnswer === null ? 0 : selectedAnswer;
+    answerRecords.push(makeRecord(q, answerValue, TIME_PER_QUESTION - timer));
+
+    nextButton.disabled = true;
+
+    setTimeout(() => {
+        currentQuestion++;
+
+        if (currentQuestion >= allQuestions.length) finishExam();
+        else showQuestion();
+    }, 180);
+}
+
+
+/* =========================================================
+   6) ระบบคะแนนใหม่
+   ---------------------------------------------------------
+   • คะแนนมิติ (0–100) = (ค่าเฉลี่ยคะแนน − 1) / 3 × 100
+     → ตอบ "ไม่ตรงเลย" ทุกข้อ = 0, "ตรงมาก" ทุกข้อ = 100
+       (เดิมต่ำสุดได้ 25% เพราะหารด้วย 4 โดยไม่ลบ 1)
+   • หาค่าเฉลี่ยจากข้อที่ตอบจริงเท่านั้น
+   • EQ index = 100 + 15 × (คะแนนรวม − μ) / σ   (55–145)
+   • ช่วงความคลาดเคลื่อนจาก Spearman–Brown ตามจำนวนข้อที่ตอบ
+   ========================================================= */
+
+const pctFromMean = m => m === null ? null : Math.round(((m - 1) / 3) * 100);
+
+const indexFromPct = (pct, norm) =>
+    pct === null ? null
+        : clamp(Math.round(100 + 15 * (pct - norm.mean) / norm.sd), EQ_MIN, EQ_MAX);
+
+function reliabilityFor(k) {
+    return k <= 0 ? 0 : (k * ITEM_RELIABILITY) / (1 + (k - 1) * ITEM_RELIABILITY);
+}
+
+const marginFor = k => Math.ceil(1.96 * 15 * Math.sqrt(1 - reliabilityFor(k)));
+
+function eqLevel(eq) {
+    if (eq >= 130) return { en: "VERY HIGH",     th: "สูงมาก" };
+    if (eq >= 115) return { en: "HIGH",          th: "สูง" };
+    if (eq >= 105) return { en: "ABOVE AVERAGE", th: "ค่อนข้างสูง" };
+    if (eq >=  90) return { en: "AVERAGE",       th: "ปานกลาง" };
+    if (eq >=  80) return { en: "BELOW AVERAGE", th: "ค่อนข้างต่ำ" };
+    return               { en: "DEVELOPING",     th: "ควรพัฒนา" };
+}
+
+function longestRun(values) {
+    let best = 0, run = 0, prev = null;
+    values.forEach(v => {
+        run = v === prev ? run + 1 : 1;
+        prev = v;
+        best = Math.max(best, run);
+    });
+    return best;
+}
+
+/* ตรวจความน่าเชื่อถือของการตอบ */
+function checkValidity(records) {
+
+    const flags = [];
+    const ans = records.filter(r => r.answered);
+
+    if (ans.length < MIN_ANSWERED) flags.push("TOO_MANY_UNANSWERED");
+
+    if (ans.length >= 20) {
+        const counts = [0, 0, 0, 0, 0];
+        ans.forEach(r => counts[r.answer]++);
+        const topShare = Math.max(...counts) / ans.length;
+
+        if (topShare >= 0.90 || longestRun(ans.map(r => r.answer)) >= 20) {
+            flags.push("STRAIGHT_LINING");        // ตอบซ้ำตัวเลือกเดิมเกือบทุกข้อ
+        }
+    }
+
+    const fast = ans.filter(r => r.timeUsed < 1.2).length;
+    if (ans.length && fast / ans.length >= 0.40) flags.push("TOO_FAST");
+
+    /* ความสอดคล้อง: ข้อเชิงบวกกับข้อกลับด้านที่แปลงแล้วควรให้ค่าใกล้กัน */
+    const fwd = mean(ans.filter(r => !r.reverse).map(r => r.keyed));
+    const rev = mean(ans.filter(r =>  r.reverse).map(r => r.keyed));
+    const gap = (fwd !== null && rev !== null) ? fwd - rev : 0;
+
+    if (gap >= 1.0) flags.push("INCONSISTENT_RESPONSES");   // เห็นด้วยทั้งข้อดีและข้อตรงข้าม
+
+    return {
+        valid: flags.length === 0,
+        flags,
+        consistencyGap: Math.round(gap * 100) / 100
+    };
+}
+
+function calculateResult() {
+
+    const totalQuestions = allQuestions.length;
+    const answeredCount = answerRecords.filter(r => r.answered).length;
+    const unansweredCount = totalQuestions - answeredCount;
+
+    /* ---------- รายโดเมน ---------- */
+    const domainResults = questions.map((domain, index) => {
+        const recs = answerRecords.filter(r => r.domainIndex === index);
+        const ans  = recs.filter(r => r.answered);
+        const m    = mean(ans.map(r => r.keyed));
+        const pct  = pctFromMean(m);
+        const coverage = ans.length / QUESTIONS_PER_DOMAIN;
+        const counted = coverage >= MIN_DOMAIN_COVERAGE && pct !== null;
+        const rawSum = ans.reduce((s, r) => s + r.keyed, 0);
+
+        return {
+            index,
+            name: domain.domain,
+            type: domain.type,
+            score: rawSum,
+            maxScore: QUESTIONS_PER_DOMAIN * MAX_ANSWER_SCORE,
+            mean: m === null ? null : Math.round(m * 100) / 100,
+            percentage: counted ? pct : null,
+            index100: counted ? indexFromPct(pct, NORM.domain) : null,
+            margin: ans.length ? marginFor(ans.length) : null,
+            answered: ans.length,
+            unanswered: recs.length - ans.length,
+            counted
+        };
+    });
+
+    const usable = domainResults.filter(d => d.counted);
+
+    /* ---------- คะแนน EQ รวม ---------- */
+    const components = EQ_COMPONENTS.map(c => {
+        const d = domainResults[c.domainIndex];
+        return {
+            key: c.key, th: c.th, domain: d.name, weight: c.weight,
+            percentage: d.percentage, index: d.index100,
+            margin: d.margin, counted: d.counted
+        };
+    });
+
+    const eqUsable = components.filter(c => c.counted);
+    const wSum = eqUsable.reduce((s, c) => s + c.weight, 0);
+    const eqPct = wSum > 0
+        ? eqUsable.reduce((s, c) => s + c.percentage * c.weight, 0) / wSum
+        : null;
+
+    const eqScore = eqPct === null ? null : indexFromPct(eqPct, NORM.composite);
+    const eqAnswered = domainResults.reduce((s, d) => s + d.answered, 0);
+    const eqMargin = eqScore === null ? null : marginFor(eqAnswered);
+    const eqPercentile = eqScore === null ? null
+        : Math.round(clamp(normalCdf((eqScore - 100) / 15) * 100, 0.1, 99.9) * 10) / 10;
+
+    const rawScore = answerRecords.reduce((s, r) => s + (r.keyed || 0), 0);
+    const maxScore = totalQuestions * MAX_ANSWER_SCORE;
+    const scorePct = eqPct === null ? 0 : Math.round(eqPct);   // 0–100 จริง (เดิมต่ำสุด 25)
+
+    const validity = checkValidity(answerRecords);
+
+    /* ---------- ระดับ EQ (อิงดัชนี EQ) ---------- */
+    let level, levelDescription;
+
+    if (eqScore === null) {
+        level = "NOT AVAILABLE";
+        levelDescription = "ตอบไม่ครบพอที่จะประเมิน EQ ได้อย่างน่าเชื่อถือ";
+    } else if (eqScore >= 130) {
+        level = "EXCEPTIONAL EQ";
+        levelDescription = "คุณมีแนวโน้มที่จะรับรู้อารมณ์ของตนเอง เข้าใจผู้อื่น ควบคุมอารมณ์ และรับมือกับสถานการณ์ทางอารมณ์ได้อย่างโดดเด่น";
+    } else if (eqScore >= 118) {
+        level = "ADVANCED EQ";
+        levelDescription = "คุณมีทักษะด้านความฉลาดทางอารมณ์ในระดับสูง สามารถจัดการอารมณ์และความสัมพันธ์ได้อย่างมีประสิทธิภาพ";
+    } else if (eqScore >= 106) {
+        level = "STRONG EQ";
+        levelDescription = "คุณมีพื้นฐานด้านความฉลาดทางอารมณ์ที่แข็งแรง และสามารถนำทักษะเหล่านี้ไปใช้ในชีวิตประจำวันได้ดี";
+    } else if (eqScore >= 94) {
+        level = "DEVELOPING EQ";
+        levelDescription = "คุณมีทักษะด้านอารมณ์ที่กำลังพัฒนา และมีพื้นที่อีกหลายด้านที่สามารถฝึกฝนให้แข็งแรงขึ้นได้";
+    } else if (eqScore >= 82) {
+        level = "AWARE EQ";
+        levelDescription = "คุณเริ่มมีความเข้าใจเกี่ยวกับอารมณ์ของตัวเองและผู้อื่น และสามารถพัฒนาทักษะด้านอารมณ์ต่อไปได้";
+    } else {
+        level = "EMOTIONAL EXPLORER";
+        levelDescription = "คุณอยู่ในช่วงสำรวจและทำความเข้าใจรูปแบบทางอารมณ์ของตัวเอง การฝึกสังเกตอารมณ์และการตอบสนองจะช่วยพัฒนาคะแนนในอนาคต";
+    }
+
+    /* ---------- โดเมนเด่น / ควรพัฒนา (เฉพาะโดเมนที่นับ) ---------- */
+    const pool = usable.length ? usable : domainResults;
+    const pv = d => d.percentage === null ? -1 : d.percentage;
+    const strongestDomain = pool.reduce((b, c) => pv(c) > pv(b) ? c : b);
+    const weakestDomain   = pool.reduce((w, c) => pv(c) < pv(w) ? c : w);
+
+    const profiles = [
+        { name: "THE INNER OBSERVER",
+          description: "คุณมีจุดเด่นด้านการรับรู้และเข้าใจอารมณ์ ความคิด และแรงจูงใจภายในของตัวเอง คุณมีแนวโน้มที่จะสังเกตสิ่งที่เกิดขึ้นภายในใจก่อนตัดสินใจ" },
+        { name: "THE EMOTIONAL ANCHOR",
+          description: "คุณมีจุดเด่นด้านการควบคุมอารมณ์ สามารถรักษาความสงบเมื่อเผชิญแรงกดดัน และมีแนวโน้มที่จะคิดก่อนตอบสนอง" },
+        { name: "THE EMPATH",
+          description: "คุณมีจุดเด่นด้านความเข้าใจความรู้สึกของผู้อื่น สามารถมองสถานการณ์จากมุมมองของคนอื่นและรับฟังความรู้สึกได้ดี" },
+        { name: "THE SOCIAL BRIDGE",
+          description: "คุณมีจุดเด่นด้านการสื่อสารและความสัมพันธ์ สามารถปรับตัวเข้ากับผู้คนและจัดการสถานการณ์ทางสังคมได้อย่างยืดหยุ่น" },
+        { name: "THE STORM WALKER",
+          description: "คุณมีจุดเด่นด้านความยืดหยุ่นทางอารมณ์ สามารถฟื้นตัวจากความผิดหวัง เรียนรู้จากปัญหา และเดินหน้าต่อเมื่อสถานการณ์เปลี่ยนแปลง" }
+    ];
+
+    const profile = profiles[strongestDomain.index];
+
+    const durationSeconds = examStartTime && examEndTime
+        ? Math.round((examEndTime - examStartTime) / 1000) : 0;
+
+    const brief = d => ({ name: d.name, percentage: d.percentage, score: d.score });
+
+    return {
+        resultVersion: 2,
+        testType: "EQ",
+        assessmentId: generateAssessmentId(),
+
+        /* คะแนนรวม 0–100 (คีย์เดิม) */
+        score: scorePct,
+        rawScore,
+        maxScore,
+        minScore: 0,
+
+        /* ดัชนี EQ (ค่าเฉลี่ย 100, SD 15) */
+        eq: eqScore,
+        eqScore,
+        eqRange: eqScore === null ? null
+            : [clamp(eqScore - eqMargin, EQ_MIN, EQ_MAX), clamp(eqScore + eqMargin, EQ_MIN, EQ_MAX)],
+        eqMargin,
+        eqPercentile,
+        eqComponents: components,
+
+        level,
+        levelDescription,
+
+        validity: validity.valid ? "VALID" : "LOW_CONFIDENCE",
+        validityFlags: validity.flags,
+        consistencyGap: validity.consistencyGap,
+
+        profile: profile.name,
+        profileDescription: profile.description,
+
+        totalQuestions,
+        answered: answeredCount,
+        unanswered: unansweredCount,
+        completion: Math.round((answeredCount / totalQuestions) * 100),
+
+        strongestDomain: brief(strongestDomain),
+        weakestDomain: brief(weakestDomain),
+
+        domains: domainResults,
+        answers: answerRecords,
+        durationSeconds,
+        timestamp: new Date().toISOString(),
+        completed: true
+    };
+}
+
+/* ฟังก์ชันปกติของ normal CDF (Abramowitz–Stegun) */
+function normalCdf(z) {
+    const t = 1 / (1 + 0.2316419 * Math.abs(z));
+    const d = 0.3989423 * Math.exp(-z * z / 2);
+    const p = d * t * (0.3193815 + t * (-0.3565638 +
+              t * (1.781478 + t * (-1.821256 + t * 1.330274))));
+    return z > 0 ? 1 - p : p;
+}
+
+
+/* =========================================================
+   7) FINISH / SAVE
+   ========================================================= */
+
+function finishExam() {
+    if (examFinished) return;
+
+    examFinished = true;
+    clearInterval(timerInterval);
+    examEndTime = new Date();
+
+    progressBar.style.width = "100%";
+    percent.textContent = "100%";
+    domainProgress.textContent = "ANALYSIS COMPLETE";
+
+    finishingScreen.classList.add("active");
+
+    const result = calculateResult();
+    const saved = saveResult(result);
+
+    if (!saved) {
+        finishingScreen.classList.remove("active");
+        alert("ไม่สามารถบันทึกผลการประเมินได้ กรุณาเปิดใช้งาน Local Storage แล้วลองใหม่อีกครั้ง");
+        examFinished = false;
+        return;
+    }
+
+    setTimeout(() => {
+        window.location.href = "eq result.html";
+    }, 900);
+}
+
+function saveResult(result) {
+    try {
+        const json = JSON.stringify(result);
+
+        localStorage.setItem(RESULT_KEY, json);
+        localStorage.setItem(RESULT_BACKUP_KEY, json);
+        localStorage.setItem("thynkEQScore", String(result.score));
+
+        if (!localStorage.getItem(RESULT_KEY)) return false;
+
+        console.log("THYNK EQ RESULT SAVED", result);
+        return true;
+    } catch (error) {
+        console.error("THYNK EQ SAVE ERROR", error);
+        return false;
+    }
+}
+
+function generateAssessmentId() {
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    const part = () => Array.from({ length: 4 },
+        () => chars[Math.floor(Math.random() * chars.length)]).join("");
+    return `THK-${part()}-${part()}`;
+}
+
+
+/* =========================================================
+   8) KEYBOARD / MISC
+   ========================================================= */
+
+document.addEventListener("keydown", event => {
+    if (introOverlay.style.display !== "none") return;
+    if (examFinished) return;
+
+    if (["1", "2", "3", "4"].includes(event.key)) {
+        const elements = document.querySelectorAll(".answer");
+        const el = elements[Number(event.key) - 1];
+        if (el) el.click();
+    }
+
+    if (event.key === "Enter" && !nextButton.disabled) {
+        submitAnswer();
+    }
+});
+
+window.addEventListener("beforeunload", event => {
+    if (!examFinished && examStartTime && answerRecords.length > 0) {
+        event.preventDefault();
+        event.returnValue = "";
+    }
+});
+
+nextButton.disabled = true;
+
+console.log("THYNK EQ ENGINE READY");
+console.log("Questions:", allQuestions.length);
+
+</script>
+
+</body>
+</html>

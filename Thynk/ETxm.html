@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THYNK — MATH CHALLENGE (20 QUESTIONS)</title>
+    <link rel="icon" type="image/png" href="thynk.png">
+    
+    <!-- MathJax สำหรับเรนเดอร์สมการคณิตศาสตร์ -->
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$']] },
+        svg: { fontCache: 'global' }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+        
+        *{ box-sizing:border-box; margin:0; padding:0; }
+        body{ font-family:'Kanit',sans-serif; background:#050505; color:#fff; min-height:100vh; }
+        
+        .exam{ width:100%; min-height:100vh; display:flex; flex-direction:column; }
+
+        /* HEADER */
+        header{
+            height:80px; border-bottom:1px solid #242424; display:flex;
+            align-items:center; justify-content:space-between; padding:0 5%; background:#080808;
+        }
+        .logo{ font-family:'JetBrains Mono',monospace; font-size:24px; font-weight:600; letter-spacing:4px; }
+        .logo span{ color:#00ff9c; font-size:13px; letter-spacing:2px; }
+        .status{ font-family:'JetBrains Mono',monospace; font-size:11px; color:#999; display:flex; align-items:center; }
+        .status-dot{ width:7px; height:7px; background:#00ff9c; border-radius:50%; margin-right:8px; animation:pulse 1.5s infinite; }
+        @keyframes pulse{ 0%,100%{ opacity:.35; } 50%{ opacity:1; } }
+
+        /* MAIN */
+        main{ width:min(950px,92%); margin:auto; padding:40px 0 70px; }
+
+        /* TOP */
+        .top{ display:grid; grid-template-columns:1fr auto; gap:30px; margin-bottom:20px; }
+        .domain-label{ font-family:'JetBrains Mono',monospace; color:#777; font-size:11px; letter-spacing:2px; margin-bottom:8px; }
+        .domain{ font-size:26px; font-weight:500; }
+        .question-counter{ text-align:right; font-family:'JetBrains Mono',monospace; }
+        .question-counter small{ display:block; color:#666; font-size:10px; }
+        .question-counter strong{ font-size:26px; color:#00ff9c; }
+        .question-counter span{ color:#555; }
+
+        /* PROGRESS */
+        .progress-wrap{ margin-bottom:30px; }
+        .progress-info{ display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:10px; color:#777; margin-bottom:8px; }
+        .progress{ width:100%; height:4px; background:#1c1c1c; overflow:hidden; }
+        .progress-bar{ width:0%; height:100%; background:#00ff9c; transition:.3s; }
+
+        /* CARD */
+        .card{ border:1px solid #292929; background:#0b0b0b; padding:40px; }
+        .type{ font-family:'JetBrains Mono',monospace; font-size:10px; color:#00ff9c; letter-spacing:2px; margin-bottom:15px; }
+        .question{ font-size:20px; line-height:1.6; font-weight:400; margin-bottom:25px; }
+        
+        .equation-box { background: #050505; border: 1px solid #222; padding: 20px; margin: 20px 0; text-align: center; font-size: 20px; }
+
+        /* INPUTS */
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display:block; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #888; margin-bottom: 8px; letter-spacing: 1px; }
+        input[type="text"], textarea {
+            width: 100%; background: #111; border: 1px solid #292929; color: #fff; padding: 14px;
+            font-family: 'JetBrains Mono', monospace; font-size: 13px; transition: border-color 0.2s;
+        }
+        input[type="text"]:focus, textarea:focus { outline: none; border-color: #00ff9c; }
+        textarea { height: 130px; resize: vertical; }
+
+        /* FOOTER */
+        .card-footer{ margin-top:30px; display:flex; justify-content:space-between; align-items:center; }
+        .timer{ font-family:'JetBrains Mono',monospace; color:#777; font-size:12px; }
+        .timer strong{ color:#fff; display:inline-block; min-width:50px; text-align:center; }
+        
+        button{
+            border:1px solid #fff; background:#fff; color:#000; padding:14px 30px;
+            font-family:'Kanit',sans-serif; font-size:14px; cursor:pointer; transition:.2s; font-weight:500;
+        }
+        button:hover{ background:#00ff9c; border-color:#00ff9c; transform:translateY(-1px); }
+
+        /* INTRO OVERLAY */
+        .overlay{ position:fixed; inset:0; background:#050505; z-index:100; display:flex; justify-content:center; align-items:center; padding:25px; }
+        .intro{ width:min(650px,100%); border:1px solid #292929; padding:50px; background:#090909; text-align:center; }
+        .intro-label{ font-family:'JetBrains Mono',monospace; color:#777; font-size:11px; letter-spacing:3px; margin-bottom:20px; }
+        .intro h1{ font-size:42px; letter-spacing:3px; margin-bottom:15px; }
+        .intro p{ color:#888; line-height:1.8; margin-bottom:30px; }
+        .warning-note{ border:1px solid #222; padding:15px; margin-bottom:25px; color:#666; font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.8; text-align:left; }
+    </style>
+</head>
+<body>
+
+<div class="exam">
+    <header>
+        <div class="logo">THYNK <span>// MATH LAB</span></div>
+        <div class="status"><span class="status-dot"></span>HIGH SCHOOL MATH EXAM ACTIVE</div>
+    </header>
+
+    <main>
+        <div class="top">
+            <div>
+                <div class="domain-label" id="domainLabel">MATHEMATICS // ALGEBRA & CALCULUS</div>
+                <div class="domain" id="questionTitle">โจทย์คณิตศาสตร์ ม.ปลาย</div>
+            </div>
+            <div class="question-counter">
+                <small>QUESTION</small>
+                <strong id="qNum">01</strong> <span>/ 20</span>
+            </div>
+        </div>
+
+        <div class="progress-wrap">
+            <div class="progress-info">
+                <span id="progressText">PROGRESS 01 / 20</span>
+                <span id="percent">0%</span>
+            </div>
+            <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+        </div>
+
+        <section class="card">
+            <div class="type" id="questionType">TOPIC: ฟังก์ชันและกราฟ</div>
+            <div class="question" id="questionText">กำลังโหลดโจทย์...</div>
+            <div class="equation-box" id="equationBox" style="display:none;"></div>
+
+            <form id="mathForm">
+                <div class="input-group">
+                    <label>FINAL ANSWER (คำตอบสุดท้ายสำหรับระบบตรวจอัตโนมัติ)</label>
+                    <input type="text" id="finalAnswer" placeholder="เช่น 5, -2, 3/4 หรือ 0.5..." required>
+                </div>
+
+                <div class="input-group">
+                    <label>STEP-BY-STEP SOLUTION / วิธีทำ (แสดงแนวคิดและวิธีคำนวณ)</label>
+                    <textarea id="solutionInput" placeholder="เขียนขั้นตอนการแก้ปัญหา วิธีทำ หรือสมการคำนวณที่นี่..." required></textarea>
+                </div>
+
+                <div class="card-footer">
+                    <div class="timer">TIME: <strong id="timer">30:00</strong></div>
+                    <button type="submit" id="nextButton">NEXT QUESTION →</button>
+                </div>
+            </form>
+        </section>
+    </main>
+</div>
+
+<!-- INTRO MODAL -->
+<div class="overlay" id="introOverlay">
+    <div class="intro">
+        <div class="intro-label">THYNK // ASSESSMENT SYSTEM</div>
+        <h1>MATH CHALLENGE</h1>
+        <p>แบบทดสอบคณิตศาสตร์ระดับมัธยมปลาย จำนวน 20 ข้อ<br>พร้อมระบบตรวจคำตอบอัตโนมัติและการแสดงวิธีทำ</p>
+        <div class="warning-note">
+            • จำนวนข้อสอบ: 20 ข้อ<br>
+            • เวลาทำข้อสอบ: 30 นาทีต่อข้อ<br>
+            • รูปแบบ: กรอกคำตอบสุดท้าย และแสดงวิธีทำทีละข้อ<br>
+            • การประเมิน: ระบบจะตรวจคำตอบและรวบรวมคะแนนส่งไปยังหน้ารายงานผลทันทีเมื่อครบ 20 ข้อ
+        </div>
+        <button id="startButton">BEGIN EXAM →</button>
+    </div>
+</div>
+
+<script>
+/* =========================================================
+   20 HIGH SCHOOL MATHEMATICS QUESTIONS DATABASE
+   ========================================================= */
+const mathQuestions = [
+    { id: 1, topic: "แคลคูลัส (Calculus)", text: "จงหาอนุพันธ์ของฟังก์ชัน $f(x) = 3x^3 - 5x^2 + 7x - 2$ เมื่อ $x = 2$", eq: "$f'(x) = 9x^2 - 10x + 7$", answer: "27" },
+    { id: 2, topic: "ฟังก์ชันและกราฟ", text: "จงหาค่าต่ำสุดของฟังก์ชันควอดราติก $f(x) = x^2 - 4x + 3$", eq: "$f(x) = x^2 - 4x + 3$", answer: "-1" },
+    { id: 3, topic: "ลอการิทึม (Logarithm)", text: "จงหาค่าของ $\\log_2(32) + \\log_3(81)$", eq: "\\log_2(32) + \\log_3(81)", answer: "9" },
+    { id: 4, topic: "ลิมิต (Limit)", text: "จงหาค่าของลิมิต $\\lim_{x \\to 2} \\frac{x^2 - 4}{x - 2}$", eq: "\\lim_{x \\to 2} \\frac{x^2 - 4}{x - 2}", answer: "4" },
+    { id: 5, topic: "ตรีโกณมิติ (Trigonometry)", text: "จงหาค่าของ $\\sin(30^\\circ) + \\cos(60^\\circ)$", eq: "\\sin(30^\\circ) + \\cos(60^\\circ)", answer: "1" },
+    { id: 6, topic: "เลขยกกำลัง (Exponents)", text: "ถ้า $2^{x+1} = 32$ จงหาค่าของ $x$", eq: "2^{x+1} = 32", answer: "4" },
+    { id: 7, topic: "อนุกรม (Series)", text: "จงหาผลรวมของอนุกรมเรขาคณิตอนันต์ $2 + 1 + 0.5 + 0.25 + \\dots$", eq: "S_\\infty = \\sum_{n=0}^{\\infty} 2 \\left(\\frac{1}{2}\\right)^n", answer: "4" },
+    { id: 8, topic: "อินทิกรัล (Integration)", text: "จงหาค่าของอินทิกรัลจำกัดเขต $\\int_{0}^{2} (3x^2 - 1) \\, dx$", eq: "\\int_{0}^{2} (3x^2 - 1) \\, dx", answer: "6" },
+    { id: 9, topic: "เรขาคณิตวิเคราะห์", text: "ความชันของเส้นตรงที่ผ่านจุด $(1, 2)$ และ $(4, 11)$ มีค่าเท่าใด", eq: "m = \\frac{y_2 - y_1}{x_2 - x_1}", answer: "3" },
+    { id: 10, topic: "ความน่าจะเป็น (Probability)", text: "จงหาค่าของแฟกทอทอเรียลและความน่าจะเป็น: เลือกสิ่งของ 2 สิ่งจาก 5 สิ่ง $\\binom{5}{2}$ ได้กี่วิธี", eq: "\\binom{5}{2} = \\frac{5!}{2!(5-2)!}", answer: "10" },
+    { id: 11, topic: "เมทริกซ์ (Matrix)", text: "กำหนดให้ $A = \\begin{pmatrix} 2 & 1 \\\\ 5 & 3 \\end{pmatrix}$ จงหาค่าดีเทอร์มิแนนต์ $\\det(A)$", eq: "\\det(A) = (2\\times3) - (1\\times5)", answer: "1" },
+    { id: 12, topic: "พหุนามและสมการ", text: "จงหาผลบวกของรากทั้งหมดของสมการพหุนาม $x^2 - 5x + 6 = 0$", eq: "x^2 - 5x + 6 = 0", answer: "5" },
+    { id: 13, topic: "ความน่าจะเป็น", text: "ถุงใบหนึ่งมีลูกบอลสีแดง 3 ลูก และสีฟ้า 2 ลูก สุ่มหยิบลูกบอล 1 ลูก ความจะเป็นที่จะได้สีแดง (ตอบในรูปทศนิยม)", eq: "P(\\text{Red}) = \\frac{3}{5}", answer: "0.6" },
+    { id: 14, topic: "ตรีโกณมิติ", text: "จงหาค่าของ $\\cos(0^\\circ) + \\sin(90^\\circ)$", eq: "\\cos(0^\\circ) + \\sin(90^\\circ)", answer: "2" },
+    { id: 15, topic: "ลำดับและอนุกรม", text: "ผลบวกของจำนวนเต็มบวกตั้งแต่ 1 ถึง 10 มีค่าเท่าใด", eq: "\\sum_{i=1}^{10} i", answer: "55" },
+    { id: 16, topic: "เรขาคณิตวิเคราะห์", text: "ระยะห่างระหว่างจุด $(1, 2)$ และ $(4, 6)$ บนระนาบพิกัดฉากคือเท่าใด", eq: "d = \\sqrt{(4-1)^2 + (6-2)^2}", answer: "5" },
+    { id: 17, topic: "ฟังก์ชันประกอบ", text: "ถ้า $f(x) = 2x + 3$ และ $g(x) = x^2$ จงหาค่าของ $(f \\circ g)(3)$", eq: "f(g(3))", answer: "21" },
+    { id: 18, topic: "ลอการิทึม", text: "จงหาค่าของ $\\log_{10}(1000)$", eq: "\\log_{10}(1000)", answer: "3" },
+    { id: 19, topic: "เรขาคณิตทั่วไป", text: "พื้นที่ของสามเหลี่ยมที่มีความยาวฐาน 10 หน่วย และความสูง 8 หน่วย คือเท่าใด", eq: "\\text{Area} = \\frac{1}{2} \\times \\text{base} \\times \\text{height}", answer: "40" },
+    { id: 20, topic: "เลขยกกำลัง", text: "จงหาค่าของ $3^3 - 2^4 + 5^0$", eq: "3^3 - 2^4 + 5^0", answer: "12" }
+];
+
+let currentIndex = 0;
+let userAnswers = [];
+let timerInterval = null;
+let timeLeft = 30 * 60; // 30 นาทีต่อข้อ (1800 วินาที)
+
+const introOverlay = document.getElementById("introOverlay");
+const startButton = document.getElementById("startButton");
+const mathForm = document.getElementById("mathForm");
+const finalAnswerInput = document.getElementById("finalAnswer");
+const solutionInput = document.getElementById("solutionInput");
+const qNum = document.getElementById("qNum");
+const questionType = document.getElementById("questionType");
+const questionText = document.getElementById("questionText");
+const equationBox = document.getElementById("equationBox");
+const progressBar = document.getElementById("progressBar");
+const percent = document.getElementById("percent");
+const progressText = document.getElementById("progressText");
+const timerDisplay = document.getElementById("timer");
+
+startButton.addEventListener("click", () => {
+    introOverlay.style.display = "none";
+    currentIndex = 0;
+    userAnswers = [];
+    loadQuestion();
+});
+
+function formatTime(seconds) {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
+}
+
+function loadQuestion() {
+    clearInterval(timerInterval);
+    timeLeft = 30 * 60; // รีเซ็ตเวลาเป็น 30 นาทีทุกครั้งที่ขึ้นข้อใหม่
+    timerDisplay.textContent = formatTime(timeLeft);
+
+    const q = mathQuestions[currentIndex];
+    qNum.textContent = String(currentIndex + 1).padStart(2, "0");
+    questionType.textContent = `TOPIC: ${q.topic.toUpperCase()}`;
+    questionText.innerHTML = q.text;
+
+    if (q.eq) {
+        equationBox.style.display = "block";
+        equationBox.innerHTML = `$$${q.eq}$$`;
+    } else {
+        equationBox.style.display = "none";
+    }
+
+    finalAnswerInput.value = "";
+    solutionInput.value = "";
+
+    updateProgress();
+    startTimer();
+
+    if (window.MathJax && window.MathJax.typesetPromise) {
+        MathJax.typesetPromise([questionText, equationBox]);
+    }
+}
+
+function startTimer() {
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        timerDisplay.textContent = formatTime(timeLeft);
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            submitAnswer(true); // หมดเวลา บันทึกคำตอบอัตโนมัติ
+        }
+    }, 1000);
+}
+
+function updateProgress() {
+    const progress = ((currentIndex + 1) / mathQuestions.length) * 100;
+    progressBar.style.width = `${progress}%`;
+    percent.textContent = `${Math.round(progress)}%`;
+    progressText.textContent = `PROGRESS ${String(currentIndex + 1).padStart(2, "0")} / 20`;
+}
+
+mathForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    submitAnswer(false);
+});
+
+function submitAnswer(isTimeout) {
+    const ansVal = finalAnswerInput.value.trim();
+    const solVal = solutionInput.value.trim();
+    const q = mathQuestions[currentIndex];
+
+    // ตรวจสอบความถูกต้องเปรียบเทียบกับคำตอบที่ตั้งไว้
+    const isCorrect = ansVal.toLowerCase() === q.answer.toLowerCase();
+
+    userAnswers.push({
+        questionId: q.id,
+        topic: q.topic,
+        questionText: q.text,
+        correctAnswer: q.answer,
+        userAnswer: ansVal || "(ไม่ตอบ)",
+        userSolution: solVal || "(ไม่มีวิธีทำ)",
+        isCorrect: isCorrect,
+        isTimeout: isTimeout
+    });
+
+    currentIndex++;
+
+    if (currentIndex < mathQuestions.length) {
+        loadQuestion();
+    } else {
+        finishExam();
+    }
+}
+
+function finishExam() {
+    clearInterval(timerInterval);
+
+    // คำนวณคะแนนรวม
+    const totalCorrect = userAnswers.filter(a => a.isCorrect).length;
+    const finalScore = Math.round((totalCorrect / mathQuestions.length) * 100);
+
+    const examResultData = {
+        totalQuestions: mathQuestions.length,
+        totalCorrect: totalCorrect,
+        score: finalScore,
+        answers: userAnswers,
+        completedAt: new Date().toLocaleString('th-TH')
+    };
+
+    // บันทึกลง sessionStorage เพื่อส่งต่อไปยังหน้า result.html
+    sessionStorage.setItem("thynkMathExamResult", JSON.stringify(examResultData));
+
+    // เปลี่ยนหน้าไปหน้ารายงานผล
+    window.location.href = "personality result.html";
+}
+</script>
+
+</body>
+</html>

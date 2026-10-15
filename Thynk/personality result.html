@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THYNK // MATH EXAM REPORT & CERTIFICATE</title>
+<link rel="icon" type="image/png" href="thynk.png">
+
+<!-- MathJax สำหรับแสดงผลสมการ LaTeX -->
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root{
+    --bg:#050505;
+    --panel:#0b0b0b;
+    --panel2:#101010;
+    --line:#252525;
+    --text:#f2f2f2;
+    --muted:#777;
+    --soft:#aaa;
+    --green:#00ff9c;
+    --red:#ff3b5c;
+    --gold:#d6b36a;
+    --blue:#5ca8ff;
+}
+
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+
+body{
+    margin:0;
+    background: radial-gradient(circle at 50% -10%, #171717 0%, #050505 45%, #000 100%);
+    color:var(--text);
+    font-family:'Kanit',sans-serif;
+    min-height:100vh;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.035;
+    background-image:
+        linear-gradient(#fff 1px, transparent 1px),
+        linear-gradient(90deg, #fff 1px, transparent 1px);
+    background-size:40px 40px;
+}
+
+/* HEADER */
+.header{
+    height:76px;
+    border-bottom:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 40px;
+    position:relative;
+    z-index:2;
+    background:rgba(5,5,5,.92);
+    backdrop-filter:blur(8px);
+}
+.logo{
+    font-family:'JetBrains Mono',monospace;
+    font-size:21px;
+    font-weight:700;
+    letter-spacing:4px;
+}
+.logo span{ color:var(--green); }
+.status{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:#777;
+    letter-spacing:1px;
+}
+.status-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow: 0 0 12px var(--green);
+}
+
+/* MAIN CONTAINER */
+.container{
+    width:min(1180px,92%);
+    margin:0 auto;
+    padding:60px 0 100px;
+}
+.kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--green);
+    letter-spacing:3px;
+    margin-bottom:12px;
+}
+h1{ font-size:48px; line-height:1; margin:0; letter-spacing:1px; }
+.subtitle{ color:var(--muted); margin-top:14px; font-size:15px; }
+
+/* META INFO */
+.assessment-meta{
+    display:flex;
+    gap:30px;
+    margin-top:25px;
+    flex-wrap:wrap;
+}
+.meta-item{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    color:#555;
+    letter-spacing:1px;
+}
+.meta-item span{ color:#aaa; margin-left:7px; }
+
+/* HERO SCORE */
+.score-hero{
+    margin-top:45px;
+    border:1px solid var(--line);
+    background: linear-gradient(135deg, rgba(255,255,255,.025), rgba(255,255,255,.005));
+    min-height:260px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    position:relative;
+    overflow:hidden;
+}
+.score-left{
+    padding:40px;
+    border-right:1px solid var(--line);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+.score-label{
+    font-family:'JetBrains Mono',monospace;
+    color:#777;
+    font-size:11px;
+    letter-spacing:3px;
+}
+.score-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 64px;
+    font-weight: 700;
+    color: var(--green);
+    margin: 10px 0;
+}
+.score-value span { font-size: 24px; color: #555; }
+
+.score-right{
+    padding:40px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+.level-label{ color:#777; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:3px; }
+.level{ font-size:28px; font-weight:600; margin:8px 0; }
+.type{ color:var(--green); font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:2px; }
+
+/* SECTIONS */
+.section{ margin-top:55px; }
+.section-title{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    letter-spacing:2px;
+    margin-bottom:20px;
+}
+.section-title::before{ content:""; width:25px; height:1px; background:var(--green); }
+
+/* QUESTION REVIEW LIST */
+.review-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.review-item {
+    border: 1px solid var(--line);
+    background: var(--panel);
+    padding: 20px;
+}
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #777;
+    margin-bottom: 8px;
+}
+.review-q {
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+.review-ans-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    background: #050505;
+    padding: 12px;
+    border: 1px solid #1f1f1f;
+}
+.correct-badge { color: var(--green); font-weight: bold; }
+.incorrect-badge { color: var(--red); font-weight: bold; }
+
+/* CERTIFICATE FORM SECTION */
+.identity{
+    border:1px solid var(--line);
+    background: linear-gradient(135deg, #0e0e0e, #070707);
+    padding:40px;
+}
+.identity-intro{
+    color:#777;
+    line-height:1.7;
+    margin-bottom:30px;
+}
+.form-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:15px;
+}
+.field{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+.field.full{
+    grid-column:1/-1;
+}
+.field label{
+    font-family:'JetBrains Mono',monospace;
+    color:#777;
+    font-size:10px;
+    letter-spacing:1px;
+}
+.field input{
+    background:#050505;
+    border:1px solid #292929;
+    color:white;
+    padding:14px;
+    font-family:'Kanit',sans-serif;
+    outline:none;
+    font-size:14px;
+    transition:.2s;
+}
+.field input:focus{
+    border-color:#777;
+    box-shadow: 0 0 0 1px #222;
+}
+
+.certificate-button{
+    width:100%;
+    margin-top:25px;
+    padding:19px;
+    background:#f2f2f2;
+    color:#050505;
+    border:0;
+    font-family:'JetBrains Mono',monospace;
+    font-weight:700;
+    letter-spacing:2px;
+    cursor:pointer;
+    transition:.25s;
+}
+.certificate-button:hover{
+    background:var(--green);
+    box-shadow: 0 0 30px rgba(0,255,156,.18);
+}
+
+.retry-button {
+    width: 100%;
+    margin-top: 15px;
+    padding: 15px;
+    background: transparent;
+    color: #888;
+    border: 1px solid #222;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    cursor: pointer;
+    transition: .2s;
+}
+.retry-button:hover {
+    border-color: #555;
+    color: #fff;
+}
+
+.error{
+    display:none;
+    color:var(--red);
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    margin-top:15px;
+}
+
+.footer{
+    text-align:center;
+    color:#444;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    letter-spacing:2px;
+    margin-top:70px;
+}
+
+@media(max-width:800px){
+    .header{ padding:0 20px; }
+    .container{ width:94%; padding-top:35px; }
+    h1{ font-size:34px; }
+    .score-hero{ grid-template-columns:1fr; }
+    .score-left{ border-right:0; border-bottom:1px solid var(--line); }
+    .form-grid{ grid-template-columns:1fr; }
+    .field.full{ grid-column:auto; }
+    .review-ans-box { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo">
+        THYNK <span>//</span> MATH EXAM REPORT
+    </div>
+    <div class="status">
+        <div class="status-dot"></div>
+        EXAM EVALUATION COMPLETE
+    </div>
+</header>
+
+<main class="container">
+
+<div class="kicker">THYNK // MATHEMATICAL ASSESSMENT</div>
+<h1>EXAM REPORT</h1>
+<div class="subtitle">รายงานผลคะแนนสอบ 20 ข้อ พร้อมการตรวจคำตอบและแสดงวิธีทำของคุณ</div>
+
+<div class="assessment-meta">
+    <div class="meta-item">COMPLETED AT <span id="resTimestamp">--</span></div>
+    <div class="meta-item">TOTAL QUESTIONS <span id="resTotal">20</span></div>
+    <div class="meta-item">CORRECT ANSWERS <span id="resCorrect">--</span></div>
+</div>
+
+<!-- HERO SCORE -->
+<section class="score-hero">
+    <div class="score-left">
+        <div class="score-label">FINAL SCORE</div>
+        <div class="score-value" id="scoreValue">--<span>/100</span></div>
+        <div style="color:#666; font-size:12px; font-family:'JetBrains Mono',monospace;" id="scoreDesc">
+            ประเมินผลจากคำตอบที่ถูกต้องทั้งหมด
+        </div>
+    </div>
+
+    <div class="score-right">
+        <div class="level-label">PERFORMANCE LEVEL</div>
+        <div class="level" id="performanceLevel">ANALYZING...</div>
+        <div class="type" id="performanceType">// HIGH SCHOOL MATHEMATICS</div>
+    </div>
+</section>
+
+<!-- DETAILED ANSWER REVIEW -->
+<section class="section">
+    <div class="section-title">DETAILED ANSWER REVIEW // ตรวจสอบคำตอบแต่ละข้อ</div>
+    <div class="review-list" id="reviewList">
+        <!-- รายการข้อสอบจะถูกเรนเดอร์ด้วย JavaScript -->
+    </div>
+</section>
+
+<!-- CERTIFICATE IDENTITY FORM -->
+<section class="section">
+    <div class="section-title">CERTIFICATE IDENTITY</div>
+
+    <div class="identity">
+        <div class="identity-intro">
+            กรอกข้อมูลด้านล่างเพื่อรับใบเกียรติบัตรการผ่านการทดสอบคณิตศาสตร์ระดับมัธยมปลาย THYNK Math Challenge
+            <br>
+            ชื่อและข้อมูลที่กรอกจะถูกนำไปแสดงบนใบเกียรติบัตรอย่างเป็นทางการของคุณ
+        </div>
+
+        <div class="form-grid">
+            <div class="field">
+                <label>FIRST NAME / ชื่อ</label>
+                <input type="text" id="firstName" placeholder="ชื่อของคุณ" maxlength="40">
+            </div>
+
+            <div class="field">
+                <label>LAST NAME / นามสกุล</label>
+                <input type="text" id="lastName" placeholder="นามสกุลของคุณ" maxlength="40">
+            </div>
+
+            <div class="field full">
+                <label>DISPLAY NAME / ชื่อที่ต้องการแสดงบนใบเกียรติบัตร</label>
+                <input type="text" id="displayName" placeholder="เว้นว่างได้ ระบบจะใช้ชื่อและนามสกุล" maxlength="80">
+            </div>
+
+            <div class="field">
+                <label>COUNTRY / ประเทศ</label>
+                <input type="text" id="country" placeholder="Thailand" maxlength="40">
+            </div>
+
+            <div class="field">
+                <label>ORGANIZATION / SCHOOL</label>
+                <input type="text" id="organization" placeholder="ไม่บังคับ" maxlength="80">
+            </div>
+        </div>
+
+        <div class="error" id="formError">
+            PLEASE ENTER YOUR FIRST NAME AND LAST NAME.
+        </div>
+
+        <button class="certificate-button" onclick="generateCertificate()">
+            ✦ RECEIVE MY MATH EXAM CERTIFICATE
+        </button>
+
+        <button class="retry-button" onclick="location.href='index.html'">
+            ↻ RETRY MATH EXAM
+        </button>
+    </div>
+</section>
+
+<div class="footer">
+    THYNK // MATHEMATICAL ASSESSMENT ENGINE
+</div>
+
+</main>
+
+<script>
+/* =========================================================
+   THYNK MATH EXAM RESULT & CERTIFICATE GENERATOR LOADER
+   ========================================================= */
+
+const rawData = sessionStorage.getItem("thynkMathExamResult");
+
+if (!rawData) {
+    document.body.innerHTML = `
+        <div style="min-height:100vh; display:flex; align-items:center; justify-content:center; background:#050505; color:white; font-family:monospace; text-align:center; padding:30px;">
+            <div>
+                <div style="color:#ff3b5c; font-size:12px; letter-spacing:3px; margin-bottom:15px;">
+                    ERROR // NO EXAM DATA
+                </div>
+                <div style="color:#777;">ไม่พบข้อมูลผลการสอบคณิตศาสตร์ในเซสชันนี้</div>
+                <button onclick="location.href='index.html'" style="margin-top:25px; padding:12px 25px; background:white; color:#050505; border:0; cursor:pointer; font-weight:bold;">
+                    RETURN TO EXAM
+                </button>
+            </div>
+        </div>
+    `;
+} else {
+    const data = JSON.parse(rawData);
+
+    document.getElementById("resTimestamp").textContent = data.completedAt || "--";
+    document.getElementById("resTotal").textContent = data.totalQuestions || 20;
+    document.getElementById("resCorrect").textContent = `${data.totalCorrect || 0} ข้อ`;
+    document.getElementById("scoreValue").innerHTML = `${data.score || 0}<span>/100</span>`;
+
+    // ระดับผลการประเมิน
+    const score = data.score || 0;
+    const levelEl = document.getElementById("performanceLevel");
+    const descEl = document.getElementById("scoreDesc");
+    if (score >= 80) {
+        levelEl.textContent = "EXCELLENT // ดีเยี่ยม";
+        descEl.textContent = "คุณมีความเข้าใจในเนื้อหาคณิตศาสตร์ระดับมัธยมปลายในเกณฑ์ยอดเยี่ยม";
+    } else if (score >= 50) {
+        levelEl.textContent = "PROFICIENT // ผ่านเกณฑ์";
+        descEl.textContent = "คุณมีความรู้ความเข้าใจในหลักการคำนวณและแก้ปัญหาได้ดี";
+    } else {
+        levelEl.textContent = "DEVELOPING // ควรพัฒนาเพิ่ม";
+        descEl.textContent = "แนะนำให้ทบทวนสูตรและฝึกฝนการแสดงวิธีทำเพิ่มเติม";
+    }
+
+    // แสดงรายการข้อสอบที่ผู้ใช้ทำ
+    const reviewList = document.getElementById("reviewList");
+    reviewList.innerHTML = data.answers.map((ans, idx) => `
+        <div class="review-item">
+            <div class="review-header">
+                <span>QUESTION ${idx + 1} // ${ans.topic.toUpperCase()}</span>
+                <span class="${ans.isCorrect ? 'correct-badge' : 'incorrect-badge'}">
+                    ${ans.isCorrect ? '✓ CORRECT (+5 PTS)' : '✗ INCORRECT (0 PTS)'}
+                </span>
+            </div>
+            <div class="review-q">${ans.questionText}</div>
+            <div class="review-ans-box">
+                <div><strong>คำตอบของคุณ:</strong> ${ans.userAnswer} (เฉลย: ${ans.correctAnswer})</div>
+                <div><strong>วิธีทำของคุณ:</strong> ${ans.userSolution}</div>
+            </div>
+        </div>
+    `).join("");
+
+    if (window.MathJax && window.MathJax.typesetPromise) {
+        MathJax.typesetPromise([reviewList]);
+    }
+}
+
+/* =========================================================
+   GENERATE CERTIFICATE LOGIC
+   ========================================================= */
+function generateCertificate() {
+    const firstName = document.getElementById("firstName").value.trim();
+    const lastName = document.getElementById("lastName").value.trim();
+    const displayName = document.getElementById("displayName").value.trim();
+    const country = document.getElementById("country").value.trim() || "Thailand";
+    const organization = document.getElementById("organization").value.trim();
+    const formError = document.getElementById("formError");
+
+    if (!firstName || !lastName) {
+        formError.style.display = "block";
+        return;
+    }
+
+    formError.style.display = "none";
+
+    const examData = JSON.parse(rawData || "{}");
+
+    // รวบรวมข้อมูลสำหรับนำไปสร้างเกียรติบัตร (ส่งต่อไปยังหน้าใบรับรอง)
+    const certData = {
+        fullName: displayName || `${firstName} ${lastName}`,
+        country: country,
+        organization: organization,
+        score: examData.score || 0,
+        totalCorrect: examData.totalCorrect || 0,
+        totalQuestions: examData.totalQuestions || 20,
+        timestamp: examData.completedAt || new Date().toLocaleString('th-TH')
+    };
+
+    localStorage.setItem("thynk_cert_data", JSON.stringify(certData));
+
+    // เปลี่ยนหน้าไปที่หน้าใบเกียรติบัตร
+    window.location.href = "personality certificate.html";
+}
+</script>
+
+</body>
+</html>

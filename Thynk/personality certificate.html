@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THYNK // Math Exam Certificate</title>
+<link rel="icon" type="image/png" href="thynk.png">
+
+<!-- MathJax สำหรับแสดงผลสมการ LaTeX -->
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Kanit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#070707;color:#111;font-family:Kanit,sans-serif}
+
+body::before{
+    content:"";
+    position:fixed;inset:0;pointer-events:none;opacity:.05;
+    background-image:
+      linear-gradient(rgba(255,255,255,.3) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.3) 1px,transparent 1px);
+    background-size:40px 40px;
+}
+
+.topbar{
+    height:64px;padding:0 34px;display:flex;align-items:center;justify-content:space-between;
+    background:#080808;border-bottom:1px solid #222;color:#fff;
+    position:relative;z-index:2;
+}
+.logo{font-family:JetBrains Mono,monospace;font-size:18px;font-weight:700;letter-spacing:2px;color:#fff}
+.logo span{color:#00ff9c;margin:0 7px}
+.top-status{font:500 10px JetBrains Mono,monospace;letter-spacing:1.7px;color:#888}
+
+.page{
+    min-height:calc(100vh - 64px);padding:30px 20px 50px;
+    display:flex;flex-direction:column;align-items:center
+}
+
+/* ขนาด A4 หั่นครึ่งแนวนอน (A5 Landscape: 210mm x 148mm) */
+.certificate{
+    width:210mm;
+    height:148mm;
+    background:#ffffff;
+    color:#000000;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 20px 50px rgba(0,0,0,0.5);
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    padding:8mm 12mm;
+    border:1px solid #000;
+}
+
+/* Decorative Frames & Borders */
+.frame1{position:absolute;inset:4mm;border:1px solid #000;pointer-events:none}
+.frame2{position:absolute;inset:5.5mm;border:1px solid #000;pointer-events:none}
+.frame3{position:absolute;inset:7.5mm;border:1px solid #e0e0e0;pointer-events:none}
+
+.corner{position:absolute;width:8mm;height:8mm;border-color:#000;z-index:2;pointer-events:none}
+.corner.tl{left:5.5mm;top:5.5mm;border-left:2px solid;border-top:2px solid}
+.corner.tr{right:5.5mm;top:5.5mm;border-right:2px solid;border-top:2px solid}
+.corner.bl{left:5.5mm;bottom:5.5mm;border-left:2px solid;border-bottom:2px solid}
+.corner.br{right:5.5mm;bottom:5.5mm;border-right:2px solid;border-bottom:2px solid}
+
+.watermark{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-15deg);
+    font:700 80px Cinzel,serif;color:#000;opacity:.025;letter-spacing:10px;white-space:nowrap;pointer-events:none;
+}
+
+.certificate-content{
+    position:relative;z-index:3;height:100%;
+    display:flex;flex-direction:column;align-items:center;text-align:center;
+    justify-content:space-between;width:100%;
+}
+
+/* ขยายขนาดโลโก้และชื่อหัวกระดาษให้ใหญ่ขึ้น */
+.thynk-logo img{width:52px;height:auto;margin-bottom:2px}
+.website-name{font:700 18px JetBrains Mono,monospace;letter-spacing:4px;color:#000000}
+.website-sub{font:600 10px JetBrains Mono,monospace;color:#000000;letter-spacing:2px;margin-bottom:2px}
+.gold-line{width:70px;height:2px;background:#000000;margin:3px 0}
+
+/* ปรับขนาดตัวอักษรหัวข้อและเนื้อหาให้ใหญ่และชัดเจนขึ้น */
+.main-title{margin:1px 0;font:700 20px Cinzel,serif;letter-spacing:2px;color:#000000}
+.main-subtitle{font:600 9.5px JetBrains Mono,monospace;letter-spacing:1.5px;color:#000000}
+.presented{margin-top:2px;font-size:12px;color:#000000;font-family:Kanit,sans-serif}
+
+.name{margin:2px 0;font:700 28px Kanit,sans-serif;letter-spacing:1px;color:#000000;line-height:1.1}
+.name-line{width:240px;border-bottom:2px solid #000000;margin:1px auto 3px}
+
+.description{margin:0 auto;max-width:540px;font-size:12px;line-height:1.45;color:#000000}
+.description strong{color:#000000}
+
+/* SCORE HERO BOX (ปรับขนาดให้ใหญ่และสมดุล) */
+.score-hero{
+    margin:2px auto;width:100%;max-width:500px;border:1px solid #000;background:#ffffff;color:#000000;
+    padding:6px 14px;display:flex;justify-content:space-between;align-items:center;text-align:left;
+    border-radius:4px;
+}
+.score-info .label{font:600 8.5px JetBrains Mono,monospace;letter-spacing:1.5px;color:#000000}
+.score-info .title{margin-top:1px;font:700 15px Cinzel,serif;letter-spacing:0.5px;color:#000000}
+.score-info .sub{font:400 8.5px JetBrains Mono,monospace;color:#000000;margin-top:1px}
+.score-badge{background:#ffffff;border:1px solid #000;padding:3px 10px;text-align:center;border-radius:3px}
+.score-badge .val{font:700 22px JetBrains Mono,monospace;color:#000000;line-height:1}
+.score-badge .lbl{font:6px JetBrains Mono,monospace;letter-spacing:1px;color:#000000;margin-top:1px}
+
+.section-title{
+    margin:3px 0 1px;text-align:left;width:100%;border-bottom:1px solid #000;
+    padding-bottom:1px;font:600 9.5px JetBrains Mono,monospace;letter-spacing:1.5px;color:#000000
+}
+
+/* STATISTICS / INFO GRID */
+.statistics{
+    display:grid;grid-template-columns:repeat(3,1fr);border:1px solid #000;margin-top:1px;width:100%;
+    text-align:left;background:#fff;border-radius:3px;overflow:hidden;
+}
+.stat{padding:4px 8px;border-right:1px solid #000}
+.stat:last-child{border-right:0}
+.stat-label{font:500 8.5px JetBrains Mono,monospace;color:#000000}
+.stat-value{margin-top:1px;font:600 12px JetBrains Mono,monospace;color:#000000}
+
+/* SIGNATURE SECTION (โซนลายเซ็นผู้ก่อตั้งตรงกึ่งกลางด้านล่าง) */
+.signature-section{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    margin: 2px auto 1px;
+}
+.signature-img{
+    height:30px;
+    width:auto;
+    object-fit:contain;
+    margin-bottom:1px;
+}
+.signature-line{
+    width:140px;
+    border-bottom:1px solid #000;
+    margin-bottom:2px;
+}
+.signature-name{
+    font:700 11px Kanit,sans-serif;
+    color:#000000;
+}
+.signature-title{
+    font:600 8.5px JetBrains Mono,monospace;
+    color:#000000;
+    letter-spacing:1px;
+}
+
+/* CERTIFICATE FOOTER (วันที่และรหัส) */
+.certificate-footer{
+    margin-top:auto;padding-top:3px;border-top:1px solid #000;
+    display:flex;justify-content:space-between;text-align:left;width:100%;align-items:flex-end;
+}
+.footer-left{display:flex;gap:30px}
+.footer-label{font:600 8.5px JetBrains Mono,monospace;color:#000000;letter-spacing:.8px}
+.footer-value{font:600 11px JetBrains Mono,monospace;margin-top:1px;color:#000000}
+.footer-right{text-align:right}
+.footer-note{font:600 8px JetBrains Mono,monospace;color:#000000;line-height:1.2}
+
+/* ACTIONS */
+.actions{display:flex;gap:12px;margin-top:20px}
+.action-btn{
+    border:1px solid #444;background:#111;color:#fff;padding:12px 22px;cursor:pointer;
+    font:500 13px Kanit,sans-serif;letter-spacing:.3px;transition:.2s;border-radius:6px;
+}
+.action-btn:hover{background:#222;border-color:#00ff9c}
+.download-btn{background:#00ff9c;border-color:#00ff9c;color:#000;font-weight:600}
+.download-btn:hover{background:#00df8a}
+
+.info{margin-top:12px;font:9px JetBrains Mono,monospace;color:#777;letter-spacing:1px}
+
+.pdf-loading{
+    position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;z-index:99;
+    align-items:center;justify-content:center;flex-direction:column;color:#fff
+}
+.pdf-loading.active{display:flex}
+.loader-ring{
+    width:42px;height:42px;border:2px solid #444;border-top-color:#00ff9c;border-radius:50%;
+    animation:spin 1s linear infinite
+}
+.loading-title{margin-top:15px;font:600 13px Kanit}
+.loading-subtitle{margin-top:5px;font:9px JetBrains Mono;color:#aaa}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.error-screen{
+    min-height:100vh;background:#090909;color:#fff;display:flex;align-items:center;
+    justify-content:center;text-align:center;padding:30px
+}
+.error-box{border:1px solid #333;padding:40px;max-width:520px;border-radius:8px}
+.error-box h1{font:600 22px Cinzel;margin:0 0 12px}
+.error-box p{color:#aaa;line-height:1.7}
+
+@media(max-width:850px){
+    .certificate{transform-origin:top center;transform:scale(.75);margin-bottom:-60px}
+}
+@media(max-width:650px){
+    .topbar{padding:0 15px}.top-status{display:none}
+    .actions{flex-direction:column;width:100%;max-width:350px}
+}
+.pdf-mode{box-shadow:none!important}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="logo">THYNK <span>//</span> MATH LAB</div>
+    <div class="top-status">VERIFIED MATHEMATICAL ASSESSMENT CERTIFICATE</div>
+</header>
+
+<main class="page">
+
+<section class="certificate" id="certificate">
+    <div class="frame1"></div>
+    <div class="frame2"></div>
+    <div class="frame3"></div>
+
+    <div class="corner tl"></div><div class="corner tr"></div>
+    <div class="corner bl"></div><div class="corner br"></div>
+
+    <div class="watermark">THYNK</div>
+
+    <div class="certificate-content">
+
+        <div class="thynk-logo">
+            <img src="thynk.png" alt="THYNK">
+        </div>
+
+        <div>
+            <div class="website-name">THYNK</div>
+            <div class="website-sub">HIGH SCHOOL MATHEMATICS ASSESSMENT SYSTEM</div>
+        </div>
+
+        <div class="gold-line"></div>
+
+        <div>
+            <h1 class="main-title">CERTIFICATE OF ACHIEVEMENT</h1>
+            <div class="main-subtitle">OFFICIAL MATH EXAM COMPLETION RECORD</div>
+        </div>
+
+        <div class="presented">ใบรับรองฉบับนี้มอบให้เพื่อแสดงว่า</div>
+
+        <div>
+            <div class="name" id="displayName">—</div>
+            <div class="name-line"></div>
+        </div>
+
+        <div class="description">
+            ได้ผ่านการทดสอบความรู้ความสามารถทางคณิตศาสตร์ระดับมัธยมปลาย จำนวน 20 ข้อ ในระบบ <strong>THYNK Math Challenge</strong> พร้อมผ่านกระบวนการตรวจคำตอบและแสดงวิธีทำครบถ้วนตามเกณฑ์มาตรฐาน
+        </div>
+
+        <!-- กล่องแสดงผลคะแนนรวม -->
+        <div class="score-hero">
+            <div class="score-info">
+                <div class="label">EXAM EVALUATION RESULT</div>
+                <div class="title" id="performanceTitle">EXCELLENT PERFORMANCE</div>
+                <div class="sub" id="orgText">ORGANIZATION: —</div>
+            </div>
+            <div class="score-badge">
+                <div class="val" id="scoreVal">0</div>
+                <div class="lbl">FINAL SCORE / 100</div>
+            </div>
+        </div>
+
+        <div style="width:100%;">
+            <div class="section-title">ASSESSMENT METRICS // สถิติและผลการประเมิน</div>
+            <div class="statistics">
+                <div class="stat">
+                    <div class="stat-label">TOTAL QUESTIONS</div>
+                    <div class="stat-value">20 ข้อ</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">CORRECT ANSWERS</div>
+                    <div class="stat-value" id="correctVal">—</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">ASSESSMENT CODE</div>
+                    <div class="stat-value" id="assessmentId" style="font-size:11px;">THK-MATH-XXXX</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- รูปลายเซ็นผู้ก่อตั้งตรงกึ่งกลางด้านล่าง พร้อมตำแหน่ง -->
+        <div class="signature-section">
+            <img src="thynk1.png" alt="Founder Signature" class="signature-img">
+            <div class="signature-line"></div>
+            <div class="signature-name">THYNK FOUNDER</div>
+            <div class="signature-title">FOUNDER & CHIEF EXECUTIVE OFFICER</div>
+        </div>
+
+        <div class="certificate-footer">
+            <div class="footer-left">
+                <div class="footer-item">
+                    <div class="footer-label">วันที่ออกใบรับรอง</div>
+                    <div class="footer-value" id="date">—</div>
+                </div>
+                <div class="footer-item">
+                    <div class="footer-label">ระบบประเมิน</div>
+                    <div class="footer-value">THYNK MATH ENGINE</div>
+                </div>
+            </div>
+
+            <div class="footer-right">
+                <div class="footer-note">THYNK ASSESSMENT LAB<br>VERIFIED EXAM RECORD</div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<div class="actions">
+    <button class="action-btn" onclick="location.href='index.html'">← &nbsp; กลับสู่หน้าทำข้อสอบ</button>
+    <button class="action-btn download-btn" id="downloadButton" onclick="downloadCertificate()">↓ &nbsp; ดาวน์โหลดใบรับรอง PDF (A5 Landscape)</button>
+</div>
+
+<div class="info">THYNK // A5 LANDSCAPE (HALF A4) // MATH CHALLENGE CERTIFICATE</div>
+
+</main>
+
+<div class="pdf-loading" id="pdfLoading">
+    <div class="loader-ring"></div>
+    <div class="loading-title" id="loadingTitle">กำลังสร้างใบรับรอง A5 แนวนอน</div>
+    <div class="loading-subtitle" id="loadingSubtitle">THYNK // BUILDING LANDSCAPE PDF</div>
+</div>
+
+<script>
+const rawData = localStorage.getItem("thynk_cert_data");
+
+if (!rawData) {
+    document.body.innerHTML = `
+        <div class="error-screen">
+            <div class="error-box">
+                <h1>NO EXAM CERTIFICATE DATA</h1>
+                <p>ไม่พบข้อมูลผลการสอบคณิตศาสตร์<br>กรุณาทำแบบทดสอบให้เสร็จสิ้นและกรอกข้อมูลยืนยันตัวตนก่อน</p>
+                <button class="action-btn" onclick="location.href='index.html'" style="margin-top:20px;">กลับหน้าหลัก</button>
+            </div>
+        </div>`;
+    throw new Error("No certificate data");
+}
+
+let data;
+try { data = JSON.parse(rawData); }
+catch(e) {
+    document.body.innerHTML = `<div class="error-screen"><div class="error-box"><h1>INVALID DATA</h1><p>ไม่สามารถอ่านข้อมูลใบรับรองได้</p></div></div>`;
+    throw e;
+}
+
+const name = data.fullName || "EXAM CANDIDATE";
+document.getElementById("displayName").textContent = name;
+
+const score = data.score || 0;
+document.getElementById("scoreVal").textContent = score;
+document.getElementById("correctVal").textContent = `${data.totalCorrect || 0} / 20 ข้อ`;
+
+const perfTitle = document.getElementById("performanceTitle");
+if (score >= 80) perfTitle.textContent = "EXCELLENT PERFORMANCE";
+else if (score >= 50) perfTitle.textContent = "PROFICIENT ACHIEVEMENT";
+else perfTitle.textContent = "COMPLETION RECORD";
+
+const org = data.organization ? `ORGANIZATION: ${data.organization}` : `COUNTRY: ${data.country || "Thailand"}`;
+document.getElementById("orgText").textContent = org;
+
+const certId = `THK-M-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+document.getElementById("assessmentId").textContent = certId;
+
+const currentDate = new Date().toLocaleDateString("th-TH",{day:"numeric",month:"long",year:"numeric"});
+document.getElementById("date").textContent = currentDate;
+
+function setLoadingState(title, subtitle){
+    document.getElementById("loadingTitle").textContent = title;
+    document.getElementById("loadingSubtitle").textContent = subtitle;
+}
+
+function waitForImages(container){
+    return Promise.all([...container.querySelectorAll("img")].map(img=>{
+        if(img.complete) return Promise.resolve();
+        return new Promise(resolve=>{
+            img.addEventListener("load",resolve,{once:true});
+            img.addEventListener("error",resolve,{once:true});
+        });
+    }));
+}
+
+async function downloadCertificate(){
+    const certificate = document.getElementById("certificate");
+    const button = document.getElementById("downloadButton");
+    const loading = document.getElementById("pdfLoading");
+    if(!certificate || !button || button.disabled) return;
+
+    const original = button.innerHTML;
+    button.disabled = true;
+    button.innerHTML = "◌ &nbsp; กำลังสร้าง PDF (A5 แนวนอน)...";
+    loading.classList.add("active");
+
+    try{
+        if(typeof html2canvas === "undefined") throw new Error("html2canvas unavailable");
+        if(!window.jspdf?.jsPDF) throw new Error("jsPDF unavailable");
+
+        setLoadingState("กำลังเตรียมใบรับรอง", "THYNK // PREPARING DOCUMENT");
+        if(document.fonts) await document.fonts.ready;
+        await waitForImages(certificate);
+        await new Promise(r => requestAnimationFrame(()=>requestAnimationFrame(r)));
+
+        certificate.classList.add("pdf-mode");
+        setLoadingState("กำลังสร้างใบรับรอง", "THYNK // RENDERING LANDSCAPE PDF");
+
+        const canvas = await html2canvas(certificate,{
+            scale: 3, useCORS: true, allowTaint: false, backgroundColor: "#ffffff",
+            logging: false, imageTimeout: 15000, scrollX: 0, scrollY: 0,
+            width: certificate.offsetWidth, height: certificate.offsetHeight
+        });
+
+        certificate.classList.remove("pdf-mode");
+
+        const { jsPDF } = window.jspdf;
+        // ตั้งค่าไฟล์ PDF เป็นแบบแนวนอน (Landscape) ขนาด A5 (210mm x 148mm)
+        const pdf = new jsPDF({ orientation: "landscape", unit: "mm", format: "a5", compress: true });
+        pdf.addImage(canvas.toDataURL("image/png", 1), "PNG", 0, 0, 210, 148, undefined, "FAST");
+
+        pdf.setProperties({
+            title: "THYNK Math Exam Achievement Certificate",
+            subject: "THYNK High School Mathematics Challenge",
+            author: "THYNK",
+            creator: "THYNK Math Engine",
+            keywords: "THYNK, Mathematics, Exam, Certificate, Landscape"
+        });
+
+        setLoadingState("กำลังบันทึกไฟล์", "THYNK // SAVING PDF");
+        pdf.save(`THYNK-Math-Certificate-${name.replace(/\s+/g, "_")}.pdf`);
+
+        button.innerHTML = "✓ &nbsp; ดาวน์โหลดสำเร็จ";
+        setLoadingState("สร้างใบรับรองสำเร็จ", "THYNK // PDF READY");
+        setTimeout(()=>{
+            loading.classList.remove("active");
+            button.disabled = false;
+            button.innerHTML = original;
+        }, 1500);
+    } catch(error) {
+        console.error(error);
+        certificate.classList.remove("pdf-mode");
+        loading.classList.remove("active");
+        button.disabled = false;
+        button.innerHTML = original;
+        alert("ไม่สามารถสร้าง PDF ได้ กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ต");
+    }
+}
+
+window.addEventListener("beforeunload", ()=>{
+    document.getElementById("certificate")?.classList.remove("pdf-mode");
+});
+</script>
+
+</body>
+</html>

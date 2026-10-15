@@ -1,0 +1,3259 @@
+<!DOCTYPE html>
+<html lang="th">
+<link rel="icon" type="image/png" href="thynk.png">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>THYNK // EQ ANALYSIS</title>
+
+<link rel="stylesheet"
+      href="css/style1.css">
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root{
+
+    --bg:#050505;
+
+    --panel:#0b0b0b;
+
+    --panel2:#101010;
+
+    --line:#252525;
+
+    --text:#f2f2f2;
+
+    --muted:#777;
+
+    --soft:#aaa;
+
+    --green:#00ff9c;
+
+    --red:#ff3b5c;
+
+    --gold:#d6b36a;
+
+    --blue:#5ca8ff;
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    margin:0;
+
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            #171717 0%,
+            #050505 45%,
+            #000 100%
+        );
+
+    color:var(--text);
+
+    font-family:'Kanit',sans-serif;
+
+    min-height:100vh;
+}
+
+
+/* GRID BACKGROUND */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    opacity:.035;
+
+    background-image:
+
+        linear-gradient(
+            #fff 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            #fff 1px,
+            transparent 1px
+        );
+
+    background-size:40px 40px;
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+
+    height:76px;
+
+    border-bottom:1px solid var(--line);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 40px;
+
+    position:relative;
+
+    z-index:2;
+
+    background:rgba(5,5,5,.92);
+
+    backdrop-filter:blur(8px);
+
+}
+
+
+.logo{
+
+    font-family:'JetBrains Mono',monospace;
+
+    font-size:21px;
+
+    font-weight:700;
+
+    letter-spacing:4px;
+
+}
+
+
+.logo span{
+
+    color:var(--green);
+
+}
+
+
+.status{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-family:'JetBrains Mono',monospace;
+
+    font-size:11px;
+
+    color:#777;
+
+    letter-spacing:1px;
+
+}
+
+
+.status-dot{
+
+    width:7px;
+
+    height:7px;
+
+    border-radius:50%;
+
+    background:var(--green);
+
+    box-shadow:
+        0 0 12px var(--green);
+
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.container{
+
+    width:min(1180px,92%);
+
+    margin:0 auto;
+
+    padding:60px 0 100px;
+
+}
+
+
+.kicker{
+
+    font-family:'JetBrains Mono',monospace;
+
+    font-size:11px;
+
+    color:var(--green);
+
+    letter-spacing:3px;
+
+    margin-bottom:12px;
+
+}
+
+
+h1{
+
+    font-size:48px;
+
+    line-height:1;
+
+    margin:0;
+
+    letter-spacing:1px;
+
+}
+
+
+.subtitle{
+
+    color:var(--muted);
+
+    margin-top:14px;
+
+    font-size:15px;
+
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.score-hero{
+
+    margin-top:45px;
+
+    border:1px solid var(--line);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.025),
+            rgba(255,255,255,.005)
+        );
+
+    min-height:310px;
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+
+.score-hero::after{
+
+    content:"EQ";
+
+    position:absolute;
+
+    right:-30px;
+
+    bottom:-90px;
+
+    font-family:'JetBrains Mono',monospace;
+
+    font-size:220px;
+
+    font-weight:700;
+
+    color:rgba(255,255,255,.018);
+
+    pointer-events:none;
+
+}
+
+
+.score-left{
+
+    padding:45px;
+
+    border-right:1px solid var(--line);
+
+}
+
+
+.score-label{
+
+    font-family:'JetBrains Mono',monospace;
+
+    color:#777;
+
+    font-size:11px;
+
+    letter-spacing:3px;
+
+}
+
+
+.score{
+
+    font-family:'JetBrains Mono',monospace;
+
+    font-size:110px;
+
+    line-height:.95;
+
+    margin:15px 0;
+
+    font-weight:700;
+
+}
+
+
+.score span{
+
+    font-size:25px;
+
+    color:#555;
+
+}
+
+
+.score-bar{
+
+    width:100%;
+
+    height:4px;
+
+    background:#202020;
+
+    overflow:hidden;
+
+}
+
+
+.score-fill{
+
+    height:100%;
+
+    background:var(--green);
+
+    box-shadow:
+        0 0 15px rgba(0,255,156,.4);
+
+    width:0%;
+
+    transition:1.2s ease;
+
+}
+
+
+.score-right{
+
+    padding:45px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+}
+
+
+.level-label{
+
+    color:#777;
+
+    font-family:'JetBrains Mono',monospace;
+
+    font-size:11px;
+
+    letter-spacing:3px;
+
+}
+
+
+.level{
+
+    font-size:38px;
+
+    font-weight:600;
+
+    margin:8px 0;
+
+}
+
+
+.type{
+
+    color:var(--green);
+
+    font-family:'JetBrains Mono',monospace;
+
+    font-size:15px;
+
+    letter-spacing:2px;
+
+}
+
+
+.description{
+
+    margin-top:20px;
+
+    color:#888;
+
+    line-height:1.8;
+
+    max-width:430px;
+
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.section{
+
+    margin-top:55px;
+
+}
+
+
+.section-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    font-family:'JetBrains Mono',monospace;
+
+    font-size:13px;
+
+    letter-spacing:2px;
+
+    margin-bottom:20px;
+
+}
+
+
+.section-title::before{
+
+    content:"";
+
+    width:25px;
+
+    height:1px;
+
+    background:var(--green);
+
+}
+
+
+/* =========================================================
+   EQ DOMAINS
+========================================================= */
+
+.domain-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(5,1fr);
+
+    gap:10px;
+
+}
+
+
+.domain{
+
+    border:1px solid var(--line);
+
+    background:var(--panel);
+
+    padding:20px;
+
+    transition:.25s;
+
+}
+
+
+.domain:hover{
+
+    border-color:#444;
+
+    transform:translateY(-2px);
+
+}
+
+
+.domain-name{
+
+    font-family:'JetBrains Mono',monospace;
+
+    font-size:10px;
+
+    color:#777;
+
+    letter-spacing:1px;
+
+}
+
+
+.domain-th{
+
+    font-size:12px;
+
+    color:#555;
+
+    margin-top:3px;
+
+}
+
+
+.domain-score{
+
+    font-family:'JetBrains Mono',monospace;
+
+    font-size:32px;
+
+    margin:8px 0;
+
+}
+
+
+.domain-bar{
+
+    height:3px;
+
+    background:#202020;
+
+}
+
+
+.domain-fill{
+
+    height:100%;
+
+    width:0%;
+
+    background:var(--green);
+
+    transition:1s ease;
+
+}
+
+
+/* =========================================================
+   PERFORMANCE
+========================================================= */
+
+.quick-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:10px;
+
+}
+
+
+.quick{
+
+    border:1px solid var(--line);
+
+    padding:25px;
+
+    background:var(--panel);
+
+}
+
+
+.quick-label{
+
+    color:#666;
+
+    font-family:'JetBrains Mono',monospace;
+
+    font-size:10px;
+
+    letter-spacing:1px;
+
+}
+
+
+.quick-value{
+
+    font-family:'JetBrains Mono',monospace;
+
+    font-size:27px;
+
+    margin-top:8px;
+
+}
+
+
+.correct{
+
+    color:var(--green);
+
+}
+
+
+.wrong{
+
+    color:var(--red);
+
+}
+
+
+/* =========================================================
+   EMOTIONAL PROFILE
+========================================================= */
+
+.profile{
+
+    border:1px solid var(--line);
+
+    padding:35px;
+
+    background:
+        linear-gradient(
+            120deg,
+            #0d0d0d,
+            #080808
+        );
+
+    display:grid;
+
+    grid-template-columns:180px 1fr;
+
+    gap:35px;
+
+}
+
+
+.profile-symbol{
+
+    width:150px;
+
+    height:150px;
+
+    border:1px solid #333;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-family:'JetBrains Mono',monospace;
+
+    font-size:42px;
+
+    color:var(--green);
+
+    position:relative;
+
+}
+
+
+.profile-symbol::before,
+.profile-symbol::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:12px;
+
+    height:12px;
+
+    border-color:var(--green);
+
+    border-style:solid;
+
+}
+
+
+.profile-symbol::before{
+
+    top:-1px;
+
+    left:-1px;
+
+    border-width:
+        1px 0 0 1px;
+
+}
+
+
+.profile-symbol::after{
+
+    right:-1px;
+
+    bottom:-1px;
+
+    border-width:
+        0 1px 1px 0;
+
+}
+
+
+.profile h2{
+
+    margin:0;
+
+    font-size:30px;
+
+}
+
+
+.profile p{
+
+    color:#888;
+
+    line-height:1.9;
+
+}
+
+
+/* =========================================================
+   EQ INSIGHT
+========================================================= */
+
+.insight{
+
+    margin-top:15px;
+
+    border:1px solid #202020;
+
+    background:#090909;
+
+    padding:20px;
+
+}
+
+
+.insight-title{
+
+    color:var(--green);
+
+    font-family:'JetBrains Mono',monospace;
+
+    font-size:10px;
+
+    letter-spacing:2px;
+
+    margin-bottom:8px;
+
+}
+
+
+.insight-text{
+
+    color:#888;
+
+    line-height:1.8;
+
+}
+
+
+/* =========================================================
+   ANSWER REVIEW
+========================================================= */
+
+.review-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+}
+
+
+.review{
+
+    border:1px solid var(--line);
+
+    background:#090909;
+
+}
+
+
+.review-head{
+
+    padding:18px 20px;
+
+    display:grid;
+
+    grid-template-columns:
+        65px 1fr 90px;
+
+    align-items:center;
+
+    gap:15px;
+
+    cursor:pointer;
+
+}
+
+
+.review-head:hover{
+
+    background:#0e0e0e;
+
+}
+
+
+.q-number{
+
+    font-family:'JetBrains Mono',monospace;
+
+    color:#666;
+
+    font-size:11px;
+
+}
+
+
+.q-title{
+
+    font-size:14px;
+
+}
+
+
+.result-badge{
+
+    text-align:right;
+
+    font-family:'JetBrains Mono',monospace;
+
+    font-size:10px;
+
+}
+
+
+.result-badge.correct{
+
+    color:var(--green);
+
+}
+
+
+.result-badge.wrong{
+
+    color:var(--red);
+
+}
+
+
+.review-body{
+
+    display:none;
+
+    border-top:1px solid var(--line);
+
+    padding:25px;
+
+    background:#0d0d0d;
+
+}
+
+
+.review.open .review-body{
+
+    display:block;
+
+}
+
+
+.question-text{
+
+    font-size:17px;
+
+    margin-bottom:20px;
+
+}
+
+
+.answer-row{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:8px;
+
+}
+
+
+.answer-box{
+
+    border:1px solid #222;
+
+    padding:12px 15px;
+
+    font-size:13px;
+
+}
+
+
+.answer-box.selected{
+
+    border-color:#555;
+
+}
+
+
+.answer-box.right{
+
+    border-color:var(--green);
+
+    color:var(--green);
+
+}
+
+
+.answer-box.wrong-selected{
+
+    border-color:var(--red);
+
+    color:var(--red);
+
+}
+
+
+.explanation{
+
+    margin-top:20px;
+
+    border-left:2px solid var(--green);
+
+    padding:12px 15px;
+
+    color:#999;
+
+    line-height:1.7;
+
+}
+
+
+/* =========================================================
+   CERTIFICATE
+========================================================= */
+
+.identity{
+
+    border:1px solid var(--line);
+
+    background:
+        linear-gradient(
+            135deg,
+            #0e0e0e,
+            #070707
+        );
+
+    padding:40px;
+
+}
+
+
+.identity-intro{
+
+    color:#777;
+
+    line-height:1.7;
+
+    margin-bottom:30px;
+
+}
+
+
+.form-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:15px;
+
+}
+
+
+.field{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+}
+
+
+.field.full{
+
+    grid-column:1/-1;
+
+}
+
+
+.field label{
+
+    font-family:'JetBrains Mono',monospace;
+
+    color:#777;
+
+    font-size:10px;
+
+    letter-spacing:1px;
+
+}
+
+
+.field input{
+
+    background:#050505;
+
+    border:1px solid #292929;
+
+    color:white;
+
+    padding:14px;
+
+    font-family:'Kanit',sans-serif;
+
+    outline:none;
+
+    font-size:14px;
+
+    transition:.2s;
+
+}
+
+
+.field input:focus{
+
+    border-color:#777;
+
+    box-shadow:
+        0 0 0 1px #222;
+
+}
+
+
+.certificate-button{
+
+    width:100%;
+
+    margin-top:30px;
+
+    padding:19px;
+
+    background:#f2f2f2;
+
+    color:#050505;
+
+    border:0;
+
+    font-family:'JetBrains Mono',monospace;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+
+.certificate-button:hover{
+
+    background:var(--green);
+
+    box-shadow:
+        0 0 30px rgba(0,255,156,.18);
+
+}
+
+
+.error{
+
+    display:none;
+
+    color:var(--red);
+
+    font-family:'JetBrains Mono',monospace;
+
+    font-size:11px;
+
+    margin-top:15px;
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+
+    text-align:center;
+
+    color:#444;
+
+    font-family:'JetBrains Mono',monospace;
+
+    font-size:10px;
+
+    letter-spacing:2px;
+
+    margin-top:70px;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:800px){
+
+    .header{
+
+        padding:0 20px;
+
+    }
+
+
+    .container{
+
+        width:94%;
+
+        padding-top:35px;
+
+    }
+
+
+    h1{
+
+        font-size:34px;
+
+    }
+
+
+    .score-hero{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .score-left{
+
+        border-right:0;
+
+        border-bottom:1px solid var(--line);
+
+    }
+
+
+    .score{
+
+        font-size:80px;
+
+    }
+
+
+    .domain-grid{
+
+        grid-template-columns:
+            1fr 1fr;
+
+    }
+
+
+    .quick-grid{
+
+        grid-template-columns:
+            1fr 1fr;
+
+    }
+
+
+    .profile{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .form-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .field.full{
+
+        grid-column:auto;
+
+    }
+
+
+    .review-head{
+
+        grid-template-columns:
+            50px 1fr 70px;
+
+    }
+
+}
+
+
+@media(max-width:500px){
+
+    .domain-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .quick-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .score-left,
+    .score-right{
+
+        padding:30px;
+
+    }
+
+
+    .profile{
+
+        padding:25px;
+
+    }
+
+
+    .answer-row{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+    <div class="logo">
+
+        THYNK <span>//</span> EQ
+
+    </div>
+
+
+    <div class="status">
+
+        <div class="status-dot"></div>
+
+        ASSESSMENT COMPLETE
+
+    </div>
+
+</header>
+
+
+
+<main class="container">
+
+
+<!-- =====================================================
+     INTRO
+===================================================== -->
+
+<div class="kicker">
+
+    THYNK // EMOTIONAL ANALYSIS
+
+</div>
+
+
+<h1>
+
+    YOUR THYNK PROFILE
+
+</h1>
+
+
+<div class="subtitle">
+
+    การวิเคราะห์ความฉลาดทางอารมณ์จากรูปแบบการตอบของคุณ
+
+</div>
+
+
+
+<!-- =====================================================
+     HERO SCORE
+===================================================== -->
+
+<section class="score-hero">
+
+
+    <div class="score-left">
+
+
+        <div class="score-label">
+
+            THYNK EQ SCORE
+
+        </div>
+
+
+        <div class="score">
+
+            <span id="score">--</span>
+
+            <span>/100</span>
+
+        </div>
+
+
+        <div class="score-bar">
+
+            <div
+                class="score-fill"
+                id="scoreFill">
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="score-right">
+
+
+        <div class="level-label">
+
+            EMOTIONAL LEVEL
+
+        </div>
+
+
+        <div
+            class="level"
+            id="level">
+
+            ANALYZING...
+
+        </div>
+
+
+        <div
+            class="type"
+            id="eqType">
+
+            //
+
+        </div>
+
+
+        <div
+            class="description"
+            id="levelDescription">
+
+            กำลังวิเคราะห์รูปแบบทางอารมณ์ของคุณ...
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     EQ MATRIX
+===================================================== -->
+
+<section class="section">
+
+
+    <div class="section-title">
+
+        EMOTIONAL MATRIX
+
+    </div>
+
+
+    <div class="domain-grid">
+
+
+        <div class="domain">
+
+            <div class="domain-name">
+
+                SELF-AWARENESS
+
+            </div>
+
+            <div class="domain-th">
+
+                การตระหนักรู้ตนเอง
+
+            </div>
+
+            <div
+                class="domain-score"
+                id="selfAwarenessScore">
+
+                --
+
+            </div>
+
+            <div class="domain-bar">
+
+                <div
+                    class="domain-fill"
+                    id="selfAwarenessBar">
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="domain">
+
+            <div class="domain-name">
+
+                SELF-CONTROL
+
+            </div>
+
+            <div class="domain-th">
+
+                การควบคุมอารมณ์
+
+            </div>
+
+            <div
+                class="domain-score"
+                id="selfControlScore">
+
+                --
+
+            </div>
+
+            <div class="domain-bar">
+
+                <div
+                    class="domain-fill"
+                    id="selfControlBar">
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="domain">
+
+            <div class="domain-name">
+
+                EMPATHY
+
+            </div>
+
+            <div class="domain-th">
+
+                ความเข้าใจผู้อื่น
+
+            </div>
+
+            <div
+                class="domain-score"
+                id="empathyScore">
+
+                --
+
+            </div>
+
+            <div class="domain-bar">
+
+                <div
+                    class="domain-fill"
+                    id="empathyBar">
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="domain">
+
+            <div class="domain-name">
+
+                SOCIAL SKILL
+
+            </div>
+
+            <div class="domain-th">
+
+                ทักษะทางสังคม
+
+            </div>
+
+            <div
+                class="domain-score"
+                id="socialSkillScore">
+
+                --
+
+            </div>
+
+            <div class="domain-bar">
+
+                <div
+                    class="domain-fill"
+                    id="socialSkillBar">
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="domain">
+
+            <div class="domain-name">
+
+                RESILIENCE
+
+            </div>
+
+            <div class="domain-th">
+
+                ความยืดหยุ่นทางอารมณ์
+
+            </div>
+
+            <div
+                class="domain-score"
+                id="resilienceScore">
+
+                --
+
+            </div>
+
+            <div class="domain-bar">
+
+                <div
+                    class="domain-fill"
+                    id="resilienceBar">
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     PERFORMANCE
+===================================================== -->
+
+<section class="section">
+
+
+    <div class="section-title">
+
+        PERFORMANCE
+
+    </div>
+
+
+    <div class="quick-grid">
+
+
+        <div class="quick">
+
+            <div class="quick-label">
+
+                ANSWERED
+
+            </div>
+
+            <div
+                class="quick-value"
+                id="answeredCount">
+
+                --
+
+            </div>
+
+        </div>
+
+
+
+        <div class="quick">
+
+            <div class="quick-label">
+
+                CORRECT
+
+            </div>
+
+            <div
+                class="quick-value correct"
+                id="correctCount">
+
+                --
+
+            </div>
+
+        </div>
+
+
+
+        <div class="quick">
+
+            <div class="quick-label">
+
+                WRONG
+
+            </div>
+
+            <div
+                class="quick-value wrong"
+                id="wrongCount">
+
+                --
+
+            </div>
+
+        </div>
+
+
+
+        <div class="quick">
+
+            <div class="quick-label">
+
+                ACCURACY
+
+            </div>
+
+            <div
+                class="quick-value"
+                id="accuracy">
+
+                --%
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     PROFILE
+===================================================== -->
+
+<section class="section">
+
+
+    <div class="section-title">
+
+        EMOTIONAL PROFILE
+
+    </div>
+
+
+    <div class="profile">
+
+
+        <div
+            class="profile-symbol"
+            id="profileSymbol">
+
+            ◇
+
+        </div>
+
+
+        <div>
+
+
+            <h2 id="profileTitle">
+
+                ANALYZING...
+
+            </h2>
+
+
+            <p id="profileText">
+
+                กำลังประมวลผลรูปแบบการตอบของคุณ
+
+            </p>
+
+
+            <div class="insight">
+
+
+                <div class="insight-title">
+
+                    PRIMARY INSIGHT
+
+                </div>
+
+
+                <div
+                    class="insight-text"
+                    id="insightText">
+
+                    กำลังวิเคราะห์จุดเด่นทางอารมณ์...
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     ANSWER REVIEW
+===================================================== -->
+
+<section class="section">
+
+
+    <div class="section-title">
+
+        ANSWER REVIEW // วิเคราะห์คำตอบ
+
+    </div>
+
+
+    <div
+        class="review-list"
+        id="reviewList">
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     CERTIFICATE
+===================================================== -->
+
+<section class="section">
+
+
+    <div class="section-title">
+
+        CERTIFICATE IDENTITY
+
+    </div>
+
+
+    <div class="identity">
+
+
+        <div class="identity-intro">
+
+            กรอกข้อมูลด้านล่างเพื่อสร้างใบเกียรติบัตร THYNK EQ
+            ชื่อที่กรอกจะถูกนำไปแสดงบนใบเกียรติบัตร
+
+        </div>
+
+
+        <div class="form-grid">
+
+
+            <div class="field">
+
+                <label>
+
+                    FIRST NAME / ชื่อ
+
+                </label>
+
+
+                <input
+                    type="text"
+                    id="firstName"
+                    placeholder="ชื่อของคุณ"
+                    maxlength="40">
+
+            </div>
+
+
+
+            <div class="field">
+
+                <label>
+
+                    LAST NAME / นามสกุล
+
+                </label>
+
+
+                <input
+                    type="text"
+                    id="lastName"
+                    placeholder="นามสกุลของคุณ"
+                    maxlength="40">
+
+            </div>
+
+
+
+            <div class="field full">
+
+                <label>
+
+                    DISPLAY NAME /
+                    ชื่อที่ต้องการแสดงบนใบเกียรติบัตร
+
+                </label>
+
+
+                <input
+                    type="text"
+                    id="displayName"
+                    placeholder="เว้นว่างได้ ระบบจะใช้ชื่อและนามสกุล"
+                    maxlength="80">
+
+            </div>
+
+
+
+            <div class="field">
+
+                <label>
+
+                    COUNTRY / ประเทศ
+
+                </label>
+
+
+                <input
+                    type="text"
+                    id="country"
+                    placeholder="Thailand"
+                    maxlength="40">
+
+            </div>
+
+
+
+            <div class="field">
+
+                <label>
+
+                    ORGANIZATION / SCHOOL
+
+                </label>
+
+
+                <input
+                    type="text"
+                    id="organization"
+                    placeholder="ไม่บังคับ"
+                    maxlength="80">
+
+            </div>
+
+
+        </div>
+
+
+        <div
+            class="error"
+            id="formError">
+
+            PLEASE ENTER YOUR FIRST NAME AND LAST NAME.
+
+        </div>
+
+
+        <button
+            class="certificate-button"
+            onclick="generateCertificate()">
+
+            ✦ RECEIVE MY EQ CERTIFICATE
+
+        </button>
+
+
+    </div>
+
+</section>
+
+
+
+<div class="footer">
+
+    THYNK // EMOTIONAL INTELLIGENCE ASSESSMENT
+
+</div>
+
+
+</main>
+
+
+
+<script>
+
+/* =========================================================
+   THYNK EQ ANALYSIS ENGINE
+========================================================= */
+
+
+/* =========================================================
+   LOAD RESULT
+========================================================= */
+
+const raw =
+    localStorage.getItem("thynkEQResult");
+
+
+if(!raw){
+
+    document.body.innerHTML = `
+
+        <div style="
+            min-height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            background:#050505;
+            color:white;
+            font-family:monospace;
+            text-align:center;
+            padding:30px;
+        ">
+
+            <div>
+
+                <div style="
+                    color:#ff3b5c;
+                    font-size:12px;
+                    letter-spacing:3px;
+                    margin-bottom:15px;
+                ">
+
+                    ERROR // NO EQ ASSESSMENT DATA
+
+                </div>
+
+
+                <div style="color:#777;">
+
+                    ไม่พบข้อมูลผลการทดสอบ EQ
+
+                </div>
+
+
+                <button
+                    onclick="location.href='index.html'"
+                    style="
+                        margin-top:25px;
+                        padding:12px 25px;
+                        background:white;
+                        border:0;
+                        cursor:pointer;
+                    ">
+
+                    BACK TO THYNK
+
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+    throw new Error(
+        "No THYNK EQ result data."
+    );
+
+}
+
+
+let result;
+
+
+try{
+
+    result = JSON.parse(raw);
+
+}catch(error){
+
+    console.error(error);
+
+    throw new Error(
+        "Invalid THYNK EQ result."
+    );
+
+}
+
+
+/* =========================================================
+   BASIC DATA
+========================================================= */
+
+const total =
+    Number(result.total || 100);
+
+
+const correct =
+    Number(result.correct || 0);
+
+
+const answered =
+    Number(
+        result.answered ??
+        result.answers?.length ??
+        total
+    );
+
+
+const score =
+    Number(
+        result.score ??
+        ((correct / total) * 100)
+    );
+
+
+const accuracy =
+    Number(
+        result.accuracy ??
+        ((correct / total) * 100)
+    );
+
+
+/* =========================================================
+   EQ DOMAIN DATA
+========================================================= */
+
+const stageStats =
+    result.stageStats || {};
+
+
+function getDomainScore(
+    ...keys
+){
+
+    for(const key of keys){
+
+        const data =
+            stageStats[key];
+
+        if(
+            data &&
+            data.accuracy !== undefined
+        ){
+
+            return Math.round(
+                Number(data.accuracy)
+            );
+
+        }
+
+
+        if(
+            data &&
+            data.correct !== undefined &&
+            data.total
+        ){
+
+            return Math.round(
+                (
+                    Number(data.correct) /
+                    Number(data.total)
+                ) * 100
+            );
+
+        }
+
+
+        if(
+            data !== undefined &&
+            typeof data === "number"
+        ){
+
+            return Math.round(data);
+
+        }
+
+    }
+
+
+    return 0;
+
+}
+
+
+/* =========================================================
+   DOMAIN MAP
+========================================================= */
+
+const domainValues = {
+
+    selfAwareness:
+        getDomainScore(
+            "selfAwareness",
+            "self-awareness",
+            "awareness"
+        ),
+
+
+    selfControl:
+        getDomainScore(
+            "selfControl",
+            "self-control",
+            "control"
+        ),
+
+
+    empathy:
+        getDomainScore(
+            "empathy"
+        ),
+
+
+    socialSkill:
+        getDomainScore(
+            "socialSkill",
+            "social-skill",
+            "social"
+        ),
+
+
+    resilience:
+        getDomainScore(
+            "resilience",
+            "resiliency"
+        )
+
+};
+
+
+/* =========================================================
+   IF DOMAIN DATA DOES NOT EXIST
+   USE SCORE AS FALLBACK
+========================================================= */
+
+Object.keys(domainValues)
+    .forEach(key=>{
+
+        if(
+            !Number.isFinite(
+                domainValues[key]
+            ) ||
+            domainValues[key] < 0
+        ){
+
+            domainValues[key] = 0;
+
+        }
+
+    });
+
+
+/* =========================================================
+   LEVEL SYSTEM
+========================================================= */
+
+function getEQLevel(value){
+
+    if(value >= 90){
+
+        return {
+
+            name:
+                "EMOTIONAL MASTER",
+
+            type:
+                "THE EMOTION ARCHITECT",
+
+            symbol:
+                "✦",
+
+            description:
+                "คุณมีความสามารถโดดเด่นในการรับรู้อารมณ์ของตนเอง ควบคุมปฏิกิริยา และเข้าใจความรู้สึกของผู้อื่นได้อย่างลึกซึ้ง",
+
+            profile:
+                "รูปแบบการตอบของคุณสะท้อนความมั่นคงทางอารมณ์สูง คุณมีแนวโน้มที่จะหยุดคิดก่อนตอบสนอง สามารถมองสถานการณ์จากหลายมุม และรักษาความสัมพันธ์กับผู้อื่นได้ดี",
+
+            insight:
+                "จุดเด่นสูงสุดของคุณคือการผสมผสานระหว่างการเข้าใจตัวเองกับการเข้าใจผู้อื่น ซึ่งเป็นพื้นฐานสำคัญของ Emotional Intelligence ระดับสูง"
+
+        };
+
+    }
+
+
+    if(value >= 80){
+
+        return {
+
+            name:
+                "EMOTIONAL STRATEGIST",
+
+            type:
+                "THE BALANCED MIND",
+
+            symbol:
+                "◇",
+
+            description:
+                "คุณสามารถจัดการอารมณ์และสถานการณ์ทางสังคมได้ดี มีแนวโน้มคิดก่อนตอบสนองและมองเห็นผลกระทบของการกระทำ",
+
+            profile:
+                "คุณมีความสามารถในการรักษาสมดุลระหว่างความรู้สึกและเหตุผล และสามารถปรับตัวตามสถานการณ์ทางสังคมได้ค่อนข้างดี",
+
+            insight:
+                "ความสามารถในการรักษาสมดุลระหว่างอารมณ์ของตัวเองและความต้องการของผู้อื่นเป็นจุดแข็งสำคัญของคุณ"
+
+        };
+
+    }
+
+
+    if(value >= 70){
+
+        return {
+
+            name:
+                "EMOTIONALLY INTELLIGENT",
+
+            type:
+                "THE EMPATHIC THINKER",
+
+            symbol:
+                "△",
+
+            description:
+                "คุณมีพื้นฐานด้านความฉลาดทางอารมณ์ที่ดี สามารถรับรู้อารมณ์และตอบสนองต่อสถานการณ์ต่าง ๆ ได้อย่างเหมาะสมในหลายกรณี",
+
+            profile:
+                "คุณมีแนวโน้มสังเกตความรู้สึกของตัวเองและคนรอบข้างได้ดี แต่ในสถานการณ์ที่มีแรงกดดันสูงอาจต้องใช้เวลาควบคุมอารมณ์เพิ่มขึ้น",
+
+            insight:
+                "คุณมีพื้นฐาน EQ ที่ดีและสามารถพัฒนาไปสู่ระดับที่สูงขึ้นได้ด้วยการฝึกการสังเกตอารมณ์และการควบคุมปฏิกิริยา"
+
+        };
+
+    }
+
+
+    if(value >= 55){
+
+        return {
+
+            name:
+                "EMOTIONAL AWARE",
+
+            type:
+                "THE OBSERVER",
+
+            symbol:
+                "○",
+
+            description:
+                "คุณเริ่มเข้าใจอารมณ์ของตัวเองและผู้อื่นได้ดีในหลายสถานการณ์ แต่ยังมีพื้นที่สำหรับพัฒนาการควบคุมและการสื่อสาร",
+
+            profile:
+                "คุณสามารถรับรู้อารมณ์ได้ แต่บางครั้งอารมณ์อาจมีอิทธิพลต่อการตัดสินใจมากกว่าที่ต้องการ",
+
+            insight:
+                "การฝึกหยุดก่อนตอบสนองและทบทวนว่า 'ตอนนี้ฉันกำลังรู้สึกอะไร' สามารถช่วยเพิ่มความมั่นคงทางอารมณ์ได้"
+
+        };
+
+    }
+
+
+    if(value >= 40){
+
+        return {
+
+            name:
+                "EMOTIONAL EXPLORER",
+
+            type:
+                "THE DEVELOPING MIND",
+
+            symbol:
+                "▽",
+
+            description:
+                "คุณกำลังอยู่ในช่วงสำรวจและพัฒนาความเข้าใจเกี่ยวกับอารมณ์ของตัวเองและผู้อื่น",
+
+            profile:
+                "รูปแบบการตอบแสดงให้เห็นว่าคุณมีหลายมุมมองทางอารมณ์ แต่บางสถานการณ์อาจทำให้การควบคุมอารมณ์หรือการสื่อสารทำได้ยาก",
+
+            insight:
+                "การฝึกสังเกตอารมณ์ก่อนตัดสินใจจะช่วยให้คุณเข้าใจรูปแบบการตอบสนองของตัวเองมากขึ้น"
+
+        };
+
+    }
+
+
+    return {
+
+        name:
+            "EMOTIONAL INITIATE",
+
+        type:
+            "THE BEGINNER",
+
+        symbol:
+            "·",
+
+        description:
+            "นี่คือจุดเริ่มต้นของการสำรวจความฉลาดทางอารมณ์ของคุณ ผลลัพธ์สามารถใช้เป็นแนวทางสำหรับการพัฒนาตัวเอง",
+
+        profile:
+            "คุณกำลังเริ่มต้นทำความเข้าใจรูปแบบอารมณ์ของตัวเอง การฝึกสังเกตความรู้สึกและการตอบสนองในชีวิตประจำวันสามารถช่วยพัฒนา EQ ได้",
+
+        insight:
+            "ทุกครั้งที่คุณหยุดเพื่อสังเกตอารมณ์ของตัวเอง ถือเป็นอีกหนึ่งก้าวของการพัฒนาความฉลาดทางอารมณ์"
+
+    };
+
+}
+
+
+const level =
+    getEQLevel(score);
+
+
+/* =========================================================
+   HERO UPDATE
+========================================================= */
+
+document.getElementById(
+    "score"
+).textContent =
+    Math.round(score);
+
+
+document.getElementById(
+    "level"
+).textContent =
+    level.name;
+
+
+document.getElementById(
+    "eqType"
+).textContent =
+    level.type;
+
+
+document.getElementById(
+    "levelDescription"
+).textContent =
+    level.description;
+
+
+document.getElementById(
+    "profileTitle"
+).textContent =
+    level.type;
+
+
+document.getElementById(
+    "profileText"
+).textContent =
+    level.profile;
+
+
+document.getElementById(
+    "profileSymbol"
+).textContent =
+    level.symbol;
+
+
+document.getElementById(
+    "insightText"
+).textContent =
+    level.insight;
+
+
+setTimeout(()=>{
+
+    document.getElementById(
+        "scoreFill"
+    ).style.width =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                score
+            )
+        ) + "%";
+
+},100);
+
+
+/* =========================================================
+   PERFORMANCE
+========================================================= */
+
+document.getElementById(
+    "answeredCount"
+).textContent =
+    answered;
+
+
+document.getElementById(
+    "correctCount"
+).textContent =
+    correct;
+
+
+document.getElementById(
+    "wrongCount"
+).textContent =
+    Math.max(
+        0,
+        total - correct
+    );
+
+
+document.getElementById(
+    "accuracy"
+).textContent =
+    Math.round(accuracy) + "%";
+
+
+/* =========================================================
+   DOMAIN RENDER
+========================================================= */
+
+function renderDomain(
+    id,
+    value
+){
+
+    const scoreElement =
+        document.getElementById(
+            id + "Score"
+        );
+
+
+    const barElement =
+        document.getElementById(
+            id + "Bar"
+        );
+
+
+    if(scoreElement){
+
+        scoreElement.textContent =
+            value;
+
+    }
+
+
+    if(barElement){
+
+        setTimeout(()=>{
+
+            barElement.style.width =
+                Math.max(
+                    0,
+                    Math.min(
+                        100,
+                        value
+                    )
+                ) + "%";
+
+        },100);
+
+    }
+
+}
+
+
+renderDomain(
+    "selfAwareness",
+    domainValues.selfAwareness
+);
+
+
+renderDomain(
+    "selfControl",
+    domainValues.selfControl
+);
+
+
+renderDomain(
+    "empathy",
+    domainValues.empathy
+);
+
+
+renderDomain(
+    "socialSkill",
+    domainValues.socialSkill
+);
+
+
+renderDomain(
+    "resilience",
+    domainValues.resilience
+);
+
+
+/* =========================================================
+   ANSWER REVIEW
+========================================================= */
+
+const reviewList =
+    document.getElementById(
+        "reviewList"
+    );
+
+
+const answers =
+    Array.isArray(result.answers)
+        ? result.answers
+        : [];
+
+
+if(answers.length === 0){
+
+    reviewList.innerHTML = `
+
+        <div style="
+            border:1px solid #222;
+            padding:30px;
+            color:#666;
+            font-family:monospace;
+            text-align:center;
+        ">
+
+            EQ ANSWER REVIEW DATA NOT FOUND
+
+        </div>
+
+    `;
+
+}else{
+
+
+    answers.forEach(
+        (item,index)=>{
+
+
+            const review =
+                document.createElement(
+                    "div"
+                );
+
+
+            review.className =
+                "review";
+
+
+            const isCorrect =
+                item.correct === true;
+
+
+            const stage =
+                item.stage ||
+                item.domain ||
+                "EMOTIONAL INTELLIGENCE";
+
+
+            const question =
+                item.question ||
+                item.title ||
+                `QUESTION ${index + 1}`;
+
+
+            const options =
+                Array.isArray(
+                    item.options
+                )
+                    ? item.options
+                    : [];
+
+
+            const selected =
+                item.selected;
+
+
+            const correctAnswer =
+                item.correctAnswer;
+
+
+            review.innerHTML = `
+
+                <div class="review-head">
+
+                    <div class="q-number">
+
+                        Q${String(
+                            index + 1
+                        ).padStart(3,"0")}
+
+                    </div>
+
+
+                    <div class="q-title">
+
+                        ${escapeHTML(
+                            question
+                        )}
+
+                    </div>
+
+
+                    <div class="
+                        result-badge
+                        ${isCorrect
+                            ? "correct"
+                            : "wrong"
+                        }
+                    ">
+
+                        ${isCorrect
+                            ? "CORRECT"
+                            : "WRONG"
+                        }
+
+                    </div>
+
+                </div>
+
+
+                <div class="review-body">
+
+
+                    <div style="
+                        font-family:monospace;
+                        color:#555;
+                        font-size:10px;
+                        margin-bottom:10px;
+                    ">
+
+                        ${escapeHTML(
+                            stage
+                        )}
+
+                        ${
+                            item.difficulty
+                                ? " // " +
+                                  escapeHTML(
+                                      item.difficulty
+                                  )
+                                : ""
+                        }
+
+                    </div>
+
+
+                    <div class="question-text">
+
+                        ${escapeHTML(
+                            item.questionText ||
+                            item.prompt ||
+                            question
+                        )}
+
+                    </div>
+
+
+                    <div class="answer-row">
+
+                        ${
+                            options.length
+                                ? options.map(
+                                    (option,i)=>{
+
+                                        let cls =
+                                            "answer-box";
+
+
+                                        if(
+                                            i ===
+                                            correctAnswer
+                                        ){
+
+                                            cls +=
+                                                " right";
+
+                                        }
+
+
+                                        if(
+                                            i === selected &&
+                                            i !== correctAnswer
+                                        ){
+
+                                            cls +=
+                                                " wrong-selected";
+
+                                        }
+
+
+                                        if(
+                                            i === selected &&
+                                            i === correctAnswer
+                                        ){
+
+                                            cls +=
+                                                " selected";
+
+                                        }
+
+
+                                        return `
+
+                                            <div
+                                                class="${cls}">
+
+                                                ${
+                                                    String
+                                                    .fromCharCode(
+                                                        65+i
+                                                    )
+                                                }.
+
+                                                ${escapeHTML(
+                                                    String(
+                                                        option
+                                                    )
+                                                )}
+
+                                            </div>
+
+                                        `;
+
+                                    }
+                                ).join("")
+                                :
+                                `
+
+                                    <div class="answer-box">
+
+                                        ${
+                                            item.selectedText
+                                                ? escapeHTML(
+                                                    item.selectedText
+                                                  )
+                                                : "ไม่พบตัวเลือก"
+                                        }
+
+                                    </div>
+
+                                `
+                        }
+
+                    </div>
+
+
+                    <div class="explanation">
+
+                        <strong style="
+                            color:#ddd;
+                        ">
+
+                            EMOTIONAL ANALYSIS
+
+                        </strong>
+
+
+                        <br>
+
+
+                        ${escapeHTML(
+                            item.explanation ||
+                            item.analysis ||
+                            "ไม่มีคำอธิบายสำหรับข้อนี้"
+                        )}
+
+                    </div>
+
+
+                </div>
+
+            `;
+
+
+            const head =
+                review.querySelector(
+                    ".review-head"
+                );
+
+
+            head.addEventListener(
+                "click",
+                ()=>{
+
+                    review.classList.toggle(
+                        "open"
+                    );
+
+                }
+            );
+
+
+            reviewList.appendChild(
+                review
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value){
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =========================================================
+   ASSESSMENT ID
+========================================================= */
+
+function createAssessmentID(){
+
+    const chars =
+        "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+
+    let id =
+        "THY-EQ-";
+
+
+    for(
+        let i = 0;
+        i < 8;
+        i++
+    ){
+
+        id +=
+            chars[
+                Math.floor(
+                    Math.random() *
+                    chars.length
+                )
+            ];
+
+    }
+
+
+    return id;
+
+}
+
+
+/* =========================================================
+   CERTIFICATE
+========================================================= */
+
+function generateCertificate(){
+
+    const firstName =
+        document
+            .getElementById(
+                "firstName"
+            )
+            .value
+            .trim();
+
+
+    const lastName =
+        document
+            .getElementById(
+                "lastName"
+            )
+            .value
+            .trim();
+
+
+    const displayName =
+        document
+            .getElementById(
+                "displayName"
+            )
+            .value
+            .trim();
+
+
+    const country =
+        document
+            .getElementById(
+                "country"
+            )
+            .value
+            .trim();
+
+
+    const organization =
+        document
+            .getElementById(
+                "organization"
+            )
+            .value
+            .trim();
+
+
+    const error =
+        document.getElementById(
+            "formError"
+        );
+
+
+    if(
+        !firstName ||
+        !lastName
+    ){
+
+        error.style.display =
+            "block";
+
+
+        document
+            .getElementById(
+                "firstName"
+            )
+            .focus();
+
+
+        return;
+
+    }
+
+
+    error.style.display =
+        "none";
+
+
+    const finalName =
+        displayName ||
+        `${firstName} ${lastName}`;
+
+
+    const assessmentId =
+        result.assessmentId ||
+        createAssessmentID();
+
+
+    const certificateData = {
+
+        examType:
+            "EQ",
+
+
+        firstName:
+            firstName,
+
+
+        lastName:
+            lastName,
+
+
+        displayName:
+            finalName,
+
+
+        country:
+            country,
+
+
+        organization:
+            organization,
+
+
+        score:
+            Math.round(score),
+
+
+        correct:
+            correct,
+
+
+        total:
+            total,
+
+
+        answered:
+            answered,
+
+
+        accuracy:
+            Math.round(accuracy),
+
+
+        level:
+            level.name,
+
+
+        neuralType:
+            level.type,
+
+
+        eqType:
+            level.type,
+
+
+        profileSymbol:
+            level.symbol,
+
+
+        profile:
+            level.profile,
+
+
+        insight:
+            level.insight,
+
+
+        selfAwareness:
+            domainValues.selfAwareness,
+
+
+        selfControl:
+            domainValues.selfControl,
+
+
+        empathy:
+            domainValues.empathy,
+
+
+        socialSkill:
+            domainValues.socialSkill,
+
+
+        resilience:
+            domainValues.resilience,
+
+
+        assessmentId:
+            assessmentId,
+
+
+        completedAt:
+            result.completedAt ||
+            new Date().toISOString()
+
+    };
+
+
+    localStorage.setItem(
+
+        "thynkEQCertificate",
+
+        JSON.stringify(
+            certificateData
+        )
+
+    );
+
+
+    window.location.href =
+        "eq certificate.html";
+
+}
+
+
+/* =========================================================
+   OPTIONAL SERVER DATA
+========================================================= */
+
+function prepareAssessmentData(){
+
+    return {
+
+        assessmentId:
+            result.assessmentId ||
+            createAssessmentID(),
+
+        examType:
+            "EQ",
+
+        score:
+            Math.round(score),
+
+        correct:
+            correct,
+
+        total:
+            total,
+
+        answered:
+            answered,
+
+        accuracy:
+            Math.round(accuracy),
+
+        level:
+            level.name,
+
+        eqType:
+            level.type,
+
+        domainScores:
+            domainValues,
+
+        completedAt:
+            result.completedAt ||
+            new Date().toISOString()
+
+    };
+
+}
+
+
+/* =========================================================
+   DEBUG
+========================================================= */
+
+console.log(
+    "THYNK EQ RESULT",
+    prepareAssessmentData()
+);
+
+</script>
+
+</body>
+
+</html>

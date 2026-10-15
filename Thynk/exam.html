@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="THYNK IQ — Neural Trial">
+<title>THYNK — Neural Trial</title>
+<link rel="icon" type="image/png" href="thynk.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style1.css">
+
+<style>
+/* THYNK // NEURAL TRIAL — 100 CHALLENGES */
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: #050505; color: #f5f5f5; font-family: "Kanit", sans-serif; overflow-x: hidden; }
+button { font-family: inherit; }
+
+/* BACKGROUND */
+.exam-page { min-height: 100vh; position: relative;
+    background: radial-gradient(circle at 50% 20%, rgba(255,255,255,.045), transparent 38%), #050505; }
+.exam-grid { position: fixed; inset: 0; pointer-events: none; opacity: .12; z-index: 0;
+    background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+    background-size: 40px 40px; }
+.scan-line { position: fixed; left: 0; width: 100%; height: 1px; background: rgba(255,255,255,.08);
+    pointer-events: none; z-index: 50; animation: scan 7s linear infinite; }
+@keyframes scan { 0% { top: -2%; } 100% { top: 102%; } }
+
+/* HEADER */
+.exam-header { position: relative; z-index: 10; height: 76px; padding: 0 40px; border-bottom: 1px solid #222;
+    display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; }
+.exam-logo { color: #fff; text-decoration: none; font-family: "JetBrains Mono", monospace; font-size: 18px; font-weight: 700; letter-spacing: 2px; }
+.exam-logo span { opacity: .4; }
+.stage-display { text-align: center; }
+.stage-display small { display: block; color: #666; font-family: "JetBrains Mono", monospace; font-size: 9px; letter-spacing: 2px; }
+.stage-display strong { display: block; margin-top: 4px; font-family: "JetBrains Mono", monospace; font-size: 13px; letter-spacing: 2px; }
+.exam-status { justify-self: end; display: flex; align-items: center; gap: 8px; color: #777;
+    font-family: "JetBrains Mono", monospace; font-size: 9px; letter-spacing: 1.5px; }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; background: #fff; box-shadow: 0 0 12px rgba(255,255,255,.8); animation: pulse 1.5s infinite; }
+@keyframes pulse { 50% { opacity: .3; } }
+
+/* MAIN */
+.exam-main { position: relative; z-index: 2; width: min(1120px, calc(100% - 40px)); margin: auto; padding: 35px 0 80px; }
+
+/* TOP INFO */
+.trial-bar { display: grid; grid-template-columns: 1fr auto 1fr; gap: 30px; align-items: end; margin-bottom: 15px; }
+.trial-label span, .difficulty-label span, .score-label span { display: block; color: #666; font-family: "JetBrains Mono", monospace; font-size: 9px; letter-spacing: 2px; }
+.trial-label strong { display: block; margin-top: 4px; font-family: "JetBrains Mono", monospace; font-size: 14px; letter-spacing: 1px; }
+.question-counter { text-align: center; color: #777; font-family: "JetBrains Mono", monospace; font-size: 10px; letter-spacing: 1px; }
+.question-counter strong { color: #fff; }
+.difficulty-label { text-align: right; }
+.difficulty-label strong { display: block; margin-top: 4px; font-family: "JetBrains Mono", monospace; font-size: 12px; letter-spacing: 2px; }
+
+/* PROGRESS */
+.progress-info { display: flex; justify-content: space-between; margin-bottom: 7px; color: #555; font-family: "JetBrains Mono", monospace; font-size: 8px; letter-spacing: 1.5px; }
+.progress-container { width: 100%; height: 3px; background: #171717; margin-bottom: 9px; }
+.progress-fill { width: 1%; height: 100%; background: #fff; transition: width .4s ease; }
+.stage-progress-container { width: 100%; height: 2px; background: #111; margin-bottom: 35px; }
+.stage-progress-fill { width: 5%; height: 100%; background: #777; transition: width .4s ease; }
+
+/* CHALLENGE */
+.challenge-container { min-height: 600px; position: relative; padding: 45px; border: 1px solid #222;
+    background: linear-gradient(135deg, rgba(255,255,255,.025), transparent 30%), rgba(9,9,9,.94); }
+.challenge-container::before { content: ""; position: absolute; top: 0; left: 0; width: 55px; height: 1px; background: #fff; }
+.challenge-container::after { content: ""; position: absolute; bottom: 0; right: 0; width: 55px; height: 1px; background: #fff; }
+.challenge-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; }
+.challenge-type { color: #666; font-family: "JetBrains Mono", monospace; font-size: 9px; letter-spacing: 2px; }
+.challenge-title { margin: 8px 0 0; font-size: 28px; font-weight: 600; letter-spacing: -.5px; }
+
+/* TIMER */
+.timer-box { min-width: 180px; text-align: right; }
+.timer-label { display: block; color: #666; font-family: "JetBrains Mono", monospace; font-size: 8px; letter-spacing: 2px; }
+.timer-value { display: block; margin-top: 4px; font-family: "JetBrains Mono", monospace; font-size: 28px; font-weight: 700; }
+.timer-bar { width: 180px; height: 3px; margin-top: 8px; background: #1b1b1b; }
+.timer-fill { width: 100%; height: 100%; background: #fff; transition: width .1s linear; }
+.timer-box.warning .timer-value { animation: timerWarning .4s infinite alternate; }
+.timer-box.warning .timer-fill { opacity: .45; }
+@keyframes timerWarning { from { opacity: 1; } to { opacity: .3; } }
+
+/* QUESTION */
+.question-area { min-height: 315px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.question-instruction { max-width: 800px; margin-bottom: 25px; color: #aaa; font-size: 17px; font-weight: 400; line-height: 1.7; }
+
+/* VISUAL SEQUENCE */
+.visual-sequence { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px; margin-bottom: 30px;
+    font-family: "JetBrains Mono", monospace; font-size: 28px; white-space: pre-line; }
+.sequence-box { width: 62px; height: 62px; display: flex; align-items: center; justify-content: center; border: 1px solid #333; background: #0c0c0c; font-size: 27px; }
+.sequence-box.missing { color: #777; border-color: #666; animation: missingPulse 1.2s infinite alternate; }
+@keyframes missingPulse { from { opacity: .5; } to { opacity: 1; } }
+
+/* NUMBER SYSTEM */
+.number-system { display: flex; flex-direction: column; gap: 9px; width: min(700px, 100%); margin-bottom: 25px; }
+.number-row { display: flex; justify-content: center; align-items: center; gap: 10px; }
+.number-cell { min-width: 75px; padding: 15px 20px; border: 1px solid #292929; background: #0b0b0b; font-family: "JetBrains Mono", monospace; font-size: 19px; }
+.number-cell.arrow { min-width: 30px; padding-left: 0; padding-right: 0; border: none; background: transparent; color: #555; }
+
+/* LOGIC */
+.logic-data { width: min(650px, 100%); display: grid; gap: 8px; margin-bottom: 25px; }
+.logic-row { display: flex; justify-content: space-between; padding: 13px 18px; border: 1px solid #262626; background: #0b0b0b; font-family: "JetBrains Mono", monospace; font-size: 12px; }
+.logic-row span { color: #666; }
+.logic-row strong { color: #ddd; }
+
+/* MEMORY */
+.memory-display { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-bottom: 25px; }
+.memory-item { min-width: 82px; padding: 18px; border: 1px solid #333; background: #0b0b0b; font-family: "JetBrains Mono", monospace; font-size: 20px; }
+.memory-countdown { margin-top: 8px; color: #555; font-family: "JetBrains Mono", monospace; font-size: 9px; letter-spacing: 2px; }
+.memory-hidden { color: #555; font-size: 35px; letter-spacing: 8px; }
+
+/* GRID */
+.grid-challenge { display: grid; grid-template-columns: repeat(3, 70px); gap: 8px; margin-bottom: 30px; }
+.grid-cell { width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; border: 1px solid #292929; background: #0b0b0b; font-size: 25px; }
+
+/* SPATIAL */
+.spatial-board { width: 180px; height: 180px; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 3px; margin-bottom: 30px; border: 1px solid #333; background: #111; }
+.spatial-cell { display: flex; align-items: center; justify-content: center; background: #080808; font-size: 25px; }
+.spatial-shape { transition: transform .4s ease; }
+
+/* ANSWERS */
+.answers { width: 100%; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 15px; }
+.answer-button { min-height: 64px; padding: 12px; border: 1px solid #292929; background: #0b0b0b; color: #ddd; cursor: pointer;
+    font-family: "JetBrains Mono", monospace; font-size: 13px; transition: border-color .2s, background .2s, color .2s, transform .2s; }
+.answer-button:hover { border-color: #777; background: #151515; transform: translateY(-2px); }
+.answer-button.selected { border-color: #fff; background: #fff; color: #000; }
+
+/* FOOTER */
+.challenge-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 25px; }
+.combo-display { color: #666; font-family: "JetBrains Mono", monospace; font-size: 10px; letter-spacing: 1px; }
+.combo-display strong { color: #fff; font-size: 15px; }
+.score-display { margin-left: 20px; color: #555; font-family: "JetBrains Mono", monospace; font-size: 9px; }
+.score-display strong { color: #aaa; }
+.confirm-button { min-width: 190px; padding: 15px 20px; border: 1px solid #fff; background: #fff; color: #000; cursor: pointer;
+    font-family: "JetBrains Mono", monospace; font-size: 10px; font-weight: 700; letter-spacing: 1px; transition: .2s; }
+.confirm-button:hover { background: #000; color: #fff; }
+.confirm-button:disabled { opacity: .3; cursor: not-allowed; }
+
+/* FEEDBACK */
+.feedback-overlay { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center;
+    background: rgba(0,0,0,.88); opacity: 0; pointer-events: none; transition: opacity .2s; }
+.feedback-overlay.show { opacity: 1; }
+.feedback-box { text-align: center; font-family: "JetBrains Mono", monospace; }
+.feedback-box strong { display: block; font-size: 42px; letter-spacing: 4px; }
+.feedback-box span { display: block; margin-top: 10px; color: #777; font-size: 10px; letter-spacing: 2px; }
+
+/* STAGE COMPLETE */
+.stage-overlay { position: fixed; inset: 0; z-index: 110; display: flex; align-items: center; justify-content: center;
+    background: rgba(0,0,0,.95); opacity: 0; pointer-events: none; transition: opacity .3s; }
+.stage-overlay.show { opacity: 1; pointer-events: auto; }
+.stage-complete-box { width: min(650px, calc(100% - 40px)); padding: 50px; border: 1px solid #333; background: #080808; text-align: center; }
+.stage-complete-label { color: #666; font-family: "JetBrains Mono", monospace; font-size: 9px; letter-spacing: 3px; }
+.stage-complete-box h2 { margin: 15px 0 5px; font-family: "JetBrains Mono", monospace; font-size: 34px; letter-spacing: 2px; }
+.stage-complete-box p { color: #777; font-size: 14px; }
+.stage-result { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 30px 0; }
+.stage-stat { padding: 20px 10px; border: 1px solid #222; background: #0c0c0c; }
+.stage-stat small { display: block; color: #555; font-family: "JetBrains Mono", monospace; font-size: 8px; letter-spacing: 1px; }
+.stage-stat strong { display: block; margin-top: 7px; font-family: "JetBrains Mono", monospace; font-size: 20px; }
+.next-stage-button { width: 100%; padding: 16px; border: 1px solid #fff; background: #fff; color: #000; cursor: pointer;
+    font-family: "JetBrains Mono", monospace; font-size: 11px; font-weight: 700; letter-spacing: 2px; }
+.next-stage-button:hover { background: #000; color: #fff; }
+
+/* INTRO */
+.intro-overlay { position: fixed; inset: 0; z-index: 200; display: flex; align-items: center; justify-content: center; background: #050505; }
+.intro-box { width: min(700px, calc(100% - 40px)); text-align: center; }
+.intro-small { color: #555; font-family: "JetBrains Mono", monospace; font-size: 9px; letter-spacing: 4px; }
+.intro-box h1 { margin: 15px 0; font-family: "JetBrains Mono", monospace; font-size: clamp(35px, 7vw, 70px); letter-spacing: 5px; }
+.intro-box p { color: #777; line-height: 1.8; }
+.start-button { margin-top: 25px; padding: 17px 35px; border: 1px solid #fff; background: #fff; color: #000; cursor: pointer;
+    font-family: "JetBrains Mono", monospace; font-size: 11px; font-weight: 700; letter-spacing: 2px; }
+.start-button:hover { background: #000; color: #fff; }
+
+/* RESPONSIVE */
+@media (max-width: 800px) {
+    .exam-header { padding: 0 20px; grid-template-columns: auto 1fr auto; }
+    .exam-logo { font-size: 14px; }
+    .stage-display { display: none; }
+    .exam-main { width: min(100% - 20px, 700px); padding-top: 20px; }
+    .trial-bar { grid-template-columns: 1fr 1fr; }
+    .question-counter { display: none; }
+    .challenge-container { padding: 25px 18px; }
+    .challenge-header { flex-direction: column; gap: 20px; }
+    .timer-box { text-align: left; }
+    .timer-bar { width: 100%; }
+    .answers { grid-template-columns: repeat(2, 1fr); }
+    .sequence-box { width: 50px; height: 50px; }
+    .stage-result { grid-template-columns: 1fr; }
+}
+@media (max-width: 500px) {
+    .exam-status { display: none; }
+    .answers { grid-template-columns: 1fr; }
+    .challenge-title { font-size: 22px; }
+    .question-instruction { font-size: 15px; }
+    .number-cell { min-width: 55px; padding: 12px 10px; font-size: 15px; }
+}
+</style>
+</head>
+
+<body class="exam-page">
+
+<div class="exam-grid"></div>
+<div class="scan-line"></div>
+
+<!-- HEADER -->
+<header class="exam-header">
+    <a href="index.html" class="exam-logo">THYNK <span>// IQ</span></a>
+    <div class="stage-display">
+        <small>CURRENT STAGE</small>
+        <strong id="stageName">THE SEQUENCE</strong>
+    </div>
+    <div class="exam-status"><i class="status-dot"></i> NEURAL ENGINE ACTIVE</div>
+</header>
+
+<!-- MAIN -->
+<main class="exam-main">
+
+    <div class="trial-bar">
+        <div class="trial-label">
+            <span>TRIAL</span>
+            <strong>NEURAL TRIAL</strong>
+        </div>
+        <div class="question-counter">
+            OVERALL <strong id="questionNumber">01</strong> / <span id="totalQuestions">100</span>
+        </div>
+        <div class="difficulty-label">
+            <span>DIFFICULTY</span>
+            <strong id="difficulty">EASY</strong>
+        </div>
+    </div>
+
+    <div class="progress-info">
+        <span id="stageProgressText">STAGE 01 / 05</span>
+        <span id="overallPercent">1%</span>
+    </div>
+    <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
+
+    <div class="progress-info">
+        <span>STAGE PROGRESS</span>
+        <span id="stageQuestionText">01 / 20</span>
+    </div>
+    <div class="stage-progress-container"><div class="stage-progress-fill" id="stageProgressFill"></div></div>
+
+    <section class="challenge-container">
+
+        <div class="challenge-header">
+            <div>
+                <div class="challenge-type" id="challengeType">PATTERN RECOGNITION</div>
+                <h1 class="challenge-title" id="challengeTitle">FIND THE PATTERN.</h1>
+            </div>
+            <div class="timer-box" id="timerBox">
+                <span class="timer-label">TIME REMAINING</span>
+                <strong class="timer-value" id="timerValue">20.0s</strong>
+                <div class="timer-bar"><div class="timer-fill" id="timerFill"></div></div>
+            </div>
+        </div>
+
+        <div class="question-area" id="questionArea"></div>
+        <div class="answers" id="answers"></div>
+
+        <div class="challenge-footer">
+            <div>
+                <span class="combo-display">COMBO <strong id="combo">×0</strong></span>
+                <span class="score-display">SCORE <strong id="score">000</strong></span>
+            </div>
+            <button class="confirm-button" id="confirmButton" disabled>CONFIRM ANSWER →</button>
+        </div>
+
+    </section>
+</main>
+
+<!-- FEEDBACK -->
+<div class="feedback-overlay" id="feedbackOverlay">
+    <div class="feedback-box">
+        <strong id="feedbackText">CORRECT</strong>
+        <span id="feedbackSub">NEURAL MOMENTUM +1</span>
+    </div>
+</div>
+
+<!-- STAGE COMPLETE -->
+<div class="stage-overlay" id="stageOverlay">
+    <div class="stage-complete-box">
+        <div class="stage-complete-label">STAGE COMPLETE</div>
+        <h2 id="completedStage">THE SEQUENCE</h2>
+        <p id="completedStageText">Neural analysis complete.</p>
+        <div class="stage-result">
+            <div class="stage-stat"><small>CORRECT</small><strong id="stageCorrect">0 / 20</strong></div>
+            <div class="stage-stat"><small>ACCURACY</small><strong id="stageAccuracy">0%</strong></div>
+            <div class="stage-stat"><small>SCORE</small><strong id="stageScore">0</strong></div>
+        </div>
+        <button class="next-stage-button" id="nextStageButton">CONTINUE TO NEXT STAGE →</button>
+    </div>
+</div>
+
+<!-- INTRO -->
+<div class="intro-overlay" id="introOverlay">
+    <div class="intro-box">
+        <div class="intro-small">THYNK // NEURAL ENGINE</div>
+        <h1>READY?</h1>
+        <p>100 CHALLENGES.<br>5 COGNITIVE DOMAINS.<br>ONE NEURAL TRIAL.</p>
+        <button class="start-button" id="startButton">BEGIN NEURAL TRIAL →</button>
+    </div>
+</div>
+
+<script>
+
+/* =========================================================
+   THYNK IQ — NEURAL TRIAL ENGINE v2
+   100 QUESTIONS • 5 STAGES × 20
+   ========================================================= */
+
+/* ---------- helpers สำหรับสร้างโจทย์ ---------- */
+
+const STAGES = { 1: "THE SEQUENCE", 2: "THE LOGIC", 3: "THE NUMBER", 4: "THE SPACE", 5: "THE CORE" };
+const TIME   = { EASY: 20, NORMAL: 15, HARD: 12, EXTREME: 8, FINAL: 8 };
+
+const c  = s => Array.from(s);                       // "●▲■" → ["●","▲","■"]
+const n  = s => s.split(" ");                        // "1 2 3" → ["1","2","3"]
+const gr = s => s.split("|").map(r =>                // "■..|...|..." → 3×3 grid
+    Array.from(r).map(x => x === "." ? "" : x));
+const ch = (s, w) => Array.from(s).slice(0, -1)      // "ABC","มากกว่า" → [["A","มากกว่า B"],...]
+    .map((x, i) => [x, w + " " + s[i + 1]]);
+
+const q = (st, type, title, diff, p) => ({
+    stage: STAGES[st], stageNumber: st, type, title,
+    difficulty: diff, time: TIME[diff], ...p
+});
+
+const GT = "มากกว่า";
+const P  = "PATTERN RECOGNITION";
+const L  = "LOGICAL REASONING";
+const N  = "NUMERICAL REASONING";
+const SP = "SPATIAL INTELLIGENCE";
+const POS4 = ["บนซ้าย", "บนขวา", "ล่างซ้าย", "ล่างขวา"];
+
+/* =========================================================
+   QUESTION DATABASE
+   ========================================================= */
+
+const challenges = [
+
+/* ---------- STAGE 01 — THE SEQUENCE ---------- */
+
+q(1,P,"FIND THE PATTERN.","EASY",{question:"สัญลักษณ์ใดควรอยู่ในตำแหน่งถัดไป?",sequence:c("●▲●▲?"),options:c("●▲■◆"),answer:0}),
+q(1,P,"CONTINUE THE SEQUENCE.","EASY",{question:"ค้นหารูปแบบที่ซ้ำกัน",sequence:c("■■●■■●?"),options:c("■●▲◆"),answer:0}),
+q(1,P,"FOLLOW THE ORDER.","EASY",{question:"รูปใดควรอยู่ถัดไป?",sequence:c("▲●■▲●?"),options:c("▲●■◆"),answer:2}),
+q(1,P,"REPEAT THE CYCLE.","EASY",{question:"ลำดับนี้วนซ้ำทุก 4 ตำแหน่ง",sequence:c("◆●▲■◆●▲?"),options:c("●■▲◆"),answer:1}),
+q(1,P,"MISSING SYMBOL.","EASY",{question:"เติมสัญลักษณ์ที่หายไป",sequence:c("●●▲●●▲?"),options:c("●▲■◆"),answer:0}),
+
+q(1,P,"DOUBLE STEP.","NORMAL",{question:"รูปแบบคือ +1, +2 สลับกัน",sequence:n("1 2 4 5 7 8 ?"),options:n("9 10 11 12"),answer:1}),
+q(1,P,"SYMBOL SHIFT.","NORMAL",{question:"รูปถัดไปควรเป็นอะไร?",sequence:c("▲▲●▲▲●?"),options:c("●▲■◆"),answer:1}),
+q(1,P,"ALTERNATING PAIRS.","NORMAL",{question:"ตรวจจับ pattern แบบคู่",sequence:c("●▲▲■■◆◆?"),options:c("●▲■◆"),answer:0}),
+q(1,P,"SEQUENCE MIRROR.","NORMAL",{question:"รูปแบบกำลังสะท้อนกลับ",sequence:c("●▲■◆■▲?"),options:c("●▲■◆"),answer:0}),
+q(1,P,"PATTERN LOCK.","NORMAL",{question:"จงหาตัวที่หายไป",sequence:c("■●●■●●?"),options:c("■●▲◆"),answer:0}),
+
+q(1,P,"STEP PATTERN.","HARD",{question:"ลำดับเพิ่มขึ้นทีละ 2 แล้วลดลง 1",sequence:n("2 4 3 5 4 6 ?"),options:n("5 6 7 8"),answer:0}),
+q(1,P,"TRIPLE CYCLE.","HARD",{question:"รูปแบบวนซ้ำเป็นชุดละ 3",sequence:c("▲■●▲■●▲?"),options:c("●■▲◆"),answer:1}),
+q(1,P,"SEQUENCE BREAK.","HARD",{question:"ข้อใดคือค่าถัดไป?",sequence:n("1 3 6 10 15 ?"),options:n("18 20 21 22"),answer:2}),
+q(1,P,"HIDDEN CYCLE.","HARD",{question:"รูปแบบกำลังเพิ่มจำนวนสัญลักษณ์",sequence:["●","●●","●●●","?"],options:["●","●●","●●●●","●●●●●"],answer:2}),
+q(1,P,"MIRROR PATTERN.","HARD",{question:"หาสัญลักษณ์ที่ทำให้รูปแบบสมมาตร",sequence:c("▲●■◆?◆■●▲"),options:c("▲●■◆"),answer:3}),
+
+q(1,P,"SEQUENCE CORE.","EXTREME",{question:"ค้นหากฎที่ซ่อนอยู่",sequence:n("2 5 10 17 26 ?"),options:n("35 36 37 38"),answer:2}),
+q(1,P,"DUAL PATTERN.","EXTREME",{question:"มีสองลำดับทำงานพร้อมกัน",sequence:n("2 4 4 8 6 12 8 ?"),options:n("14 16 18 20"),answer:1}),
+q(1,P,"DEEP SEQUENCE.","EXTREME",{question:"ค้นหาค่าที่หายไป",sequence:n("3 6 12 24 48 ?"),options:n("72 84 96 108"),answer:2}),
+q(1,P,"NEURAL PATTERN.","EXTREME",{question:"ลำดับนี้ใช้กฎเดียวกันทุกขั้น",sequence:n("1 4 9 16 25 ?"),options:n("30 32 36 49"),answer:2}),
+q(1,"FINAL SEQUENCE","THE FIRST CORE.","FINAL",{question:"Challenge สุดท้ายของ THE SEQUENCE",sequence:n("2 6 12 20 30 ?"),options:n("36 40 42 44"),answer:2}),
+
+
+/* ---------- STAGE 02 — THE LOGIC ---------- */
+
+q(2,L,"FOLLOW THE RULE.","EASY",{logic:ch("ABC",GT),question:"ข้อใดต้องเป็นจริง?",options:["A > C","C > A","A = C","B > A"],answer:0}),
+q(2,L,"DIRECT CONNECTION.","EASY",{logic:[["A","เท่ากับ B"],["B","มากกว่า C"]],question:"ข้อใดถูกต้อง?",options:["A > C","C > A","A < C","A = C"],answer:0}),
+q(2,L,"ORDER.","EASY",{logic:ch("ABCD","สูงกว่า"),question:"ใครสูงที่สุด?",options:c("ABCD"),answer:0}),
+q(2,L,"TRUE STATEMENT.","EASY",{logic:[["X","ไม่ใช่ Y"],["Y","เป็น Z"]],question:"ข้อใดได้รับการระบุโดยตรง?",options:["X ไม่ใช่ Y","X เป็น Z","Y ไม่ใช่ Z","Z ไม่ใช่ X"],answer:0}),
+q(2,L,"SIMPLE ORDER.","EASY",{logic:ch("ABC",GT),question:"ข้อใดเป็นไปไม่ได้?",options:["A > C","C < A","B < A","C > A"],answer:3}),
+
+q(2,L,"CHAIN REACTION.","NORMAL",{logic:ch("ABCD",GT),question:"ข้อใดต้องเป็นจริง?",options:["A > D","D > A","A = D","B < D"],answer:0}),
+q(2,L,"RELATION.","NORMAL",{logic:ch("ABCD","อยู่ก่อน"),question:"ใครอยู่หลัง A แต่ก่อน D?",options:["B เท่านั้น","C เท่านั้น","B และ C","D เท่านั้น"],answer:2}),
+q(2,L,"ELIMINATION.","NORMAL",{logic:[["A","ไม่ใช่สีแดง"],["B","เป็นสีแดง"],["C","ไม่ใช่สีเขียว"]],question:"ข้อใดทราบแน่นอน?",options:["A ไม่ใช่สีแดง","A เป็นสีเขียว","C เป็นสีแดง","B ไม่ใช่สีแดง"],answer:0}),
+q(2,L,"POSITION.","NORMAL",{logic:[["A","อยู่ซ้าย B"],["B","อยู่ซ้าย C"]],question:"ใครอยู่ซ้ายที่สุด?",options:["A","B","C","ไม่สามารถรู้ได้"],answer:0}),
+q(2,L,"LOGIC LOCK.","NORMAL",{logic:[["A","จริง"],["B","เท็จ"],["C","ถ้า A จริง → C จริง"]],question:"C มีค่าเป็นอะไร?",options:["จริง","เท็จ","ไม่เกี่ยวข้อง","ไม่สามารถระบุ"],answer:0}),
+
+q(2,L,"CHAIN LOGIC.","HARD",{logic:ch("ABCDE",GT),question:"ใครมีค่าน้อยที่สุด?",options:["A","B","D","E"],answer:3}),
+q(2,L,"CONDITIONAL.","HARD",{logic:[["ถ้า A","แล้ว B"],["ถ้า B","แล้ว C"]],question:"ถ้า A เป็นจริง ข้อใดต้องเป็นจริง?",options:["C","ไม่ใช่ C","A เป็นเท็จ","B เป็นเท็จ"],answer:0}),
+q(2,L,"EXCLUSION.","HARD",{logic:[["A","เลือกได้หนึ่งตัว"],["A","ไม่ใช่ B"],["B","ไม่ใช่ C"]],question:"ข้อใดสรุปได้แน่นอน?",options:["A ไม่ใช่ B","A เป็น C","B เป็น A","C เป็น A"],answer:0}),
+q(2,L,"ORDER MATRIX.","HARD",{logic:[["A","ก่อน B"],["C","ก่อน A"],["D","หลัง B"]],question:"ใครอยู่ก่อน A?",options:["B","C","D","ไม่มี"],answer:1}),
+q(2,L,"LOGIC GRID.","HARD",{logic:ch("ABCDE",GT),question:"ข้อใดถูกต้อง?",options:["E > A","A > E","C > A","D > B"],answer:1}),
+
+q(2,L,"PARADOX CHECK.","EXTREME",{logic:ch("ABCD",GT),question:"ข้อใดเป็นไปไม่ได้?",options:["A > C","B > D","A > D","D > A"],answer:3}),
+q(2,L,"MULTI CONDITION.","EXTREME",{logic:[["A","จริง → B จริง"],["B","จริง → C จริง"],["C","จริง → D จริง"],["A","จริง"]],question:"ข้อใดต้องเป็นจริง?",options:["D","ไม่ใช่ D","C เป็นเท็จ","B เป็นเท็จ"],answer:0}),
+q(2,L,"DEEP ORDER.","EXTREME",{logic:ch("ABCDE","ก่อน"),question:"ข้อใดอยู่ตรงกลางของลำดับ?",options:["A","B","C","E"],answer:2}),
+q(2,L,"CORE DEDUCTION.","EXTREME",{logic:ch("ABCDE",GT),question:"ถ้า E = 1 ใครมีค่ามากที่สุด?",options:c("ABCD"),answer:0}),
+q(2,"FINAL LOGIC","THE LOGIC CORE.","FINAL",{logic:ch("ABCDE",GT),question:"ข้อใดเป็นไปไม่ได้?",options:["A > E","B > D","C > E","E > A"],answer:3}),
+
+
+/* ---------- STAGE 03 — THE NUMBER ---------- */
+
+q(3,N,"SQUARE RULE.","EASY",{number:[["3","9"],["4","16"],["7","49"],["11","?"]],question:"ค้นหากฎของระบบ",options:n("121 111 99 101"),answer:0}),
+q(3,N,"DOUBLE.","EASY",{sequence:n("2 4 6 8 ?"),question:"ตัวเลขถัดไปคือ?",options:n("9 10 11 12"),answer:1}),
+q(3,N,"ADD THREE.","EASY",{sequence:n("3 6 9 12 ?"),question:"ค้นหากฎของลำดับ",options:n("14 15 16 18"),answer:1}),
+q(3,N,"MULTIPLY.","EASY",{sequence:n("2 4 8 16 ?"),question:"ตัวเลขใดควรอยู่ถัดไป?",options:n("24 30 32 36"),answer:2}),
+q(3,N,"HIDDEN RULE.","EASY",{number:[["5","10"],["7","14"],["9","18"],["12","?"]],question:"กฎเดียวกันถูกใช้กับทุกคู่",options:n("20 22 24 26"),answer:2}),
+
+q(3,N,"MULTI STEP.","NORMAL",{sequence:n("2 6 18 54 ?"),question:"ค้นหากฎของลำดับ",options:n("108 162 216 124"),answer:1}),
+q(3,N,"ODD GAP.","NORMAL",{sequence:n("5 8 13 20 29 ?"),question:"ส่วนต่างเป็นเลขคี่เรียงกัน",options:n("38 39 40 41"),answer:2}),
+q(3,N,"DOUBLE PLUS.","NORMAL",{sequence:n("1 3 7 15 ?"),question:"แต่ละขั้นคือ ×2 + 1",options:n("28 29 30 31"),answer:3}),
+q(3,N,"PAIR RULE.","NORMAL",{number:[["2","6"],["3","12"],["4","20"],["5","?"]],question:"ตัวเลขใดควรอยู่ถัดไป?",options:n("25 30 35 40"),answer:1}),
+q(3,N,"FIBONACCI.","NORMAL",{sequence:n("1 1 2 3 5 8 ?"),question:"ตัวเลขถัดไปคือ?",options:n("11 12 13 15"),answer:2}),
+
+q(3,N,"GROWING GAP.","HARD",{sequence:n("4 6 9 13 18 24 ?"),question:"ส่วนต่างเพิ่มขึ้นทีละ 1 เริ่มจาก 2",options:n("29 30 31 32"),answer:2}),
+q(3,N,"MULTI RULE.","HARD",{sequence:n("2 5 11 23 47 ?"),question:"กฎคือ ×2 + 1",options:n("94 95 96 97"),answer:1}),
+q(3,N,"CUBE RULE.","HARD",{sequence:n("1 8 27 64 ?"),question:"ค้นหารูปแบบ",options:n("100 121 125 144"),answer:2}),
+q(3,N,"ALTERNATING.","HARD",{sequence:n("10 8 11 9 12 10 ?"),question:"มีสองกฎทำงานสลับกัน",options:n("11 12 13 14"),answer:2}),
+q(3,N,"NUMBER MATRIX.","HARD",{number:[["2 + 3","5"],["4 + 5","9"],["7 + 6","13"],["8 + 9","?"]],question:"หาค่าที่หายไป",options:n("15 16 17 18"),answer:2}),
+
+q(3,N,"ODD STEPS.","EXTREME",{sequence:n("1 3 7 13 21 ?"),question:"ส่วนต่างเป็นเลขคู่เรียงกัน",options:n("29 31 33 35"),answer:1}),
+q(3,N,"DEEP NUMBER.","EXTREME",{sequence:n("3 7 15 31 63 ?"),question:"กฎเดียวกันถูกใช้ทุกขั้น",options:n("95 111 127 129"),answer:2}),
+q(3,N,"PRIME LOCK.","EXTREME",{sequence:n("2 3 5 7 11 13 ?"),question:"ลำดับนี้เกี่ยวข้องกับจำนวนเฉพาะ",options:n("15 16 17 19"),answer:2}),
+q(3,N,"NUMBER CORE.","EXTREME",{sequence:n("1 2 6 24 120 ?"),question:"ลำดับนี้เกี่ยวข้องกับ factorial",options:n("360 600 720 840"),answer:2}),
+q(3,"FINAL NUMBER","THE NUMBER CORE.","FINAL",{sequence:n("5 11 23 47 95 ?"),question:"Challenge สุดท้ายของ THE NUMBER",options:n("181 189 191 193"),answer:2}),
+
+
+/* ---------- STAGE 04 — THE SPACE ---------- */
+
+q(4,SP,"ROTATE 90°.","EASY",{spatial:{symbol:"↑",rotation:90},question:"ลูกศรชี้ขึ้น เมื่อหมุนตามเข็มนาฬิกา 90° จะชี้ไปทางใด?",options:c("→←↑↓"),answer:0}),
+q(4,SP,"ROTATE 180°.","EASY",{spatial:{symbol:"↑",rotation:180},question:"ลูกศรชี้ขึ้น หมุน 180° จะเป็นทิศใด?",options:c("→←↑↓"),answer:3}),
+q(4,SP,"POSITION SHIFT.","EASY",{grid:gr("■..|...|..."),question:"ถ้าหมุนภาพ 180° ■ จะไปอยู่ตำแหน่งใด?",options:["บนขวา","ล่างขวา","ล่างซ้าย","บนซ้าย"],answer:1}),
+q(4,SP,"CORNER ROTATION.","EASY",{grid:gr("..◆|...|..."),question:"หมุนภาพ 180° ◆ จะอยู่ตรงไหน?",options:POS4,answer:2}),
+q(4,SP,"MIRROR POSITION.","EASY",{grid:gr(".●.|...|..."),question:"สะท้อนภาพตามแกนตั้ง ตำแหน่ง ● จะเปลี่ยนอย่างไร?",options:["ยังอยู่ตรงกลาง","ไปซ้าย","ไปขวา","ไปด้านล่าง"],answer:0}),
+
+q(4,SP,"ROTATION.","NORMAL",{spatial:{symbol:"→",rotation:90},question:"ลูกศร → หมุนตามเข็มนาฬิกา 90° จะเป็น?",options:c("↑↓←→"),answer:1}),
+q(4,SP,"ROTATE BACK.","NORMAL",{spatial:{symbol:"↓",rotation:90},question:"ลูกศร ↓ หมุนตามเข็มนาฬิกา 90°",options:c("→←↑↓"),answer:1}),
+q(4,SP,"GRID SHIFT.","NORMAL",{grid:gr("...|■..|..."),question:"หมุนภาพ 90° ตามเข็มนาฬิกา ■ จะไปอยู่ตำแหน่งใด?",options:["กลางบน","กลางล่าง","กลางซ้าย","กลางขวา"],answer:0}),
+q(4,SP,"MIRROR GRID.","NORMAL",{grid:gr("◆..|...|..."),question:"สะท้อนตามแกนตั้ง ◆ จะอยู่ตำแหน่งใด?",options:POS4,answer:1}),
+q(4,SP,"PATTERN ROTATION.","NORMAL",{visualSequence:["▲","→","▼","?"],question:"สัญลักษณ์ถัดไปเกิดจากการหมุน 90° ตามเข็มนาฬิกา",options:c("←↑→↓"),answer:0}),
+
+q(4,SP,"COMPOUND ROTATION.","HARD",{grid:gr("■▲.|...|..."),question:"หมุน 180° ทั้งภาพ ■ จะไปอยู่ตรงไหน?",options:["บนซ้าย","ล่างขวา","ล่างซ้าย","บนขวา"],answer:1}),
+q(4,SP,"DUAL POSITION.","HARD",{grid:gr("●..|.■.|..."),question:"หมุน 180° ตำแหน่งของ ● จะอยู่ที่ใด?",options:["บนซ้าย","กลาง","ล่างขวา","ล่างซ้าย"],answer:2}),
+q(4,SP,"ROTATING ORDER.","HARD",{visualSequence:["▲","→","▼","←","?"],question:"ลำดับนี้หมุนทีละ 90°",options:["▲","→","↓","←"],answer:0}),
+q(4,SP,"MIRROR LOGIC.","HARD",{grid:gr("■.●|...|..."),question:"สะท้อนตามแกนตั้ง ตำแหน่ง ■ จะเป็น?",options:["บนซ้าย","บนกลาง","บนขวา","ล่างซ้าย"],answer:2}),
+q(4,SP,"SPACE MATRIX.","HARD",{grid:gr("▲.●|...|■.◆"),question:"หมุน 180° แล้ว ◆ จะอยู่ตำแหน่งใด?",options:POS4,answer:0}),
+
+q(4,SP,"VECTOR ROTATION.","EXTREME",{spatial:{symbol:"↗",rotation:90},question:"↗ หมุนตามเข็มนาฬิกา 90°",options:c("↘↙↖↗"),answer:0}),
+q(4,SP,"DEEP ROTATION.","EXTREME",{visualSequence:c("↑↗→↘?"),question:"ทิศทางหมุนทีละ 45° ตามเข็มนาฬิกา",options:c("↓↙←↖"),answer:0}),
+q(4,SP,"SPATIAL TRANSFORM.","EXTREME",{grid:gr("■●.|.▲.|..◆"),question:"หมุนภาพ 180° แล้ว ▲ อยู่ตำแหน่งใด?",options:["กลาง","กลางซ้าย","กลางขวา","ล่างกลาง"],answer:0}),
+q(4,SP,"SPACE CORE.","EXTREME",{visualSequence:c("●◆■▲?"),question:"รูปแบบหมุนตำแหน่งทีละหนึ่งขั้น",options:c("●◆■▲"),answer:0}),
+q(4,"FINAL SPATIAL","THE SPACE CORE.","FINAL",{visualSequence:c("↑↗→↘↓?"),question:"Challenge สุดท้ายของ THE SPACE",options:c("↙←↖↑"),answer:0}),
+
+
+/* ---------- STAGE 05 — THE CORE ---------- */
+
+q(5,"MEMORY","MEMORY FLASH.","EASY",{memory:["△ 7","● 2","▲ 9","■ 4"],memoryTime:2500,question:"ตัวเลขใดอยู่หลัง ▲?",options:n("2 4 7 9"),answer:3}),
+q(5,"MEMORY","MEMORY ORDER.","EASY",{memory:["A","7","K","3"],memoryTime:2500,question:"ตัวอักษรใดอยู่ตำแหน่งที่ 3?",options:["A","7","K","3"],answer:2}),
+q(5,"MEMORY","MEMORY PAIR.","EASY",{memory:["● 4","▲ 8","■ 2","◆ 6"],memoryTime:2500,question:"ตัวเลขใดอยู่หลัง ■?",options:n("2 4 6 8"),answer:0}),
+q(5,"PATTERN","CORE PATTERN.","EASY",{sequence:n("5 10 15 20 ?"),question:"ตัวเลขถัดไปคือ?",options:n("22 25 30 35"),answer:1}),
+q(5,"LOGIC","CORE LOGIC.","EASY",{logic:ch("ABC",GT),question:"ใครมีค่ามากที่สุด?",options:["A","B","C","เท่ากัน"],answer:0}),
+
+q(5,"NUMBER","MIXED NUMBER.","NORMAL",{sequence:n("3 6 12 24 ?"),question:"ค้นหากฎ",options:n("36 42 48 50"),answer:2}),
+q(5,"MEMORY","MEMORY LOCK.","NORMAL",{memory:["R","2","▲","9","M"],memoryTime:3000,question:"อะไรอยู่ก่อน M?",options:["R","2","▲","9"],answer:3}),
+q(5,"PATTERN","DUAL PATTERN.","NORMAL",{sequence:n("2 4 5 10 11 22 ?"),question:"กฎคือ ×2, +1 สลับกัน",options:n("23 24 44 45"),answer:0}),
+q(5,"LOGIC","CHAIN CORE.","NORMAL",{logic:ch("ABCD","ก่อน"),question:"ใครอยู่ระหว่าง A กับ C?",options:c("ABCD"),answer:1}),
+q(5,"SPATIAL","CORE ROTATION.","NORMAL",{spatial:{symbol:"←",rotation:180},question:"ลูกศร ← หมุนตามเข็มนาฬิกา 180° จะเป็น?",options:c("→←↑↓"),answer:0}),
+
+q(5,"NUMBER","NUMBER CORE.","HARD",{sequence:n("4 9 25 49 ?"),question:"ลำดับนี้เกี่ยวข้องกับจำนวนเฉพาะ",options:n("81 100 121 169"),answer:2}),
+q(5,"MEMORY","MEMORY SEQUENCE.","HARD",{memory:c("831947"),memoryTime:3000,question:"ตัวเลขตัวที่ 4 คือ?",options:n("1 3 7 9"),answer:3}),
+q(5,"LOGIC","DEEP LOGIC.","HARD",{logic:ch("ABCDE",GT),question:"ข้อใดเป็นไปไม่ได้?",options:["A > E","B > D","C > E","E > A"],answer:3}),
+q(5,"SPATIAL","SPATIAL CORE.","HARD",{grid:gr("■..|.●.|..▲"),question:"หมุน 180° แล้ว ■ จะอยู่ตรงไหน?",options:["บนซ้าย","กลาง","ล่างขวา","บนขวา"],answer:2}),
+q(5,"PATTERN","HIDDEN CORE.","HARD",{sequence:n("1 1 2 4 7 13 ?"),question:"แต่ละค่าคือผลรวมของสามค่าก่อนหน้า",options:n("20 22 24 26"),answer:2}),
+
+q(5,"MIXED","NEURAL LOAD.","EXTREME",{logic:[["A","2"],["B","4"],["C","8"],["D","16"]],question:"หากรูปแบบดำเนินต่อไป ค่า E คือเท่าใด?",options:n("20 24 32 36"),answer:2}),
+q(5,"NUMBER","MULTI RULE.","EXTREME",{sequence:n("2 3 5 9 17 33 ?"),question:"ส่วนต่างเพิ่มเป็นสองเท่าทุกขั้น",options:n("49 63 65 67"),answer:2}),
+q(5,"MEMORY","FINAL MEMORY.","EXTREME",{memory:["Q","7","▲","4","K","2"],memoryTime:2500,question:"ตัวอักษรใดอยู่หลัง 4?",options:["Q","▲","K","7"],answer:2}),
+q(5,"MIXED INTELLIGENCE","NEURAL FUSION.","EXTREME",{sequence:n("1 4 27 256 ?"),question:"แต่ละค่าคือ n ยกกำลัง n",options:n("625 1024 3125 3456"),answer:2}),
+q(5,"FINAL CHALLENGE","THE NEURAL CORE.","FINAL",{sequence:n("1 2 5 12 29 ?"),question:"Challenge สุดท้ายของ THYNK — แต่ละค่าอ้างอิงจากสองค่าก่อนหน้า",options:n("60 68 70 72"),answer:2})
+
+];
+
+/* ตรวจความถูกต้องของฐานข้อมูลโจทย์ */
+challenges.forEach((ch_, i) => {
+    if (!ch_.options || ch_.answer < 0 || ch_.answer >= ch_.options.length) {
+        console.error("THYNK ERROR: invalid answer index at question", i + 1);
+    }
+});
+
+/* =========================================================
+   THYNK IQ — ENGINE v2  (ระบบคะแนน + การประเมิน IQ ใหม่)
+   วางทับตั้งแต่ "VALIDATION" จนถึงก่อน 
+   (ต่อจาก const challenges = [ ... ]; เดิม)
+   ========================================================= */
+
+/* =========================================================
+   VALIDATION
+   ========================================================= */
+
+if (challenges.length !== 100) {
+    console.error("THYNK ERROR: Challenge count is not 100.", challenges.length);
+}
+
+
+/* =========================================================
+   SCORING CONFIG
+   ---------------------------------------------------------
+   points  = คะแนนเกม (โชว์ระหว่างเล่น)
+   weight  = น้ำหนักความยาก (ใช้คำนวณ IQ เท่านั้น)
+   ========================================================= */
+
+const DIFFICULTY = {
+    EASY:    { weight: 1.00, points: 100 },
+    NORMAL:  { weight: 1.50, points: 150 },
+    HARD:    { weight: 2.25, points: 225 },
+    EXTREME: { weight: 3.25, points: 325 },
+    FINAL:   { weight: 4.00, points: 400 }
+};
+
+const TIME_BONUS_MAX = 0.5;   // (ไม่ใช้แล้ว — คะแนนเกมคิด 1 ข้อ = 1 คะแนน)
+const COMBO_STEP     = 0.05;  // (ไม่ใช้แล้ว)
+const COMBO_CAP      = 10;    // คอมโบสูงสุดที่นับ (x1.5)
+
+const IQ_MIN = 55;            // ability 0.0
+const IQ_MAX = 145;           // ability 1.0
+const SPEED_WEIGHT = 0.08;    // ความเร็วมีผลได้มากสุด 8% ของ ability
+
+/* --- กันการตอบมั่ว --- */
+const WRONG_PENALTY_RATIO = 0.5;    // (ไม่ใช้แล้ว — ตอบผิดไม่หักคะแนน)
+const MIN_THINK_TIME = 1.5;         // ตอบเร็วกว่านี้ (วินาที) = ไม่ได้โบนัสเวลา
+const RAPID_LIMIT    = 1.0;         // ตอบเร็วกว่านี้ถือว่า "กดรัว"
+const PASS_IQ        = 100;         // เกณฑ์ผ่าน (ปรับได้)
+const CHANCE_CORRECT_MAX = 34;      // ถูก ≤ 34/100 ≈ เท่ากับการเดา (25 + 2SD)
+
+
+/* =========================================================
+   STATE
+   ========================================================= */
+
+let currentQuestion = 0;
+let selectedAnswer  = null;
+let answered        = false;   // กันกด Enter / ตอบซ้ำระหว่างแสดง feedback
+
+let score          = 0;
+let combo          = 0;
+let maxCombo       = 0;
+let correctAnswers = 0;
+let timeouts       = 0;
+
+let timer = null;
+let remainingTime = 0;
+let totalTime = 0;
+let memoryTimeout = null;
+let feedbackTimeout = null;
+let trialStarted = false;
+
+const answerLog = [];          // บันทึกทุกข้อ ใช้คำนวณ IQ
+
+const stageStats = {};
+for (let i = 1; i <= 5; i++) stageStats[i] = { correct: 0, score: 0 };
+
+
+/* =========================================================
+   ELEMENTS
+   ========================================================= */
+
+const $ = id => document.getElementById(id);
+
+const stageName          = $("stageName");
+const questionNumber     = $("questionNumber");
+const totalQuestions     = $("totalQuestions");
+const difficulty         = $("difficulty");
+const progressFill       = $("progressFill");
+const stageProgressFill  = $("stageProgressFill");
+const stageProgressText  = $("stageProgressText");
+const stageQuestionText  = $("stageQuestionText");
+const overallPercent     = $("overallPercent");
+const challengeType      = $("challengeType");
+const challengeTitle     = $("challengeTitle");
+const timerValue         = $("timerValue");
+const timerFill          = $("timerFill");
+const timerBox           = $("timerBox");
+const questionArea       = $("questionArea");
+const answers            = $("answers");
+const confirmButton      = $("confirmButton");
+const comboDisplay       = $("combo");
+const scoreDisplay       = $("score");
+const feedbackOverlay    = $("feedbackOverlay");
+const feedbackText       = $("feedbackText");
+const feedbackSub        = $("feedbackSub");
+const introOverlay       = $("introOverlay");
+const startButton        = $("startButton");
+const stageOverlay       = $("stageOverlay");
+const completedStage     = $("completedStage");
+const completedStageText = $("completedStageText");
+const stageCorrect       = $("stageCorrect");
+const stageAccuracy      = $("stageAccuracy");
+const stageScore         = $("stageScore");
+const nextStageButton    = $("nextStageButton");
+
+function el(tag, cls, text) {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined) e.textContent = text;
+    return e;
+}
+
+const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+
+
+/* =========================================================
+   INIT
+   ========================================================= */
+
+totalQuestions.textContent = challenges.length;
+comboDisplay.textContent   = "×0";
+scoreDisplay.textContent   = "000";
+
+startButton.addEventListener("click", () => {
+    introOverlay.style.display = "none";
+    trialStarted = true;
+    loadChallenge();
+});
+
+
+/* =========================================================
+   LOAD CHALLENGE
+   ========================================================= */
+
+function loadChallenge() {
+
+    clearInterval(timer);
+    clearTimeout(memoryTimeout);
+    clearTimeout(feedbackTimeout);
+
+    selectedAnswer = null;
+    answered = false;
+    confirmButton.disabled = true;
+
+    const c = challenges[currentQuestion];
+
+    stageName.textContent      = c.stage;
+    questionNumber.textContent = String(currentQuestion + 1).padStart(2, "0");
+    difficulty.textContent     = c.difficulty;
+    challengeType.textContent  = c.type;
+    challengeTitle.textContent = c.title;
+
+    const overall = ((currentQuestion + 1) / challenges.length) * 100;
+    progressFill.style.width  = overall + "%";
+    overallPercent.textContent = Math.round(overall) + "%";
+
+    const stageQ = (currentQuestion % 20) + 1;
+    stageProgressFill.style.width = (stageQ / 20) * 100 + "%";
+    stageProgressText.textContent =
+        `STAGE ${String(c.stageNumber).padStart(2, "0")} / 05`;
+    stageQuestionText.textContent =
+        `${String(stageQ).padStart(2, "0")} / 20`;
+
+    renderQuestion(c);
+    renderAnswers(c);
+    startTimer(c.time);
+}
+
+
+/* =========================================================
+   RENDER QUESTION
+   ========================================================= */
+
+function renderBoxes(list, markMissing) {
+    const wrap = el("div", "visual-sequence");
+    list.forEach(v => {
+        const box = el("div", "sequence-box", v);
+        if (markMissing && v === "?") box.classList.add("missing");
+        wrap.appendChild(box);
+    });
+    return wrap;
+}
+
+function renderQuestion(c) {
+
+    questionArea.innerHTML = "";
+
+    if (c.question) {
+        questionArea.appendChild(el("div", "question-instruction", c.question));
+    }
+
+    if (c.sequence)       questionArea.appendChild(renderBoxes(c.sequence, true));
+    if (c.visualSequence) questionArea.appendChild(renderBoxes(c.visualSequence, true));
+
+    /* NUMBER PAIRS  (แก้: แสดงลูกศร → ระหว่างคู่) */
+    if (c.number) {
+        const sys = el("div", "number-system");
+        c.number.forEach(row => {
+            const r = el("div", "number-row");
+            row.forEach((v, i) => {
+                r.appendChild(el("div", "number-cell", v));
+                if (i < row.length - 1) {
+                    r.appendChild(el("div", "number-cell arrow", "→"));
+                }
+            });
+            sys.appendChild(r);
+        });
+        questionArea.appendChild(sys);
+    }
+
+    /* LOGIC */
+    if (c.logic) {
+        const box = el("div", "logic-data");
+        c.logic.forEach(row => {
+            const item = el("div", "logic-row");
+            item.appendChild(el("span", "", row[0]));
+            item.appendChild(el("strong", "", row[1]));
+            box.appendChild(item);
+        });
+        questionArea.appendChild(box);
+    }
+
+    /* MEMORY */
+    if (c.memory) {
+        const mem = el("div", "memory-display");
+        c.memory.forEach(m => mem.appendChild(el("div", "memory-item", m)));
+        questionArea.appendChild(mem);
+
+        const cd = el("div", "memory-countdown", "MEMORY DATA ACTIVE");
+        questionArea.appendChild(cd);
+
+        memoryTimeout = setTimeout(() => {
+            mem.innerHTML =
+                '<div class="memory-hidden">• • • • • •</div>';
+            cd.textContent = "MEMORY DATA LOCKED";
+        }, c.memoryTime || 2500);
+    }
+
+    /* GRID */
+    if (c.grid) {
+        const grid = el("div", "grid-challenge");
+        c.grid.forEach(row => row.forEach(cell =>
+            grid.appendChild(el("div", "grid-cell", cell))
+        ));
+        questionArea.appendChild(grid);
+    }
+
+    /* SPATIAL  (แก้: แสดงสัญลักษณ์ต้นฉบับ ไม่หมุนล่วงหน้า
+       เดิมหมุนให้เห็นคำตอบเลย) */
+    if (c.spatial) {
+        const board = el("div", "spatial-board");
+        for (let i = 0; i < 9; i++) board.appendChild(el("div", "spatial-cell"));
+        board.children[4].appendChild(
+            el("div", "spatial-shape", c.spatial.symbol)
+        );
+        questionArea.appendChild(board);
+    }
+}
+
+
+/* =========================================================
+   ANSWERS
+   ========================================================= */
+
+function renderAnswers(c) {
+    answers.innerHTML = "";
+    c.options.forEach((opt, i) => {
+        const b = el("button", "answer-button", opt);
+        b.addEventListener("click", () => selectAnswer(i));
+        answers.appendChild(b);
+    });
+}
+
+function selectAnswer(index) {
+    if (answered) return;
+    selectedAnswer = index;
+    document.querySelectorAll(".answer-button").forEach((b, i) =>
+        b.classList.toggle("selected", i === index)
+    );
+    confirmButton.disabled = false;
+}
+
+confirmButton.addEventListener("click", submitAnswer);
+
+
+/* =========================================================
+   POINTS  (คะแนนเกม)
+   ---------------------------------------------------------
+   ตอบถูก 1 ข้อ = 1 คะแนน   (100 ข้อ = 100 คะแนนเต็ม)
+   ตอบผิด / หมดเวลา = 0 คะแนน (ไม่หักคะแนน)
+   ไม่มีโบนัสเวลา / ตัวคูณคอมโบ / น้ำหนักตามความยากในคะแนนนี้
+   (ส่วนการคำนวณ IQ ยังใช้ระบบเดิมทุกอย่าง)
+   ========================================================= */
+
+const POINT_PER_QUESTION = 1;
+
+function calcPoints() {
+    return POINT_PER_QUESTION;
+}
+
+function logAnswer(c, correct, timedOut, timeUsed, points) {
+    answerLog.push({
+        n: currentQuestion + 1,
+        stage: c.stageNumber,
+        difficulty: c.difficulty,
+        options: c.options.length,
+        timeLimit: c.time,
+        timeUsed: Math.round(timeUsed * 100) / 100,
+        selected: timedOut ? null : selectedAnswer,
+        correct: correct,
+        timedOut: timedOut,
+        points: points
+    });
+}
+
+
+/* =========================================================
+   SUBMIT
+   ========================================================= */
+
+function submitAnswer() {
+
+    if (answered || selectedAnswer === null) return;
+    answered = true;
+
+    clearInterval(timer);
+
+    const c = challenges[currentQuestion];
+    const timeUsed = c.time - remainingTime;
+    const correct = selectedAnswer === c.answer;
+
+    if (correct) {
+
+        correctAnswers++;
+        combo++;
+        maxCombo = Math.max(maxCombo, combo);
+
+        const pts = calcPoints();
+        score += pts;
+
+        stageStats[c.stageNumber].correct++;
+        stageStats[c.stageNumber].score += pts;
+
+        logAnswer(c, true, false, timeUsed, pts);
+
+        scoreDisplay.textContent = String(score).padStart(3, "0");
+        comboDisplay.textContent = `×${combo}`;
+
+        showFeedback("CORRECT", `+${pts} SCORE • COMBO ×${combo}`);
+
+    } else {
+
+        combo = 0;
+        comboDisplay.textContent = "×0";
+
+        // ตอบผิด = 0 คะแนน (ไม่หักคะแนน)
+        logAnswer(c, false, false, timeUsed, 0);
+
+        showFeedback("INCORRECT", "+0 SCORE • COMBO BROKEN");
+    }
+}
+
+function timeoutChallenge() {
+
+    if (answered) return;
+    answered = true;
+
+    clearInterval(timer);
+
+    const c = challenges[currentQuestion];
+
+    combo = 0;
+    timeouts++;
+    comboDisplay.textContent = "×0";
+
+    logAnswer(c, false, true, c.time, 0);
+
+    showFeedback("TIMEOUT", "NEURAL MOMENTUM LOST");
+}
+
+
+/* =========================================================
+   TIMER
+   ========================================================= */
+
+function startTimer(seconds) {
+
+    clearInterval(timer);
+
+    totalTime = seconds;
+    remainingTime = seconds;
+
+    timerValue.textContent = seconds.toFixed(1) + "s";
+    timerFill.style.width = "100%";
+    timerBox.classList.remove("warning");
+
+    const start = performance.now();
+
+    timer = setInterval(() => {
+
+        const elapsed = (performance.now() - start) / 1000;
+        remainingTime = Math.max(0, totalTime - elapsed);
+
+        timerValue.textContent = remainingTime.toFixed(1) + "s";
+        timerFill.style.width = (remainingTime / totalTime) * 100 + "%";
+
+        if (remainingTime <= 3) timerBox.classList.add("warning");
+
+        if (remainingTime <= 0) {
+            remainingTime = 0;
+            timeoutChallenge();
+        }
+
+    }, 50);
+}
+
+
+/* =========================================================
+   FEEDBACK / FLOW
+   ========================================================= */
+
+function showFeedback(title, subtitle) {
+
+    feedbackText.textContent = title;
+    feedbackSub.textContent  = subtitle;
+    feedbackOverlay.classList.add("show");
+
+    feedbackTimeout = setTimeout(() => {
+        feedbackOverlay.classList.remove("show");
+        handleAfterQuestion();
+    }, 850);
+}
+
+function handleAfterQuestion() {
+
+    if (currentQuestion === challenges.length - 1) {
+        finishTrial();
+        return;
+    }
+
+    if ((currentQuestion + 1) % 20 === 0) {
+        showStageComplete();
+        return;
+    }
+
+    nextChallenge();
+}
+
+function nextChallenge() {
+    currentQuestion++;
+    loadChallenge();
+}
+
+function showStageComplete() {
+
+    clearInterval(timer);
+
+    const c = challenges[currentQuestion];
+    const stage = c.stageNumber;
+    const stats = stageStats[stage];
+
+    completedStage.textContent = c.stage;
+
+    completedStageText.textContent = stage < 5
+        ? "Neural load accepted. Prepare for the next cognitive domain."
+        : "All cognitive domains completed.";
+
+    stageCorrect.textContent  = `${stats.correct} / 20`;
+    stageAccuracy.textContent = `${Math.round((stats.correct / 20) * 100)}%`;
+    stageScore.textContent    = stats.score;
+
+    nextStageButton.textContent = stage < 5
+        ? `CONTINUE TO ${challenges[currentQuestion + 1].stage} →`
+        : "VIEW NEURAL ANALYSIS →";
+
+    stageOverlay.classList.add("show");
+}
+
+nextStageButton.addEventListener("click", () => {
+
+    stageOverlay.classList.remove("show");
+
+    if (currentQuestion >= challenges.length - 1) {
+        finishTrial();
+        return;
+    }
+
+    nextChallenge();
+});
+
+
+/* =========================================================
+   IQ ENGINE
+   ---------------------------------------------------------
+   1) ให้น้ำหนักตามความยาก (ถูกข้อยากได้มากกว่า)
+   2) หักการเดา: ตอบผิด = −weight / (จำนวนตัวเลือก − 1)
+      หมดเวลา (ไม่ตอบ) = 0  → เดาสุ่มได้ค่าเฉลี่ย ≈ 0
+   3) ability = adjusted × (0.92 + 0.08 × speedIndex)
+      speedIndex = เวลาที่เหลือเฉลี่ย (ถ่วงน้ำหนัก) ของข้อที่ตอบถูก
+   4) IQ = 55 + 90 × ability   (ability 0.5 → IQ 100, 1.0 → 145)
+   5) ช่วงความคลาดเคลื่อน 90% จาก effective-N ของข้อสอบ
+   ========================================================= */
+
+function normalCdf(z) {
+    // Abramowitz–Stegun erf approximation
+    const t = 1 / (1 + 0.2316419 * Math.abs(z));
+    const d = 0.3989423 * Math.exp(-z * z / 2);
+    const p = d * t * (0.3193815 + t * (-0.3565638 +
+              t * (1.781478 + t * (-1.821256 + t * 1.330274))));
+    return z > 0 ? 1 - p : p;
+}
+
+function classifyIQ(iq) {
+    if (iq >= 130) return { en: "VERY SUPERIOR", th: "สูงมาก" };
+    if (iq >= 120) return { en: "SUPERIOR",      th: "สูง" };
+    if (iq >= 110) return { en: "HIGH AVERAGE",  th: "ค่อนข้างสูง" };
+    if (iq >=  90) return { en: "AVERAGE",       th: "ปานกลาง" };
+    if (iq >=  80) return { en: "LOW AVERAGE",   th: "ค่อนข้างต่ำ" };
+    if (iq >=  70) return { en: "BORDERLINE",    th: "ต่ำกว่าเกณฑ์เล็กน้อย" };
+    return               { en: "LOW",            th: "ต่ำ" };
+}
+
+function abilityFrom(entries, useSpeed) {
+
+    let totalW = 0, sumW2 = 0, earned = 0, penalty = 0;
+    let correctW = 0, speedNum = 0;
+
+    entries.forEach(e => {
+        const w = DIFFICULTY[e.difficulty].weight;
+        totalW += w;
+        sumW2  += w * w;
+
+        if (e.correct) {
+            earned   += w;
+            correctW += w;
+            speedNum += w * clamp(1 - e.timeUsed / e.timeLimit, 0, 1);
+        } else if (!e.timedOut) {
+            penalty += w / (e.options - 1);
+        }
+    });
+
+    if (totalW === 0) {
+        return { ability: 0, adjusted: 0, rawWeighted: 0, speed: 0, nEff: 1 };
+    }
+
+    const rawWeighted = earned / totalW;
+    const adjusted    = clamp((earned - penalty) / totalW, 0, 1);
+    const speed       = correctW > 0 ? speedNum / correctW : 0;
+    const ability     = useSpeed
+        ? adjusted * ((1 - SPEED_WEIGHT) + SPEED_WEIGHT * speed)
+        : adjusted;
+
+    return {
+        ability, adjusted, rawWeighted, speed,
+        nEff: (totalW * totalW) / sumW2
+    };
+}
+
+const abilityToIQ = a => IQ_MIN + (IQ_MAX - IQ_MIN) * a;
+
+/* =========================================================
+   IRT ENGINE  (3PL + EAP)  — วัดความสามารถ θ แล้วแปลงเป็น IQ
+   ---------------------------------------------------------
+   P(ถูก | θ) = c + (1 − c) / (1 + e^(−a(θ − b)))
+     b = ความยากของข้อ, a = อำนาจจำแนก, c = โอกาสเดาถูก (1/จำนวนตัวเลือก)
+   • ข้อที่ตอบเร็วผิดปกติ (กดรัว) ถูกตัดออกจากการคำนวณ (effort-moderated)
+   • หมดเวลา = ถือว่าตอบผิด
+   • θ ประมาณแบบ EAP (prior N(0,1)) → SE มาจาก posterior SD
+   • IQ = 100 + 15θ    (θ = 0 คือค่าเฉลี่ยประชากรตามนิยามของสเกล)
+   • ตรวจความสอดคล้องของรูปแบบการตอบด้วยสถิติ lz
+   ========================================================= */
+
+/* พารามิเตอร์เริ่มต้นตามระดับความยาก
+   (ค่าตั้งต้นจากการประมาณ — ควรแทนด้วยค่าที่ calibrate จากข้อมูลจริง) */
+const IRT_DEFAULT = {
+    EASY:    { a: 0.90, b: -1.50 },
+    NORMAL:  { a: 1.00, b: -0.60 },
+    HARD:    { a: 1.10, b:  0.30 },
+    EXTREME: { a: 1.20, b:  1.20 },
+    FINAL:   { a: 1.20, b:  1.80 }
+};
+
+/* ใส่ค่าที่ calibrate แล้วทีละข้อได้ที่นี่ เช่น  { 48: { a: 1.3, b: 0.4 } }
+   (คีย์ = เลขข้อ 1–100) */
+const ITEM_PARAMS = {};
+
+function itemParams(n, entry) {
+    const base = IRT_DEFAULT[entry.difficulty];
+    const own  = ITEM_PARAMS[n] || {};
+    return {
+        a: own.a !== undefined ? own.a : base.a,
+        b: own.b !== undefined ? own.b : base.b,
+        c: own.c !== undefined ? own.c : 1 / entry.options
+    };
+}
+
+const irtProb = (it, th) =>
+    it.c + (1 - it.c) / (1 + Math.exp(-it.a * (th - it.b)));
+
+function eap(items) {
+
+    const grid = [];
+    for (let th = -4; th <= 4.0001; th += 0.05) {
+        let ll = -0.5 * th * th;                       // prior N(0,1)
+        items.forEach(it => {
+            const p = clamp(irtProb(it, th), 1e-6, 1 - 1e-6);
+            ll += it.u ? Math.log(p) : Math.log(1 - p);
+        });
+        grid.push([th, ll]);
+    }
+
+    const mx = Math.max(...grid.map(g => g[1]));
+    let den = 0, m1 = 0, m2 = 0;
+    grid.forEach(([th, ll]) => {
+        const w = Math.exp(ll - mx);
+        den += w; m1 += w * th; m2 += w * th * th;
+    });
+
+    const mean = m1 / den;
+    return { theta: mean, sd: Math.sqrt(Math.max(0, m2 / den - mean * mean)) };
+}
+
+/* lz: ค่าติดลบมาก = รูปแบบการตอบไม่สอดคล้อง (เดาถูกข้อยาก / พลาดข้อง่ายผิดปกติ) */
+function personFit(items, theta) {
+    let l0 = 0, e = 0, v = 0;
+    items.forEach(it => {
+        const p = clamp(irtProb(it, theta), 1e-6, 1 - 1e-6);
+        l0 += it.u ? Math.log(p) : Math.log(1 - p);
+        e  += p * Math.log(p) + (1 - p) * Math.log(1 - p);
+        v  += p * (1 - p) * Math.pow(Math.log(p / (1 - p)), 2);
+    });
+    return v > 0 ? (l0 - e) / Math.sqrt(v) : 0;
+}
+
+const thetaToIQ = th => clamp(Math.round(100 + 15 * th), IQ_MIN, IQ_MAX);
+
+/* =========================================================
+   SCORE → IQ  (ตารางแปลงคะแนนดิบเป็น IQ)
+   ---------------------------------------------------------
+   ใช้ "จำนวนข้อที่ตอบถูก" เป็นหลัก แล้วแปลงเป็น IQ ด้วยเส้นโค้งคุณลักษณะ
+   ของข้อสอบ (Test Characteristic Curve) ทำให้
+     • ถูกมากขึ้น → IQ สูงขึ้นเสมอ (ไม่ย้อนแย้ง)
+     • คะแนนเท่ากัน → IQ เท่ากัน
+   ข้อที่ตอบเร็วผิดปกติ (กดรัว) นับเป็นแค่ "ค่าเดา" (0.25) ไม่ใช่ถูกเต็มข้อ
+   ========================================================= */
+
+function scoreItems(log) {
+    return log.map(e => ({
+        ...itemParams(e.n, e),
+        u: e.correct ? 1 : 0,
+        rapid: !e.timedOut && e.timeUsed < RAPID_LIMIT,
+        stage: e.stage
+    }));
+}
+
+const effectiveRaw = items =>
+    items.reduce((s, it) => s + (it.rapid ? it.c : it.u), 0);
+
+const expectedRaw = (items, th) =>
+    items.reduce((s, it) => s + irtProb(it, th), 0);
+
+/* หา θ ที่ทำให้คะแนนคาดหวัง = คะแนนดิบ (bisection) */
+function thetaFromRaw(items, raw) {
+    let lo = -4, hi = 4;
+    if (raw <= expectedRaw(items, lo)) return lo;
+    if (raw >= expectedRaw(items, hi)) return hi;
+    for (let i = 0; i < 40; i++) {
+        const mid = (lo + hi) / 2;
+        if (expectedRaw(items, mid) < raw) lo = mid; else hi = mid;
+    }
+    return (lo + hi) / 2;
+}
+
+/* ข้อมูลของข้อสอบ ณ θ (3PL) → SE = 1/√I */
+function testInfo(items, th) {
+    return items.reduce((s, it) => {
+        const p = clamp(irtProb(it, th), 1e-6, 1 - 1e-6);
+        const k = (p - it.c) / (1 - it.c);
+        return s + it.a * it.a * ((1 - p) / p) * k * k;
+    }, 0);
+}
+
+function fullTestItems() {
+    return challenges.map((ch_, i) => ({
+        ...itemParams(i + 1, { difficulty: ch_.difficulty, options: ch_.options.length }),
+        u: 0, rapid: false, stage: ch_.stageNumber
+    }));
+}
+
+/* ตารางคะแนนดิบ (0–100) → IQ  เรียกดูได้ด้วย thynkScoreTable() */
+function buildScoreTable() {
+    const items = fullTestItems();
+    const rows = [];
+    for (let r = 0; r <= items.length; r++) {
+        rows.push({ correct: r, iq: thetaToIQ(thetaFromRaw(items, r)) });
+    }
+    return rows;
+}
+
+function iqFromScore(correct) {
+    return thetaToIQ(thetaFromRaw(fullTestItems(), correct));
+}
+
+window.thynkScoreTable = function () {
+    const t = buildScoreTable();
+    console.table(t.filter(r => r.correct % 5 === 0));
+    return t;
+};
+window.thynkIqFromScore = iqFromScore;
+
+function estimateIQ(log) {
+
+    const items = scoreItems(log);
+    const raw   = effectiveRaw(items);
+    const theta = thetaFromRaw(items, raw);
+    const iq    = thetaToIQ(theta);
+
+    const info = Math.max(testInfo(items, theta), 1);
+    const sd   = Math.min(1, 1 / Math.sqrt(info));
+
+    const margin = Math.max(2, Math.ceil(1.96 * 15 * sd));
+    const percentile = clamp(normalCdf((iq - 100) / 15) * 100, 0.1, 99.9);
+    const reliability = clamp(1 - sd * sd, 0, 1);
+
+    const valid = items.filter(it => !it.rapid);
+    const lz = personFit(valid, theta);
+
+    /* ---- ความน่าเชื่อถือ ---- */
+    const reasons = [];
+    const rapidWrong = log.filter(e =>
+        !e.correct && !e.timedOut && e.timeUsed < RAPID_LIMIT).length;
+    const rapidAll = items.length - valid.length;
+    if (rapidWrong >= 12 || rapidAll >= 20) reasons.push("RAPID_GUESSING");
+    if (correctAnswers <= CHANCE_CORRECT_MAX) reasons.push("NEAR_CHANCE");
+    if (timeouts >= 25)       reasons.push("TOO_MANY_TIMEOUTS");
+    if (valid.length < 60)    reasons.push("TOO_FEW_VALID_ITEMS");
+    if (lz < -2.5)            reasons.push("INCONSISTENT_PATTERN");
+
+    /* ---- รายด้าน (ใช้วิธีเดียวกัน ด้านละ 20 ข้อ) ---- */
+    const legacy = abilityFrom(log, false);
+    const domains = {};
+    for (let st = 1; st <= 5; st++) {
+        const part = abilityFrom(log.filter(e => e.stage === st), false);
+        const si   = items.filter(it => it.stage === st);
+        const th   = thetaFromRaw(si, effectiveRaw(si));
+        const dsd  = Math.min(1, 1 / Math.sqrt(Math.max(testInfo(si, th), 1)));
+        domains[st] = {
+            weightedAccuracy: Math.round(part.rawWeighted * 100),
+            adjustedScore:    Math.round(part.adjusted * 100),
+            index:  thetaToIQ(th),
+            margin: Math.ceil(1.96 * 15 * dsd)
+        };
+    }
+
+    const label = classifyIQ(iq);
+
+    return {
+        iq,
+        iqLow:  clamp(iq - margin, IQ_MIN, IQ_MAX),
+        iqHigh: clamp(iq + margin, IQ_MIN, IQ_MAX),
+        margin,
+        rawScore: Math.round(raw * 10) / 10,
+        theta: Math.round(theta * 1000) / 1000,
+        se: Math.round(sd * 15 * 10) / 10,
+        reliability: Math.round(reliability * 100) / 100,
+        personFit: Math.round(lz * 100) / 100,
+        itemsUsed: valid.length,
+        itemsExcluded: rapidAll,
+        percentile: Math.round(percentile * 10) / 10,
+        topPercent: Math.round((100 - percentile) * 10) / 10,
+        classification: label.en,
+        classificationTh: label.th,
+        ability: Math.round(clamp((iq - IQ_MIN) / (IQ_MAX - IQ_MIN), 0, 1) * 1000) / 1000,
+        weightedAccuracy: Math.round(legacy.rawWeighted * 100),
+        adjustedAccuracy: Math.round(legacy.adjusted * 100),
+        speedIndex: Math.round(legacy.speed * 100),
+        validity: reasons.length ? "LOW_CONFIDENCE" : "VALID",
+        validityReasons: reasons,
+        domains
+    };
+}
+
+
+
+/* =========================================================
+   FINISH
+   ========================================================= */
+
+function finishTrial() {
+
+    clearInterval(timer);
+    clearTimeout(memoryTimeout);
+
+    const est = estimateIQ(answerLog);
+
+    const stageResults = {};
+    for (let s = 1; s <= 5; s++) {
+        stageResults[s] = {
+            correct:  stageStats[s].correct,
+            total:    20,
+            accuracy: est.domains[s].adjustedScore,
+            rawAccuracy: Math.round((stageStats[s].correct / 20) * 100),
+            score:    stageStats[s].score,
+            weightedAccuracy: est.domains[s].weightedAccuracy,
+            adjustedScore:    est.domains[s].adjustedScore,
+            index:            est.domains[s].index
+        };
+    }
+
+    const avgTime = answerLog.length
+        ? answerLog.reduce((a, e) => a + e.timeUsed, 0) / answerLog.length
+        : 0;
+
+    const result = {
+
+        /* ---- คีย์เดิม (result.html เดิมยังใช้ได้) ---- */
+        score:   score,                      // 1 ข้อถูก = 1 คะแนน (0–100)
+        correct: correctAnswers,
+        total:   challenges.length,
+        accuracy: est.adjustedAccuracy,      // คิดหลังหักการเดาและถ่วงความยาก (เดามั่ว ≈ 0%)
+        rawAccuracy: Math.round((correctAnswers / challenges.length) * 100),
+        passed: est.validity === "VALID" && est.iq >= PASS_IQ,
+        passIQ: PASS_IQ,
+        combo:   combo,
+        profile: calculateProfile(stageResults),
+        stages:  stageResults,
+        assessmentId: generateAssessmentId(),
+        completed: true,
+        timestamp: new Date().toISOString(),
+
+        /* ---- คีย์ใหม่ ---- */
+        version: 3,
+        iq: est.iq,
+        iqRange: [est.iqLow, est.iqHigh],
+        iqMargin: est.margin,
+        rawScore: est.rawScore,
+        theta: est.theta,
+        iqSE: est.se,
+        reliability: est.reliability,
+        personFit: est.personFit,
+        itemsUsed: est.itemsUsed,
+        itemsExcluded: est.itemsExcluded,
+        percentile: est.percentile,
+        topPercent: est.topPercent,
+        classification: est.classification,
+        classificationTh: est.classificationTh,
+        weightedAccuracy: est.weightedAccuracy,
+        speedIndex: est.speedIndex,
+        validity: est.validity,
+        validityReasons: est.validityReasons,
+        maxCombo: maxCombo,
+        timeouts: timeouts,
+        avgTime: Math.round(avgTime * 10) / 10,
+        log: answerLog
+    };
+
+    try {
+        localStorage.setItem("thynkIQResult", JSON.stringify(result));
+
+        /* เก็บประวัติการตอบรายข้อ (ในเบราว์เซอร์นี้) ไว้ใช้ calibrate ภายหลัง */
+        const history = JSON.parse(localStorage.getItem("thynkSessions") || "[]");
+        history.push({
+            id: result.assessmentId, t: result.timestamp, iq: result.iq,
+            valid: result.validity,
+            r: answerLog.map(e => [e.n, e.selected, e.correct ? 1 : 0,
+                                   e.timedOut ? 1 : 0, e.timeUsed])
+        });
+        localStorage.setItem("thynkSessions", JSON.stringify(history.slice(-100)));
+    } catch (error) {
+        console.error("Unable to save THYNK result.", error);
+    }
+
+    window.location.href = "result.html";
+}
+
+
+/* =========================================================
+   PROFILE ENGINE  (ใช้คะแนนที่หักการเดา + ถ่วงน้ำหนักความยาก)
+   ========================================================= */
+
+function calculateProfile(stages) {
+
+    const v = [1, 2, 3, 4, 5].map(s => stages[s].adjustedScore);
+    const avg = v.reduce((a, b) => a + b, 0) / 5;
+    const max = Math.max(...v);
+    const min = Math.min(...v);
+
+    if (avg >= 75 && min >= 60) return "THE ARCHITECT";
+
+    const names = [
+        "THE PATTERN SEEKER",
+        "THE LOGIC CORE",
+        "THE ANALYST",
+        "THE OBSERVER",
+        "THE STRATEGIST"
+    ];
+
+    if (max >= 70 && max - avg >= 8) return names[v.indexOf(max)];
+
+    if (avg >= 60) return "THE ADAPTER";
+    if (avg >= 40) return "THE EXPLORER";
+    return "THE INITIATE";
+}
+
+
+/* =========================================================
+   ASSESSMENT ID
+   ========================================================= */
+
+function generateAssessmentId() {
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    const part = () => Array.from({ length: 4 },
+        () => chars[Math.floor(Math.random() * chars.length)]).join("");
+    return `THK-${part()}-${part()}`;
+}
+
+
+/* =========================================================
+   EXPORT ข้อมูลรายข้อ (สำหรับ calibrate พารามิเตอร์ a, b)
+   เรียกจาก console:  thynkExportCSV()
+   ========================================================= */
+
+window.thynkExportCSV = function () {
+    const h = JSON.parse(localStorage.getItem("thynkSessions") || "[]");
+    const rows = ["session,item,selected,correct,timedOut,timeUsed,valid"];
+    h.forEach(s => s.r.forEach(r =>
+        rows.push([s.id, r[0], r[1] === null ? "" : r[1], r[2], r[3], r[4], s.valid].join(","))));
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([rows.join("\n")], { type: "text/csv" }));
+    a.download = "thynk-responses.csv";
+    a.click();
+};
+
+
+/* =========================================================
+   KEYBOARD SUPPORT
+   ========================================================= */
+
+document.addEventListener("keydown", event => {
+
+    if (!trialStarted || answered) return;
+    if (stageOverlay.classList.contains("show")) return;
+
+    if (event.key >= "1" && event.key <= "4") {
+        const i = Number(event.key) - 1;
+        if (document.querySelectorAll(".answer-button")[i]) selectAnswer(i);
+    }
+
+    if (event.key === "Enter" && selectedAnswer !== null) {
+        submitAnswer();
+    }
+});
+
+</script>
+
+</body>
+</html>

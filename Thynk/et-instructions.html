@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="THYNK Math Assessment — แบบทดสอบวัดความรู้คณิตศาสตร์ระดับมัธยมปลาย 20 ข้อ พร้อมระบบตรวจคำตอบอัตโนมัติและแสดงวิธีทำ">
+    <title>THYNK — HIGH SCHOOL MATH ASSESSMENT</title>
+    <link rel="icon" type="image/png" href="thynk.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- MathJax สำหรับเรนเดอร์ตัวอย่างสมการคณิตศาสตร์ -->
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$']] },
+        svg: { fontCache: 'global' }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg: #050505;
+            --panel: #0b0b0b;
+            --panel-border: #1f1f1f;
+            --text: #f2f2f2;
+            --muted: #888;
+            --green: #00ff9c;
+            --green-glow: rgba(0, 255, 156, 0.15);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Kanit', sans-serif;
+            background: radial-gradient(circle at 50% -10%, #171717 0%, #050505 45%, #000 100%);
+            color: var(--text);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Background Grid Effect */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.035;
+            background-image: 
+                linear-gradient(#fff 1px, transparent 1px), 
+                linear-gradient(90deg, #fff 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* HEADER */
+        .instruction-navbar {
+            height: 76px;
+            border-bottom: 1px solid var(--panel-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            background: rgba(5, 5, 5, 0.92);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: var(--text);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logo span:first-child { color: var(--green); }
+        .logo b { color: #555; font-size: 14px; }
+        .logo span:last-child { letter-spacing: 2px; font-size: 14px; color: #aaa; }
+
+        .instruction-status {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: 1.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .instruction-status i {
+            width: 7px;
+            height: 7px;
+            background: var(--green);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--green);
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+        /* MAIN CONTAINER */
+        .instruction-main {
+            width: min(1000px, 92%);
+            margin: 0 auto;
+            padding: 60px 0 100px;
+        }
+
+        .instruction-eyebrow {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--green);
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .instruction-eyebrow span { opacity: 0.6; }
+
+        /* HERO TITLE */
+        .instruction-title {
+            margin-bottom: 40px;
+        }
+        .system-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--muted);
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .instruction-title h1 {
+            font-size: clamp(36px, 6vw, 60px);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+        .instruction-title h1 span {
+            color: var(--green);
+            text-shadow: 0 0 30px var(--green-glow);
+        }
+        .instruction-title p {
+            color: #aaa;
+            font-size: 16px;
+            line-height: 1.8;
+            max-width: 800px;
+            font-weight: 300;
+        }
+
+        /* BEGIN BUTTON */
+        .begin-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            background: var(--text);
+            color: var(--bg);
+            padding: 18px 32px;
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 2px;
+            border: 1px solid var(--text);
+            transition: all 0.25s ease;
+            margin: 20px 0 50px;
+        }
+        .begin-button:hover {
+            background: var(--green);
+            border-color: var(--green);
+            box-shadow: 0 0 30px var(--green-glow);
+            transform: translateY(-2px);
+        }
+
+        /* OVERVIEW GRID */
+        .instruction-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 60px;
+        }
+        .overview-item {
+            background: var(--panel);
+            border: 1px solid var(--panel-border);
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        .overview-item span {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--muted);
+            letter-spacing: 1.5px;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .overview-item strong {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text);
+            display: block;
+            margin-bottom: 4px;
+        }
+        .overview-item small {
+            font-size: 11px;
+            color: #666;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* SECTIONS & HEADERS */
+        .instruction-content {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid var(--panel-border);
+        }
+        .instruction-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .instruction-header span {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--green);
+            letter-spacing: 2px;
+            margin-top: 4px;
+        }
+        .instruction-header small {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--muted);
+            letter-spacing: 2px;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .instruction-header h2 {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* TOPICS GRID */
+        .domain-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .domain-card {
+            background: var(--panel);
+            border: 1px solid var(--panel-border);
+            padding: 30px;
+            transition: border-color 0.2s ease;
+        }
+        .domain-card:hover { border-color: #444; }
+        .domain-card strong {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--green);
+            letter-spacing: 2px;
+            display: block;
+            margin-bottom: 12px;
+        }
+        .domain-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+        .domain-card p {
+            font-size: 14px;
+            color: #aaa;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        .domain-card small {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: #555;
+            letter-spacing: 1.5px;
+        }
+
+        /* INSTRUCTION LIST */
+        .instruction-list {
+            display: grid;
+            gap: 15px;
+        }
+        .instruction-item {
+            background: var(--panel);
+            border: 1px solid var(--panel-border);
+            padding: 25px 30px;
+            display: flex;
+            align-items: flex-start;
+            gap: 25px;
+        }
+        .instruction-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--green);
+            font-weight: 700;
+            padding-top: 2px;
+        }
+        .instruction-item h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .instruction-item p {
+            font-size: 14px;
+            color: #aaa;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* WARNING BOX */
+        .instruction-warning {
+            margin-top: 60px;
+            background: rgba(214, 179, 106, 0.05);
+            border: 1px solid rgba(214, 179, 106, 0.2);
+            padding: 30px;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+        .instruction-warning span {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 18px;
+            color: #d6b36a;
+            font-weight: 700;
+            background: rgba(214, 179, 106, 0.1);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .instruction-warning strong {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: #d6b36a;
+            letter-spacing: 2px;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .instruction-warning p {
+            font-size: 13px;
+            color: #aaa;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* ACTION FOOTER */
+        .instruction-action {
+            margin-top: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--panel);
+            border: 1px solid var(--panel-border);
+            padding: 30px 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .action-meta span {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--muted);
+            letter-spacing: 1.5px;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .action-meta strong {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--green);
+            letter-spacing: 1px;
+        }
+        .instruction-action .begin-button {
+            margin: 0;
+        }
+
+        /* FOOTER */
+        .instruction-footer {
+            border-top: 1px solid var(--panel-border);
+            padding: 30px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: #555;
+            letter-spacing: 1.5px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .instruction-navbar { padding: 0 20px; }
+            .instruction-main { width: 92%; padding: 40px 0; }
+            .instruction-action { padding: 25px 20px; flex-direction: column; align-items: stretch; text-align: center; }
+            .instruction-action .begin-button { justify-content: center; }
+        }
+    </style>
+</head>
+
+<body class="instruction-page">
+
+    <!-- HEADER -->
+    <header class="instruction-navbar">
+        <a href="index.html" class="logo">
+            <span>THYNK</span>
+            <b>•</b>
+            <span>MATH LAB</span>
+        </a>
+        <div class="instruction-status">
+            <i></i>
+            MATH ASSESSMENT SYSTEM READY
+        </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="instruction-main">
+
+        <!-- TOP LABEL -->
+        <div class="instruction-eyebrow">
+            <span>01</span>
+            HIGH SCHOOL MATHEMATICS
+        </div>
+
+        <!-- TITLE -->
+        <section class="instruction-title">
+            <div class="system-label">
+                THYNK // MATH ASSESSMENT ENGINE
+            </div>
+            <h1>
+                TEST YOUR<br>
+                <span>MATH SKILLS.</span>
+            </h1>
+            <p>
+                แบบทดสอบวัดความรู้คณิตศาสตร์ระดับมัธยมปลาย จำนวน 20 ข้อ ออกแบบมาเพื่อวัดทักษะการคำนวณ ตรรกะทางคณิตศาสตร์ และการแก้ปัญหา โดยผู้สอบจะต้องกรอกคำตอบสุดท้ายเพื่อรับการตรวจอัตโนมัติ พร้อมทั้งเขียนแสดงวิธีทำรายข้อ
+            </p>
+        </section>
+
+        <!-- BEGIN BUTTON -->
+        <a href="ETxm.html" class="begin-button">
+            <span>BEGIN MATH EXAM (20 QUESTIONS)</span>
+            <strong>→</strong>
+        </a>
+
+        <!-- EXAM OVERVIEW -->
+        <section class="instruction-overview">
+            <div class="overview-item">
+                <span>QUESTIONS</span>
+                <strong>20</strong>
+                <small>TOTAL PROBLEMS</small>
+            </div>
+            <div class="overview-item">
+                <span>TIME LIMIT</span>
+                <strong>30:00</strong>
+                <small>MINUTES PER QUESTION</small>
+            </div>
+            <div class="overview-item">
+                <span>EVALUATION</span>
+                <strong>AUTO + PROOF</strong>
+                <small>REAL-TIME CHECKING</small>
+            </div>
+            <div class="overview-item">
+                <span>CERTIFICATE</span>
+                <strong>AVAILABLE</strong>
+                <small>UPON COMPLETION</small>
+            </div>
+        </section>
+
+        <!-- CORE MATHEMATICS TOPICS -->
+        <section class="instruction-content">
+            <div class="instruction-header">
+                <span>02</span>
+                <div>
+                    <small>EXAM COVERAGE & TOPICS</small>
+                    <h2>COVERED TOPICS.</h2>
+                </div>
+            </div>
+
+            <div class="domain-grid">
+                <div class="domain-card">
+                    <strong>TOPIC 01</strong>
+                    <h3>ALGEBRA & LOGARITHM</h3>
+                    <p>พีชคณิต พหุนาม สมการ และฟังก์ชันลอการิทึม เช่น $\log_2(32) + \log_3(81)$ และเลขยกกำลัง</p>
+                    <small>ALGEBRAIC STRUCTURES</small>
+                </div>
+
+                <div class="domain-card">
+                    <strong>TOPIC 02</strong>
+                    <h3>CALCULUS & LIMITS</h3>
+                    <p>การหาลิมิต อนุพันธ์ และอินทิกรัล เช่น $\lim_{x \to 2} \frac{x^2 - 4}{x - 2}$ และ $\int_{0}^{2} (3x^2 - 1) \, dx$</p>
+                    <small>CONTINUOUS MATHEMATICS</small>
+                </div>
+
+                <div class="domain-card">
+                    <strong>TOPIC 03</strong>
+                    <h3>TRIGONOMETRY</h3>
+                    <p>ฟังก์ชันตรีโกณมิติ การหาค่ามุม และสมการตรีโกณ เช่น $\sin(30^\circ) + \cos(60^\circ)$</p>
+                    <small>TRIANGLE & WAVE FUNCTIONS</small>
+                </div>
+
+                <div class="domain-card">
+                    <strong>TOPIC 04</strong>
+                    <h3>MATRIX & GEOMETRY</h3>
+                    <p>เมทริกซ์ ดีเทอร์มิแนนต์ $\det(A)$ และเรขาคณิตวิเคราะห์ ระยะห่างระหว่างจุด ความชันเส้นตรง</p>
+                    <small>LINEAR ALGEBRA & COORD</small>
+                </div>
+
+                <div class="domain-card">
+                    <strong>TOPIC 05</strong>
+                    <h3>PROBABILITY & SERIES</h3>
+                    <p>การนับ คอมบิเนทอริกส์ $\binom{n}{r}$ ความน่าจะเป็น ลำดับและอนุกรมเรขาคณิตอนันต์</p>
+                    <small>DISCRETE MATHEMATICS</small>
+                </div>
+            </div>
+        </section>
+
+        <!-- RULES & INSTRUCTIONS -->
+        <section class="instruction-content">
+            <div class="instruction-header">
+                <span>03</span>
+                <div>
+                    <small>EXAM RULES & GUIDELINES</small>
+                    <h2>RULES & INSTRUCTIONS.</h2>
+                </div>
+            </div>
+
+            <div class="instruction-list">
+                <div class="instruction-item">
+                    <div class="instruction-number">01</div>
+                    <div>
+                        <h3>เวลา 30 นาทีต่อข้อ</h3>
+                        <p>แต่ละข้อจะมีเวลาให้ 30 นาที หากหมดเวลาระบบจะทำการบันทึกคำตอบปัจจุบันและเปลี่ยนไปยังข้อถัดไปอัตโนมัติ</p>
+                    </div>
+                </div>
+
+                <div class="instruction-item">
+                    <div class="instruction-number">02</div>
+                    <div>
+                        <h3>การกรอกคำตอบสุดท้าย (Final Answer)</h3>
+                        <p>กรอกเฉพาะคำตอบสุดท้ายที่เป็นตัวเลข หรือทศนิยม เช่น 27, 4, 0.6 เพื่อให้ระบบตรวจคะแนนอัตโนมัติได้อย่างแม่นยำ</p>
+                    </div>
+                </div>
+
+                <div class="instruction-item">
+                    <div class="instruction-number">03</div>
+                    <div>
+                        <h3>การเขียนแสดงวิธีทำ (Step-by-step Solution)</h3>
+                        <p>พิมพ์อธิบายลำดับการคิดและสมการคำนวณเพื่อบันทึกเป็นหลักฐานไว้ในรายงานผลและเกียรติบัตรของคุณ</p>
+                    </div>
+                </div>
+
+                <div class="instruction-item">
+                    <div class="instruction-number">04</div>
+                    <div>
+                        <h3>รับใบเกียรติบัตรหลังสอบเสร็จ</h3>
+                        <p>เมื่อทำครบทั้ง 20 ข้อ ระบบจะคำนวณคะแนนรวมเต็ม 100 พร้อมเปิดให้คุณกรอกชื่อเพื่อรับใบเกียรติบัตรฉบับ PDF ทันที</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WARNING BOX -->
+        <div class="instruction-warning">
+            <span>!</span>
+            <div>
+                <strong>IMPORTANT NOTICE</strong>
+                <p>
+                    กรุณาเตรียมกระดาษทดและเครื่องเขียนให้พร้อมก่อนเริ่มทำข้อสอบ เนื่องจากระบบไม่มีปุ่มย้อนกลับไปทำข้อเดิมเพื่อป้องกันการทุจริต
+                </p>
+            </div>
+        </div>
+
+        <!-- ACTION -->
+        <section class="instruction-action">
+            <div class="action-meta">
+                <span>EXAM SYSTEM STATUS</span>
+                <strong>MATH ENGINE READY (20 PROBLEMS)</strong>
+            </div>
+            <a href="ETxm.html" class="begin-button">
+                <span>BEGIN MATH EXAM</span>
+                <strong>→</strong>
+            </a>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="instruction-footer">
+        <span>THYNK • HIGH SCHOOL MATHEMATICS</span>
+        <span>ASSESSMENT SYSTEM / V2.0.0</span>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <link rel="icon" type="image/png" href="thynk.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THYNK // EQ Certificate</title>
+    
+    <link rel="stylesheet" href="css/style2.css">
+
+    <!-- PDF LIBRARIES -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+
+<body>
+
+<!-- TOP NAVIGATION -->
+<header class="topbar">
+    <div class="logo">
+        THYNK
+        <span>//</span>
+        EQ
+    </div>
+    <div class="top-status">
+        VERIFIED EMOTIONAL ASSESSMENT
+    </div>
+</header>
+
+<!-- MAIN -->
+<main class="page">
+
+    <!-- CERTIFICATE PAPER -->
+    <section class="certificate" id="certificate">
+
+        <!-- DECORATIVE FRAMES -->
+        <div class="frame1"></div>
+        <div class="frame2"></div>
+        <div class="frame3"></div>
+
+        <!-- CORNER DECORATIONS -->
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+        <div class="corner bl"></div>
+        <div class="corner br"></div>
+
+        <!-- WATERMARK -->
+        <div class="watermark">THYNK</div>
+
+        <!-- CERTIFICATE CONTENT -->
+        <div class="certificate-content">
+
+            <!-- BRAND -->
+            <div class="thynk-logo">
+                <img src="thynk.png" alt="THYNK">
+            </div>
+
+            <div class="website-name">THYNK</div>
+            <div class="website-sub">ระบบประเมินความฉลาดทางอารมณ์ (EQ)</div>
+            <div class="gold-line"></div>
+
+            <!-- CERTIFICATE TITLE -->
+            <h1 class="main-title">THYNK EMOTIONAL INTELLIGENCE ACHIEVEMENT</h1>
+            <div class="main-subtitle">OFFICIAL EMOTIONAL INTELLIGENCE ASSESSMENT CERTIFICATE</div>
+            <div class="presented">ใบประกาศนียบัตรฉบับนี้มอบให้แก่</div>
+
+            <!-- USER NAME -->
+            <div class="name" id="displayName">—</div>
+            <div class="name-line"></div>
+
+            <!-- DESCRIPTION -->
+            <div class="description">
+                เพื่อรับรองว่า
+                <strong id="descriptionName">ผู้เข้ารับการประเมิน</strong>
+                ได้ผ่านการประเมินความฉลาดทางอารมณ์ (EQ) ของ THYNK ครอบคลุมการตระหนักรู้และควบคุมอารมณ์ ความเข้าอกเข้าใจผู้อื่น ความสัมพันธ์ทางสังคม และความสามารถในการรับมือกับความท้าทาย
+            </div>
+
+            <!-- EQ SCORE -->
+            <div class="iq-hero">
+                <div class="iq-title">EQ SCORE</div>
+                <div class="iq-score" id="score">—</div>
+                <div class="iq-score-label">EMOTIONAL INTELLIGENCE SCORE</div>
+
+                <div class="iq-level-box">
+                    <div class="iq-level-label">ระดับ EQ</div>
+                    <div class="iq-level-value" id="level">—</div>
+                </div>
+
+                <div class="neural-type">
+                    รูปแบบทางอารมณ์ :
+                    <strong id="type">—</strong>
+                </div>
+            </div>
+
+            <!-- RESULT HEADER -->
+            <div class="section-title">
+                <span>ผลการประเมิน</span>
+            </div>
+
+            <!-- STATISTICS -->
+            <div class="statistics">
+                <div class="stat">
+                    <div class="stat-label">คะแนน EQ</div>
+                    <div class="stat-value gold" id="resultScore">—</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">ระดับความสามารถ</div>
+                    <div class="stat-value" id="resultLevel">—</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">จำนวนข้อ</div>
+                    <div class="stat-value" id="totalQuestions">—</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">ตอบแล้ว</div>
+                    <div class="stat-value" id="correctAnswers">—</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">ความสมบูรณ์</div>
+                    <div class="stat-value" id="accuracy">—</div>
+                </div>
+            </div>
+
+          
+
+            <!-- LARGE CENTER IMAGE -->
+            <div class="certificate-image-section">
+                <div class="certificate-image-title">THYNK EMOTIONAL INTELLIGENCE ASSESSMENT</div>
+                <div class="certificate-image-frame">
+                    <img src="thynk 4.png" alt="THYNK Emotional Intelligence Assessment">
+                </div>
+            </div>
+
+            <!-- CERTIFICATE FOOTER -->
+            <div class="certificate-footer">
+               <div class="footer-left">
+    <div class="footer-item">
+        <div class="footer-label">วันที่ประเมิน</div>
+        <div class="footer-value" id="date">—</div>
+    </div>
+    <div class="footer-item">
+        <div class="footer-label">ASSESSMENT ID</div>
+        <div class="footer-value assessment-code" id="assessmentId">THY-XXXXXXXX</div>
+    </div>
+</div>
+
+<script>
+    // ฟังก์ชันสำหรับแสดงวันที่ปัจจุบัน (อิงตามเวลาเครื่องของผู้ใช้งาน)
+    function setCurrentDate() {
+        const dateElement = document.getElementById('date');
+        const now = new Date();
+        
+        // กำหนดรูปแบบวันที่ (ตัวอย่างนี้เลือกเป็นแบบไทย พ.ศ.)
+        const options = { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric',
+            timeZone: 'Asia/Bangkok' // หรือปล่อยให้ใช้วันที่ตามเครื่องผู้ใช้
+        };
+        
+        // แปลงเป็นวันที่ภาษาไทย (หากต้องการภาษาอังกฤษให้เปลี่ยนเป็น 'en-GB' หรือ 'en-US')
+        const formattedDate = now.toLocaleDateString('th-TH', options);
+        
+        dateElement.textContent = formattedDate;
+    }
+
+    // เรียกใช้งานฟังก์ชันทันทีเมื่อโหลดหน้าเว็บ
+    setCurrentDate();
+</script>
+                <div class="footer-right">
+                    <div class="footer-image">
+                        <img src="thynk1.png" alt="THYNK Certificate Signature">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ACTION BUTTONS (อยู่นอกกระดาษสีขาว) -->
+    <div class="actions">
+        <button type="button" class="action-btn home-btn" onclick="goHome()">
+            <span class="btn-icon">←</span>
+            <span>กลับหน้าหลัก</span>
+        </button>
+        <button type="button" class="action-btn download-btn" id="downloadButton" onclick="downloadCertificate()">
+            <span class="btn-icon">↓</span>
+            <span>ดาวน์โหลดใบประกาศ</span>
+        </button>
+    </div>
+
+    <div class="info">
+        THYNK // A4 PORTRAIT // VERIFIED EMOTIONAL ASSESSMENT
+    </div>
+
+</main>
+
+<!-- PDF LOADING OVERLAY -->
+<div class="pdf-loading" id="pdfLoading">
+    <div class="loader-ring"></div>
+    <div class="loading-title" id="loadingTitle">กำลังสร้างใบประกาศนียบัตร</div>
+    <div class="loading-subtitle" id="loadingSubtitle">THYNK // BUILDING A4 PDF</div>
+</div>
+
+<script>
+function goHome() { window.location.href = "index.html"; }
+
+let rawData = null;
+function parseLocalStorageJSON(key) {
+    try { const val = localStorage.getItem(key); return val ? JSON.parse(val) : null; } 
+    catch (e) { return null; }
+}
+
+rawData = parseLocalStorageJSON("thynkEQCertificate") || parseLocalStorageJSON("thynkCertificate");
+if (!rawData) {
+    const eqData = parseLocalStorageJSON("thynkEQResult");
+    if (eqData) {
+        const firstName = String(eqData.firstName || "").trim();
+        const lastName = String(eqData.lastName || "").trim();
+        const certificateData = {
+            displayName: String(eqData.displayName || eqData.name || `${firstName} ${lastName}` || "THYNK USER").trim(),
+            score: eqData.eqScore ?? eqData.eq ?? eqData.score ?? 0,
+            level: eqData.level || "",
+            neuralType: eqData.neuralType || eqData.profileName || "—",
+            totalQuestions: eqData.totalQuestions ?? 100,
+            answered: eqData.answered ?? eqData.correct ?? 0,
+            assessmentId: eqData.assessmentId || "",
+            completedAt: eqData.completedAt || new Date().toISOString()
+        };
+        rawData = JSON.stringify(certificateData);
+        localStorage.setItem("thynkEQCertificate", rawData);
+    }
+}
+
+if (!rawData) {
+    alert("ไม่พบข้อมูลใบประกาศ EQ");
+    window.location.href = "index.html";
+}
+
+let data = JSON.parse(rawData);
+function setText(id, val) { const el = document.getElementById(id); if (el) el.textContent = val; }
+
+const displayName = data.displayName || "THYNK USER";
+setText("displayName", displayName);
+setText("descriptionName", displayName);
+
+const score = Math.max(0, Math.min(100, Number(data.score ?? data.eqScore ?? 0)));
+setText("score", score);
+setText("resultScore", score);
+
+const level = data.level || (score >= 90 ? "EXCEPTIONAL EQ" : score >= 80 ? "ADVANCED EQ" : score >= 70 ? "STRONG EQ" : score >= 60 ? "DEVELOPING EQ" : "AWARE EQ");
+setText("level", level);
+setText("resultLevel", level);
+setText("type", data.neuralType || "—");
+
+setText("totalQuestions", data.totalQuestions || 100);
+setText("correctAnswers", data.answered || 0);
+setText("accuracy", `${((data.answered || 0) / (data.totalQuestions || 100) * 100).toFixed(1)}%`);
+
+document.querySelectorAll(".iq-level").forEach(el => el.classList.remove("active"));
+const targetLevel = document.querySelector(`[data-min="${score >= 90 ? 90 : score >= 80 ? 80 : score >= 70 ? 70 : score >= 60 ? 60 : score >= 50 ? 50 : 0}"]`);
+if (targetLevel) targetLevel.classList.add("active");
+
+setText("assessmentId", data.assessmentId || "THY-EX4829");
+setText("date", new Date(data.completedAt || Date.now()).toLocaleDateString("th-TH", { day: "numeric", month: "long", year: "numeric" }));
+
+async function downloadCertificate() {
+    const certificate = document.getElementById("certificate");
+    const button = document.getElementById("downloadButton");
+    const loading = document.getElementById("pdfLoading");
+    if (!certificate || button.disabled) return;
+
+    button.disabled = true;
+    button.innerHTML = `<span>◌</span><span>กำลังสร้าง PDF...</span>`;
+    if (loading) loading.classList.add("active");
+
+    try {
+        certificate.classList.add("pdf-mode");
+        const canvas = await window.html2canvas(certificate, { scale: 2, useCORS: true, backgroundColor: "#ffffff" });
+        certificate.classList.remove("pdf-mode");
+
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF("portrait", "mm", "a4");
+        const imgWidth = 210;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        
+        pdf.addImage(canvas.toDataURL("image/png"), "PNG", 0, 0, imgWidth, imgHeight);
+        pdf.save(`THYNK_EQ_Certificate_${displayName.replace(/\s+/g, "_")}.pdf`);
+    } catch (err) {
+        alert("เกิดข้อผิดพลาดในการสร้าง PDF");
+    } finally {
+        certificate.classList.remove("pdf-mode");
+        button.disabled = false;
+        button.innerHTML = `<span class="btn-icon">↓</span><span>ดาวน์โหลดใบประกาศ</span>`;
+        if (loading) loading.classList.remove("active");
+    }
+}
+</script>
+</body>
+</html>

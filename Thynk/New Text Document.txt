@@ -1,0 +1,21 @@
+IQ-EQ-EXAM/
+│
+├── index.html
+├── exam.html
+├── result.html
+├── certificate.html
+├── payment.html             ← 🆕 หน้าจ่ายเงิน
+│
+├── css/
+│   └── style.css
+│
+├── js/
+│   ├── app.js
+│   ├── exam.js
+│   ├── result.js
+│   ├── certificate.js
+│   └── payment.js           ← 🆕 ระบบชำระเงิน
+│
+└── assets/
+    ├── logo.png
+    └── certificate-bg.png

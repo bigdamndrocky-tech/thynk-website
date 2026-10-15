@@ -1,0 +1,2190 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<link rel="icon" type="image/png" href="thynk.png">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="THYNK IQ — Neural Trial ระบบทดสอบความสามารถด้านการคิด วิเคราะห์ ตรรกะ รูปแบบ ตัวเลข ความจำ และมิติสัมพันธ์">
+
+    <title>THYNK — NEURAL TRIAL</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style1.css">
+
+    <style>
+        .question-breakdown-intro {
+            max-width: 850px;
+            margin: 0 0 28px;
+            line-height: 1.9;
+            opacity: .82;
+        }
+
+        .question-total-bar {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 20px;
+            align-items: center;
+            padding: 18px 20px;
+            margin-bottom: 32px;
+            border: 1px solid rgba(218,174,72,.35);
+            background: rgba(218,174,72,.035);
+            font-family: "JetBrains Mono", monospace;
+        }
+
+        .question-total-bar strong {
+            font-size: 24px;
+        }
+
+        .question-total-bar small {
+            opacity: .65;
+        }
+
+        .question-stage {
+            margin: 0 0 34px;
+            border-top: 1px solid rgba(218,174,72,.28);
+            padding-top: 22px;
+        }
+
+        .question-stage-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 20px;
+            margin-bottom: 16px;
+        }
+
+        .question-stage-header span {
+            display: block;
+            font-family: "JetBrains Mono", monospace;
+            font-size: 11px;
+            letter-spacing: .16em;
+            opacity: .65;
+        }
+
+        .question-stage-header h3 {
+            margin: 5px 0 0;
+        }
+
+        .question-stage-header > small {
+            font-family: "JetBrains Mono", monospace;
+            opacity: .55;
+            text-align: right;
+        }
+
+        .question-detail-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+        }
+
+        .question-detail-card {
+            display: grid;
+            grid-template-columns: 58px 1fr auto;
+            gap: 12px;
+            align-items: center;
+            min-height: 64px;
+            padding: 10px 12px;
+            border: 1px solid rgba(255,255,255,.08);
+            background: rgba(255,255,255,.018);
+            transition: border-color .2s, transform .2s;
+        }
+
+        .question-detail-card:hover {
+            border-color: rgba(218,174,72,.45);
+            transform: translateX(2px);
+        }
+
+        .question-id {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 12px;
+            opacity: .55;
+        }
+
+        .question-info strong {
+            display: block;
+            font-size: 13px;
+        }
+
+        .question-info small {
+            display: block;
+            margin-top: 3px;
+            font-family: "JetBrains Mono", monospace;
+            font-size: 9px;
+            opacity: .48;
+        }
+
+        .question-meta {
+            text-align: right;
+            font-family: "JetBrains Mono", monospace;
+        }
+
+        .question-meta span {
+            display: block;
+            font-size: 9px;
+            opacity: .62;
+        }
+
+        .question-meta b {
+            display: block;
+            margin-top: 3px;
+            font-size: 12px;
+        }
+
+        @media (max-width: 760px) {
+            .question-total-bar {
+                grid-template-columns: 1fr;
+                gap: 7px;
+            }
+
+            .question-stage-header {
+                display: block;
+            }
+
+            .question-stage-header > small {
+                display: block;
+                margin-top: 8px;
+                text-align: left;
+            }
+
+            .question-detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+</head>
+
+
+<body class="instruction-page">
+
+    <!-- =========================
+         BACKGROUND
+    ========================== -->
+
+    <div class="instruction-grid"></div>
+
+    <div class="neural-scan"></div>
+
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header class="instruction-navbar">
+
+        <a href="index.html" class="logo">
+            <span>THYNK</span>
+            <b>•</b>
+            <span>IQ</span>
+        </a>
+
+        <div class="instruction-status">
+            <i></i>
+            NEURAL SYSTEM READY
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
+    <main class="instruction-main">
+
+
+        <!-- =========================
+             TOP LABEL
+        ========================== -->
+
+        <div class="instruction-eyebrow">
+            <span>01</span>
+            NEURAL ASSESSMENT
+        </div>
+
+
+        <!-- =========================
+             TITLE
+        ========================== -->
+
+        <section class="instruction-title">
+
+            <div class="system-label">
+                THYNK // NEURAL TRIAL
+            </div>
+
+            <h1>
+                THINK
+                <span>DIFFERENT.</span>
+            </h1>
+
+            <p>
+                นี่ไม่ใช่เพียงแบบทดสอบข้อสอบทั่วไป
+                แต่คือสนามทดสอบที่ออกแบบมาเพื่อสำรวจ
+                วิธีที่คุณมองรูปแบบ วิเคราะห์ข้อมูล
+                ใช้เหตุผล และแก้ปัญหา
+            </p>
+      
+        </section>
+          <a href="exam.html?type=iq"
+               class="begin-button">
+
+                <span>
+                    ENTER NEURAL TRIAL
+                </span>
+
+                <strong>→</strong>
+
+            </a>
+
+        <!-- =========================
+             TRIAL OVERVIEW
+        ========================== -->
+
+        <section class="instruction-overview">
+
+
+            <div class="overview-item">
+
+                <span>STAGES</span>
+
+                <strong>05</strong>
+
+                <small>NEURAL STAGES</small>
+
+            </div>
+
+
+            <div class="overview-item">
+
+                <span>QUESTIONS</span>
+
+                <strong>100</strong>
+
+                <small>NEURAL CHALLENGES</small>
+
+            </div>
+
+
+            <div class="overview-item">
+
+                <span>DIFFICULTY</span>
+
+                <strong>ADAPTIVE</strong>
+
+                <small>DYNAMIC SYSTEM</small>
+
+            </div>
+
+
+            <div class="overview-item">
+
+                <span>MODE</span>
+
+                <strong>01</strong>
+
+                <small>NO BACKTRACKING</small>
+
+            </div>
+
+        </section>
+
+      
+
+        <!-- =========================
+             NEURAL STAGES
+        ========================== -->
+
+        <section class="iq-domains">
+
+
+            <div class="domain-title">
+
+                <span>02</span>
+
+                <div>
+                    <small>NEURAL TRIAL STRUCTURE</small>
+
+                    <h2>FIVE STAGES.</h2>
+                </div>
+
+            </div>
+
+
+            <div class="domain-grid">
+
+
+                <!-- STAGE 01 -->
+
+                <div class="domain-card">
+
+                    <strong>STAGE 01</strong>
+
+                    <h3>THE SEQUENCE</h3>
+
+                    <p>
+                        ค้นหารูปแบบ ความต่อเนื่อง
+                        และกฎที่ซ่อนอยู่ในข้อมูล
+                    </p>
+
+                    <small>
+                        PATTERN RECOGNITION
+                    </small>
+
+                </div>
+
+
+                <!-- STAGE 02 -->
+
+                <div class="domain-card">
+
+                    <strong>STAGE 02</strong>
+
+                    <h3>THE LOGIC</h3>
+
+                    <p>
+                        วิเคราะห์ความสัมพันธ์
+                        และค้นหาข้อสรุปที่เป็นไปได้
+                    </p>
+
+                    <small>
+                        LOGICAL REASONING
+                    </small>
+
+                </div>
+
+
+                <!-- STAGE 03 -->
+
+                <div class="domain-card">
+
+                    <strong>STAGE 03</strong>
+
+                    <h3>THE NUMBER</h3>
+
+                    <p>
+                        ค้นหากฎของตัวเลข
+                        และแก้ปัญหาหลายขั้นตอน
+                    </p>
+
+                    <small>
+                        NUMERICAL REASONING
+                    </small>
+
+                </div>
+
+
+                <!-- STAGE 04 -->
+
+                <div class="domain-card">
+
+                    <strong>STAGE 04</strong>
+
+                    <h3>THE SPACE</h3>
+
+                    <p>
+                        ทดสอบการมองวัตถุ
+                        การหมุน และความสัมพันธ์เชิงมิติ
+                    </p>
+
+                    <small>
+                        SPATIAL INTELLIGENCE
+                    </small>
+
+                </div>
+
+
+                <!-- STAGE 05 -->
+
+                <div class="domain-card">
+
+                    <strong>STAGE 05</strong>
+
+                    <h3>THE CORE</h3>
+
+                    <p>
+                        Mixed Challenge
+                        ที่รวมหลายทักษะไว้ในด่านสุดท้าย
+                    </p>
+
+                    <small>
+                        MIXED INTELLIGENCE
+                    </small>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             CHALLENGE TYPES
+        ========================== -->
+
+        <section class="instruction-content">
+
+
+            <div class="instruction-header">
+
+                <span>03</span>
+
+                <div>
+
+                    <small>CHALLENGE SYSTEM</small>
+
+                    <h2>NOT JUST QUESTIONS.</h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="instruction-list">
+
+
+                <!-- 01 -->
+
+                <div class="instruction-item">
+
+                    <div class="instruction-number">
+                        01
+                    </div>
+
+                    <div>
+
+                        <h3>FIND THE INTRUDER</h3>
+
+                        <p>
+                            ค้นหารูปหรือสัญลักษณ์ที่แตกต่าง
+                            จากรูปแบบทั้งหมด
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 02 -->
+
+                <div class="instruction-item">
+
+                    <div class="instruction-number">
+                        02
+                    </div>
+
+                    <div>
+
+                        <h3>MEMORY FLASH</h3>
+
+                        <p>
+                            ข้อมูลจะปรากฏเพียงช่วงเวลาสั้น ๆ
+                            จากนั้นระบบจะทดสอบว่าคุณจำอะไรได้บ้าง
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 03 -->
+
+                <div class="instruction-item">
+
+                    <div class="instruction-number">
+                        03
+                    </div>
+
+                    <div>
+
+                        <h3>SEQUENCE BREAK</h3>
+
+                        <p>
+                            วิเคราะห์ลำดับที่เปลี่ยนแปลง
+                            และค้นหาสิ่งที่จะเกิดขึ้นต่อไป
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 04 -->
+
+                <div class="instruction-item">
+
+                    <div class="instruction-number">
+                        04
+                    </div>
+
+                    <div>
+
+                        <h3>ROTATE</h3>
+
+                        <p>
+                            วิเคราะห์วัตถุจากมุมมองต่าง ๆ
+                            และเลือกผลลัพธ์หลังการหมุน
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 05 -->
+
+                <div class="instruction-item">
+
+                    <div class="instruction-number">
+                        05
+                    </div>
+
+                    <div>
+
+                        <h3>CODE BREAK</h3>
+
+                        <p>
+                            ค้นหากฎที่ซ่อนอยู่ในตัวเลข
+                            และถอดรหัสของระบบ
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+
+        <!-- =========================
+             100 QUESTION BREAKDOWN
+        ========================== -->
+
+        <section class="instruction-content question-breakdown">
+
+            <div class="instruction-header">
+                <span>03B</span>
+                <div>
+                    <small>100 QUESTION DATABASE</small>
+                    <h2>THE 100 CHALLENGES.</h2>
+                </div>
+            </div>
+
+            <p class="question-breakdown-intro">
+                แบบทดสอบทั้งหมด 100 ข้อ แบ่งเป็น 5 Stages
+                Stage ละ 20 ข้อ โดยครอบคลุม Pattern, Logic, Number,
+                Space และ Mixed Intelligence ตามโครงสร้างของ NEURAL TRIAL
+            </p>
+
+            <div class="question-total-bar">
+                <span>TOTAL QUESTIONS</span>
+                <strong>100 / 100</strong>
+                <small>5 STAGES × 20 QUESTIONS</small>
+            </div>
+
+            
+            <div class="question-stage">
+                <div class="question-stage-header">
+                    <div>
+                        <span>STAGE 01</span>
+                        <h3>THE SEQUENCE</h3>
+                    </div>
+                    <small>PATTERN RECOGNITION / QUESTIONS 001–020</small>
+                </div>
+                <div class="question-detail-grid">
+                    
+                <div class="question-detail-card">
+                    <div class="question-id">Q001</div>
+                    <div class="question-info">
+                        <strong>FIND THE INTRUDER</strong>
+                        <small>PATTERN RECOGNITION</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EASY</span>
+                        <b>20s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q002</div>
+                    <div class="question-info">
+                        <strong>SEQUENCE BREAK</strong>
+                        <small>PATTERN RECOGNITION</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EASY</span>
+                        <b>20s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q003</div>
+                    <div class="question-info">
+                        <strong>PATTERN MATCH</strong>
+                        <small>PATTERN RECOGNITION</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EASY</span>
+                        <b>20s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q004</div>
+                    <div class="question-info">
+                        <strong>NEXT SYMBOL</strong>
+                        <small>PATTERN RECOGNITION</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EASY</span>
+                        <b>20s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q005</div>
+                    <div class="question-info">
+                        <strong>MISSING PATTERN</strong>
+                        <small>PATTERN RECOGNITION</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>NORMAL</span>
+                        <b>15s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q006</div>
+                    <div class="question-info">
+                        <strong>ODD ONE OUT</strong>
+                        <small>PATTERN RECOGNITION</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>NORMAL</span>
+                        <b>15s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q007</div>
+                    <div class="question-info">
+                        <strong>SEQUENCE SHIFT</strong>
+                        <small>PATTERN RECOGNITION</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>NORMAL</span>
+                        <b>15s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q008</div>
+                    <div class="question-info">
+                        <strong>PATTERN GRID</strong>
+                        <small>PATTERN RECOGNITION</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>NORMAL</span>
+                        <b>15s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q009</div>
+                    <div class="question-info">
+                        <strong>HIDDEN RULE</strong>
+                        <small>PATTERN RECOGNITION</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>NORMAL</span>
+                        <b>15s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q010</div>
+                    <div class="question-info">
+                        <strong>ORDER LOGIC</strong>
+                        <small>PATTERN RECOGNITION</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>HARD</span>
+                        <b>12s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q011</div>
+                    <div class="question-info">
+                        <strong>VISUAL SEQUENCE</strong>
+                        <small>PATTERN RECOGNITION</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>HARD</span>
+                        <b>12s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q012</div>
+                    <div class="question-info">
+                        <strong>SYMBOL CHAIN</strong>
+                        <small>PATTERN RECOGNITION</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>HARD</span>
+                        <b>12s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q013</div>
+                    <div class="question-info">
+                        <strong>PATTERN COMPLETION</strong>
+                        <small>PATTERN RECOGNITION</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>HARD</span>
+                        <b>12s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q014</div>
+                    <div class="question-info">
+                        <strong>MATRIX PATTERN</strong>
+                        <small>PATTERN RECOGNITION</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>HARD</span>
+                        <b>12s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q015</div>
+                    <div class="question-info">
+                        <strong>SEQUENCE MEMORY</strong>
+                        <small>PATTERN RECOGNITION</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EXTREME</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q016</div>
+                    <div class="question-info">
+                        <strong>RULE DETECTION</strong>
+                        <small>PATTERN RECOGNITION</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EXTREME</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q017</div>
+                    <div class="question-info">
+                        <strong>PATTERN TRANSFORM</strong>
+                        <small>PATTERN RECOGNITION</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EXTREME</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q018</div>
+                    <div class="question-info">
+                        <strong>MISSING SYMBOL</strong>
+                        <small>PATTERN RECOGNITION</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EXTREME</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q019</div>
+                    <div class="question-info">
+                        <strong>SEQUENCE ANALYSIS</strong>
+                        <small>PATTERN RECOGNITION</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EXTREME</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q020</div>
+                    <div class="question-info">
+                        <strong>FINAL PATTERN</strong>
+                        <small>PATTERN RECOGNITION</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>FINAL</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="question-stage">
+                <div class="question-stage-header">
+                    <div>
+                        <span>STAGE 02</span>
+                        <h3>THE LOGIC</h3>
+                    </div>
+                    <small>LOGICAL REASONING / QUESTIONS 021–040</small>
+                </div>
+                <div class="question-detail-grid">
+                    
+                <div class="question-detail-card">
+                    <div class="question-id">Q021</div>
+                    <div class="question-info">
+                        <strong>FIND THE INTRUDER</strong>
+                        <small>LOGICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EASY</span>
+                        <b>20s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q022</div>
+                    <div class="question-info">
+                        <strong>LOGIC GRID</strong>
+                        <small>LOGICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EASY</span>
+                        <b>20s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q023</div>
+                    <div class="question-info">
+                        <strong>TRUE OR FALSE</strong>
+                        <small>LOGICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EASY</span>
+                        <b>20s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q024</div>
+                    <div class="question-info">
+                        <strong>RELATIONSHIP</strong>
+                        <small>LOGICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EASY</span>
+                        <b>20s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q025</div>
+                    <div class="question-info">
+                        <strong>DEDUCTION</strong>
+                        <small>LOGICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>NORMAL</span>
+                        <b>15s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q026</div>
+                    <div class="question-info">
+                        <strong>ORDERING</strong>
+                        <small>LOGICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>NORMAL</span>
+                        <b>15s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q027</div>
+                    <div class="question-info">
+                        <strong>CONDITIONAL LOGIC</strong>
+                        <small>LOGICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>NORMAL</span>
+                        <b>15s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q028</div>
+                    <div class="question-info">
+                        <strong>LOGIC CHAIN</strong>
+                        <small>LOGICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>NORMAL</span>
+                        <b>15s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q029</div>
+                    <div class="question-info">
+                        <strong>WHO IS CORRECT</strong>
+                        <small>LOGICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>NORMAL</span>
+                        <b>15s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q030</div>
+                    <div class="question-info">
+                        <strong>MISSING CONDITION</strong>
+                        <small>LOGICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>HARD</span>
+                        <b>12s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q031</div>
+                    <div class="question-info">
+                        <strong>CAUSE & EFFECT</strong>
+                        <small>LOGICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>HARD</span>
+                        <b>12s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q032</div>
+                    <div class="question-info">
+                        <strong>LOGIC MATRIX</strong>
+                        <small>LOGICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>HARD</span>
+                        <b>12s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q033</div>
+                    <div class="question-info">
+                        <strong>STATEMENT ANALYSIS</strong>
+                        <small>LOGICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>HARD</span>
+                        <b>12s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q034</div>
+                    <div class="question-info">
+                        <strong>RULE APPLICATION</strong>
+                        <small>LOGICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>HARD</span>
+                        <b>12s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q035</div>
+                    <div class="question-info">
+                        <strong>ELIMINATION</strong>
+                        <small>LOGICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EXTREME</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q036</div>
+                    <div class="question-info">
+                        <strong>LOGIC SEQUENCE</strong>
+                        <small>LOGICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EXTREME</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q037</div>
+                    <div class="question-info">
+                        <strong>CONCLUSION</strong>
+                        <small>LOGICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EXTREME</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q038</div>
+                    <div class="question-info">
+                        <strong>CONSTRAINT PUZZLE</strong>
+                        <small>LOGICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EXTREME</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q039</div>
+                    <div class="question-info">
+                        <strong>FINAL DEDUCTION</strong>
+                        <small>LOGICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EXTREME</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q040</div>
+                    <div class="question-info">
+                        <strong>CORE LOGIC</strong>
+                        <small>LOGICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>FINAL</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="question-stage">
+                <div class="question-stage-header">
+                    <div>
+                        <span>STAGE 03</span>
+                        <h3>THE NUMBER</h3>
+                    </div>
+                    <small>NUMERICAL REASONING / QUESTIONS 041–060</small>
+                </div>
+                <div class="question-detail-grid">
+                    
+                <div class="question-detail-card">
+                    <div class="question-id">Q041</div>
+                    <div class="question-info">
+                        <strong>NUMBER SEQUENCE</strong>
+                        <small>NUMERICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EASY</span>
+                        <b>20s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q042</div>
+                    <div class="question-info">
+                        <strong>MISSING NUMBER</strong>
+                        <small>NUMERICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EASY</span>
+                        <b>20s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q043</div>
+                    <div class="question-info">
+                        <strong>NUMBER PATTERN</strong>
+                        <small>NUMERICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EASY</span>
+                        <b>20s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q044</div>
+                    <div class="question-info">
+                        <strong>CALCULATION</strong>
+                        <small>NUMERICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EASY</span>
+                        <b>20s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q045</div>
+                    <div class="question-info">
+                        <strong>DIGIT RULE</strong>
+                        <small>NUMERICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>NORMAL</span>
+                        <b>15s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q046</div>
+                    <div class="question-info">
+                        <strong>ARITHMETIC LOGIC</strong>
+                        <small>NUMERICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>NORMAL</span>
+                        <b>15s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q047</div>
+                    <div class="question-info">
+                        <strong>NUMBER MATRIX</strong>
+                        <small>NUMERICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>NORMAL</span>
+                        <b>15s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q048</div>
+                    <div class="question-info">
+                        <strong>RATIO</strong>
+                        <small>NUMERICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>NORMAL</span>
+                        <b>15s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q049</div>
+                    <div class="question-info">
+                        <strong>PROPORTION</strong>
+                        <small>NUMERICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>NORMAL</span>
+                        <b>15s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q050</div>
+                    <div class="question-info">
+                        <strong>OPERATION CHAIN</strong>
+                        <small>NUMERICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>HARD</span>
+                        <b>12s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q051</div>
+                    <div class="question-info">
+                        <strong>NUMBER RELATION</strong>
+                        <small>NUMERICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>HARD</span>
+                        <b>12s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q052</div>
+                    <div class="question-info">
+                        <strong>MISSING VALUE</strong>
+                        <small>NUMERICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>HARD</span>
+                        <b>12s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q053</div>
+                    <div class="question-info">
+                        <strong>EQUATION LOGIC</strong>
+                        <small>NUMERICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>HARD</span>
+                        <b>12s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q054</div>
+                    <div class="question-info">
+                        <strong>QUANTITY COMPARISON</strong>
+                        <small>NUMERICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>HARD</span>
+                        <b>12s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q055</div>
+                    <div class="question-info">
+                        <strong>MULTI-STEP NUMBER</strong>
+                        <small>NUMERICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EXTREME</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q056</div>
+                    <div class="question-info">
+                        <strong>NUMBER GRID</strong>
+                        <small>NUMERICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EXTREME</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q057</div>
+                    <div class="question-info">
+                        <strong>HIDDEN OPERATION</strong>
+                        <small>NUMERICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EXTREME</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q058</div>
+                    <div class="question-info">
+                        <strong>NUMERICAL SEQUENCE</strong>
+                        <small>NUMERICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EXTREME</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q059</div>
+                    <div class="question-info">
+                        <strong>FINAL CALCULATION</strong>
+                        <small>NUMERICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EXTREME</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q060</div>
+                    <div class="question-info">
+                        <strong>CORE NUMBER</strong>
+                        <small>NUMERICAL REASONING</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>FINAL</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="question-stage">
+                <div class="question-stage-header">
+                    <div>
+                        <span>STAGE 04</span>
+                        <h3>THE SPACE</h3>
+                    </div>
+                    <small>SPATIAL INTELLIGENCE / QUESTIONS 061–080</small>
+                </div>
+                <div class="question-detail-grid">
+                    
+                <div class="question-detail-card">
+                    <div class="question-id">Q061</div>
+                    <div class="question-info">
+                        <strong>ROTATE</strong>
+                        <small>SPATIAL INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EASY</span>
+                        <b>20s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q062</div>
+                    <div class="question-info">
+                        <strong>FOLD THE SHAPE</strong>
+                        <small>SPATIAL INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EASY</span>
+                        <b>20s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q063</div>
+                    <div class="question-info">
+                        <strong>MIRROR IMAGE</strong>
+                        <small>SPATIAL INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EASY</span>
+                        <b>20s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q064</div>
+                    <div class="question-info">
+                        <strong>SPATIAL MATCH</strong>
+                        <small>SPATIAL INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EASY</span>
+                        <b>20s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q065</div>
+                    <div class="question-info">
+                        <strong>CUBE VISION</strong>
+                        <small>SPATIAL INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>NORMAL</span>
+                        <b>15s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q066</div>
+                    <div class="question-info">
+                        <strong>OBJECT ROTATION</strong>
+                        <small>SPATIAL INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>NORMAL</span>
+                        <b>15s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q067</div>
+                    <div class="question-info">
+                        <strong>MISSING SHAPE</strong>
+                        <small>SPATIAL INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>NORMAL</span>
+                        <b>15s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q068</div>
+                    <div class="question-info">
+                        <strong>3D RELATION</strong>
+                        <small>SPATIAL INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>NORMAL</span>
+                        <b>15s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q069</div>
+                    <div class="question-info">
+                        <strong>SHADOW MATCH</strong>
+                        <small>SPATIAL INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>NORMAL</span>
+                        <b>15s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q070</div>
+                    <div class="question-info">
+                        <strong>PERSPECTIVE</strong>
+                        <small>SPATIAL INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>HARD</span>
+                        <b>12s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q071</div>
+                    <div class="question-info">
+                        <strong>SPATIAL SEQUENCE</strong>
+                        <small>SPATIAL INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>HARD</span>
+                        <b>12s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q072</div>
+                    <div class="question-info">
+                        <strong>MENTAL ROTATION</strong>
+                        <small>SPATIAL INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>HARD</span>
+                        <b>12s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q073</div>
+                    <div class="question-info">
+                        <strong>SHAPE TRANSFORM</strong>
+                        <small>SPATIAL INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>HARD</span>
+                        <b>12s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q074</div>
+                    <div class="question-info">
+                        <strong>SYMMETRY</strong>
+                        <small>SPATIAL INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>HARD</span>
+                        <b>12s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q075</div>
+                    <div class="question-info">
+                        <strong>POSITION LOGIC</strong>
+                        <small>SPATIAL INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EXTREME</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q076</div>
+                    <div class="question-info">
+                        <strong>3D MATRIX</strong>
+                        <small>SPATIAL INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EXTREME</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q077</div>
+                    <div class="question-info">
+                        <strong>OBJECT COUNT</strong>
+                        <small>SPATIAL INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EXTREME</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q078</div>
+                    <div class="question-info">
+                        <strong>SPACE PATH</strong>
+                        <small>SPATIAL INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EXTREME</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q079</div>
+                    <div class="question-info">
+                        <strong>FINAL ROTATION</strong>
+                        <small>SPATIAL INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EXTREME</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q080</div>
+                    <div class="question-info">
+                        <strong>CORE SPACE</strong>
+                        <small>SPATIAL INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>FINAL</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="question-stage">
+                <div class="question-stage-header">
+                    <div>
+                        <span>STAGE 05</span>
+                        <h3>THE CORE</h3>
+                    </div>
+                    <small>MIXED INTELLIGENCE / QUESTIONS 081–100</small>
+                </div>
+                <div class="question-detail-grid">
+                    
+                <div class="question-detail-card">
+                    <div class="question-id">Q081</div>
+                    <div class="question-info">
+                        <strong>CORE PATTERN</strong>
+                        <small>MIXED INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EASY</span>
+                        <b>20s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q082</div>
+                    <div class="question-info">
+                        <strong>CORE LOGIC</strong>
+                        <small>MIXED INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EASY</span>
+                        <b>20s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q083</div>
+                    <div class="question-info">
+                        <strong>CORE NUMBER</strong>
+                        <small>MIXED INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EASY</span>
+                        <b>20s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q084</div>
+                    <div class="question-info">
+                        <strong>CORE SPACE</strong>
+                        <small>MIXED INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EASY</span>
+                        <b>20s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q085</div>
+                    <div class="question-info">
+                        <strong>MIXED SEQUENCE</strong>
+                        <small>MIXED INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>NORMAL</span>
+                        <b>15s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q086</div>
+                    <div class="question-info">
+                        <strong>MIXED DEDUCTION</strong>
+                        <small>MIXED INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>NORMAL</span>
+                        <b>15s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q087</div>
+                    <div class="question-info">
+                        <strong>MIXED MEMORY</strong>
+                        <small>MIXED INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>NORMAL</span>
+                        <b>15s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q088</div>
+                    <div class="question-info">
+                        <strong>MIXED MATRIX</strong>
+                        <small>MIXED INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>NORMAL</span>
+                        <b>15s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q089</div>
+                    <div class="question-info">
+                        <strong>MIXED ROTATION</strong>
+                        <small>MIXED INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>NORMAL</span>
+                        <b>15s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q090</div>
+                    <div class="question-info">
+                        <strong>MIXED CODE</strong>
+                        <small>MIXED INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>HARD</span>
+                        <b>12s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q091</div>
+                    <div class="question-info">
+                        <strong>MIXED RELATION</strong>
+                        <small>MIXED INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>HARD</span>
+                        <b>12s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q092</div>
+                    <div class="question-info">
+                        <strong>MIXED PATTERN</strong>
+                        <small>MIXED INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>HARD</span>
+                        <b>12s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q093</div>
+                    <div class="question-info">
+                        <strong>MIXED NUMBER</strong>
+                        <small>MIXED INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>HARD</span>
+                        <b>12s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q094</div>
+                    <div class="question-info">
+                        <strong>MIXED LOGIC</strong>
+                        <small>MIXED INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>HARD</span>
+                        <b>12s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q095</div>
+                    <div class="question-info">
+                        <strong>MIXED SPACE</strong>
+                        <small>MIXED INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EXTREME</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q096</div>
+                    <div class="question-info">
+                        <strong>FINAL SEQUENCE</strong>
+                        <small>MIXED INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EXTREME</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q097</div>
+                    <div class="question-info">
+                        <strong>FINAL LOGIC</strong>
+                        <small>MIXED INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EXTREME</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q098</div>
+                    <div class="question-info">
+                        <strong>FINAL NUMBER</strong>
+                        <small>MIXED INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EXTREME</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q099</div>
+                    <div class="question-info">
+                        <strong>FINAL SPACE</strong>
+                        <small>MIXED INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>EXTREME</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                <div class="question-detail-card">
+                    <div class="question-id">Q100</div>
+                    <div class="question-info">
+                        <strong>THE NEURAL CORE</strong>
+                        <small>MIXED INTELLIGENCE</small>
+                    </div>
+                    <div class="question-meta">
+                        <span>FINAL</span>
+                        <b>08s</b>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             ADAPTIVE SYSTEM
+        ========================== -->
+
+        <section class="instruction-content adaptive-section">
+
+
+            <div class="instruction-header">
+
+                <span>04</span>
+
+                <div>
+
+                    <small>ADAPTIVE ENGINE</small>
+
+                    <h2>THE SYSTEM WATCHES.</h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="adaptive-panel">
+
+                <div class="adaptive-status">
+
+                    <span>NEURAL LOAD</span>
+
+                    <div class="load-bar">
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                    </div>
+
+                    <strong>ADAPTIVE</strong>
+
+                </div>
+
+
+                <p>
+                    ระดับความยากจะเปลี่ยนแปลงตามรูปแบบการตอบของคุณ
+                    หากคุณทำได้ดี ระบบอาจเพิ่มความซับซ้อน
+                    หากคุณเริ่มผิดพลาด ระบบจะปรับระดับให้เหมาะสม
+                </p>
+
+
+                <div class="adaptive-flow">
+
+                    <span>ANSWER</span>
+
+                    <b>→</b>
+
+                    <span>ANALYZE</span>
+
+                    <b>→</b>
+
+                    <span>ADAPT</span>
+
+                    <b>→</b>
+
+                    <span>CHALLENGE</span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             TIME SYSTEM
+        ========================== -->
+
+        <section class="instruction-content">
+
+
+            <div class="instruction-header">
+
+                <span>05</span>
+
+                <div>
+
+                    <small>TIME ENGINE</small>
+
+                    <h2>TIME IS NOT FIXED.</h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="time-grid">
+
+
+                <div class="time-card">
+
+                    <span>EASY</span>
+
+                    <strong>20s</strong>
+
+                    <small>PER CHALLENGE</small>
+
+                </div>
+
+
+                <div class="time-card">
+
+                    <span>NORMAL</span>
+
+                    <strong>15s</strong>
+
+                    <small>PER CHALLENGE</small>
+
+                </div>
+
+
+                <div class="time-card">
+
+                    <span>HARD</span>
+
+                    <strong>12s</strong>
+
+                    <small>PER CHALLENGE</small>
+
+                </div>
+
+
+                <div class="time-card">
+
+                    <span>EXTREME</span>
+
+                    <strong>08s</strong>
+
+                    <small>PER CHALLENGE</small>
+
+                </div>
+
+
+            </div>
+
+
+            <p class="time-note">
+                เวลาของแต่ละ Challenge อาจแตกต่างกัน
+                ตามระดับความยากของโจทย์
+            </p>
+
+        </section>
+
+
+
+        <!-- =========================
+             COMBO
+        ========================== -->
+
+        <section class="instruction-content">
+
+
+            <div class="instruction-header">
+
+                <span>06</span>
+
+                <div>
+
+                    <small>PERFORMANCE SYSTEM</small>
+
+                    <h2>BUILD YOUR MOMENTUM.</h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="combo-preview">
+
+
+                <div class="combo-line">
+
+                    <span>CORRECT</span>
+
+                    <strong>+ SCORE</strong>
+
+                </div>
+
+
+                <div class="combo-line">
+
+                    <span>COMBO ×3</span>
+
+                    <strong>NEURAL MOMENTUM</strong>
+
+                </div>
+
+
+                <div class="combo-line">
+
+                    <span>COMBO ×5</span>
+
+                    <strong>HIGH PERFORMANCE</strong>
+
+                </div>
+
+
+                <div class="combo-line broken">
+
+                    <span>INCORRECT</span>
+
+                    <strong>COMBO BROKEN</strong>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             INSTRUCTIONS
+        ========================== -->
+
+        <section class="instruction-content">
+
+
+            <div class="instruction-header">
+
+                <span>07</span>
+
+                <div>
+
+                    <small>BEFORE YOU BEGIN</small>
+
+                    <h2>KNOW THE RULES.</h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="instruction-list">
+
+
+                <div class="instruction-item">
+
+                    <div class="instruction-number">
+                        01
+                    </div>
+
+                    <div>
+
+                        <h3>ตอบให้ทันเวลา</h3>
+
+                        <p>
+                            แต่ละ Challenge มีเวลาจำกัด
+                            เมื่อหมดเวลาระบบจะบันทึกเป็น
+                            <strong>TIMEOUT</strong>
+                            และเข้าสู่ Challenge ถัดไป
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="instruction-item">
+
+                    <div class="instruction-number">
+                        02
+                    </div>
+
+                    <div>
+
+                        <h3>ไม่สามารถย้อนกลับ</h3>
+
+                        <p>
+                            เมื่อส่งคำตอบแล้ว
+                            คุณจะไม่สามารถย้อนกลับมาแก้ไข
+                            Challenge ก่อนหน้าได้
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="instruction-item">
+
+                    <div class="instruction-number">
+                        03
+                    </div>
+
+                    <div>
+
+                        <h3>บาง Challenge เป็น Interactive</h3>
+
+                        <p>
+                            คุณอาจต้องคลิก หมุน จับคู่
+                            จดจำ หรือวิเคราะห์วัตถุ
+                            เพื่อค้นหาคำตอบ
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="instruction-item">
+
+                    <div class="instruction-number">
+                        04
+                    </div>
+
+                    <div>
+
+                        <h3>ห้ามรีเฟรชระหว่างการทดสอบ</h3>
+
+                        <p>
+                            ไม่ควรปิดหรือรีเฟรชหน้าเว็บ
+                            ระหว่างการทดสอบเพื่อป้องกัน
+                            การสูญเสียสถานะของ Trial
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             FINAL WARNING
+        ========================== -->
+
+        <div class="instruction-warning">
+
+            <span>!</span>
+
+            <div>
+
+                <strong>IMPORTANT</strong>
+
+                <p>
+                    THYNK IQ เป็นระบบประเมินเชิงทดลอง
+                    สำหรับการศึกษาและความบันเทิง
+                    ผลลัพธ์ไม่ใช่การวินิจฉัยทางการแพทย์
+                    และไม่ควรใช้แทนการประเมินโดยผู้เชี่ยวชาญ
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             ACTION
+        ========================== -->
+
+        <section class="instruction-action">
+
+
+            <div class="action-meta">
+
+                <span>TRIAL STATUS</span>
+
+                <strong>
+                    NEURAL SYSTEM READY
+                </strong>
+
+            </div>
+
+
+            <a href="exam.html?type=iq"
+               class="begin-button">
+
+                <span>
+                    ENTER NEURAL TRIAL
+                </span>
+
+                <strong>→</strong>
+
+            </a>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer class="instruction-footer">
+
+        <span>
+            THYNK • NEURAL TRIAL
+        </span>
+
+        <span>
+            IQ SYSTEM / V2.0.0
+        </span>
+
+    </footer>
+
+
+</body>
+
+</html>
